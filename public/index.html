@@ -42,32 +42,39 @@
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
-      let todaysGuest = "A"; // heutiger Gast
-
-      let match = {
+      // data
+      let todayAsformattedDate;
+      let todaysMatch;
+      /*let match = {
         formattedDate: "250808",
         homeTeam: "Heimteam",
         awayTeam: "Auswärtsteam",
         homeGoals: [{ minute: 45, additional: 2, goalscorer: "Heimtor" }],
         awayGoals: [{ minute: 76, additional: 0, goalscorer: "Auswärtstor" }],
-      };
+      };*/
 
       let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
+      //matchMap.set("250808", match);
 
-      function setGreeting(todaysGuest) {
+      // methods
+      function setGreeting() {
+        // Begrüßung setzen
         let greeting = document.getElementById("greeting");
 
-        if (todaysGuest != "") {
+        if (matchMap.has(todayAsformattedDate)) {
+          todaysMatch = matchMap.get(todayAsformattedDate);
+        } else {
+          todaysMatch = getMatchDetails(todayAsformattedDate);
+        }
+
+        if (todaysMatch) {
           greeting.textContent =
-            "Heute begrüßen wir den " + todaysGuest + " als Gast";
+            "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast";
         }
       }
 
-      setGreeting(todaysGuest);
-      function getLastMatches() {}
-
       function getMatchDetails(date) {
-        const data = match;
+        const data = {};
 
         // POST-Request senden
         fetch("/api/match", {
@@ -91,6 +98,20 @@
           });
       }
 
+      function updateDateTime() {
+        let dateTime = new Date();
+        let date = dateTime.toLocaleDateString();
+        let time = dateTime.toLocaleTimeString();
+
+        document.getElementById("datum").textContent = date;
+        document.getElementById("uhrzeit").textContent = time;
+
+        todayAsformattedDate = formatDate(dateTime);
+
+        console.log("todayAsformattedDate: " + todayAsformattedDate);
+        console.log("aktualisiert");
+      }
+
       function formatDate(dateToFormat) {
         return (
           dateToFormat.getFullYear().toString().slice(-2) +
@@ -101,28 +122,13 @@
         );
       }
 
-      function updateData() {
-        // hole Daten vom Server
-        /*
-        fetch("/api/data")
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Fehler:", error));
-*/
-        let dateTime = new Date();
-        let date = dateTime.toLocaleDateString();
-        let time = dateTime.toLocaleTimeString();
-        document.getElementById("datum").textContent = date;
-        document.getElementById("uhrzeit").textContent = time;
+      function getLastMatches() {}
 
-        let todayAsformattedDate = formatDate(dateTime);
-        getMatchDetails(todayAsformattedDate);
+      // acting
 
-        console.log("todayAsformattedDate: " + todayAsformattedDate);
-        console.log("aktualisiert");
-      }
-      updateData();
-      setInterval(updateData, 1000 * 60 * 10); // Aktualisiere das Datum 10 min
+      updateDateTime();
+      setGreeting();
+      setInterval(updateDateTime, 1000 * 60 * 10); // Aktualisiere das Datum 10 min
     </script>
   </body>
   <footer>

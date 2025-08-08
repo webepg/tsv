@@ -25,9 +25,15 @@ app.post("/api/match", (req, res) => {
   // Daten aus dem JSON-Body auswerten
   const matchData = req.body;
 
-  res
-    .status(200)
-    .json({ message: "Daten erfolgreich empfangen", data: matchData });
+  let match = {
+    formattedDate: "250808",
+    homeTeam: "Heimteam",
+    awayTeam: "Auswärtsteam",
+    homeGoals: [{ minute: 90, additional: 2, goalscorer: "Heimtor" }],
+    awayGoals: [{ minute: 105, additional: 0, goalscorer: "Auswärtstor" }],
+  };
+
+  res.status(200).json(match);
 });
 
 app.listen(port, () => {
