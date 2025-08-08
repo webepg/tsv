@@ -80,7 +80,10 @@
         document.getElementById("uhrzeit").textContent = time;
 
         let todayAsformattedDate =
-          dateTime.getFullYear().toString().slice(-2) + dateTime.getMonth() < 10
+          "" +
+            dateTime.getFullYear().toString().slice(-2) +
+            dateTime.getMonth() <
+          10
             ? "0"
             : "" + dateTime.getMonth().toString() + dateTime.getDay() < 10
             ? "0"
