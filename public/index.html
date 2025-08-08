@@ -10,6 +10,8 @@
     <p>Das aktuelle Datum ist: <span id="datum"></span></p>
     <p>Die aktuelle Uhrzeit ist: <span id="uhrzeit"></span></p>
 
+    <div><p id="greeting"></p></div>
+
     <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY">
       <a
         href="https://www.fupa.net/club/tsv-bad-griesbach"
@@ -40,6 +42,29 @@
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
+      let todaysGuest = "a"; // heutiger Gast
+      let match = {
+        formattedDate: "",
+        homeTeam: "",
+        awayTeam: "",
+        homeGoals: [{ minute: 0, goalscorer: "" }],
+        awayGoals: [{ minute: 0, goalscorer: "" }],
+      };
+
+      let lastMatches; // Map mit allen letzten Spiele, Datum als Schluessel
+
+      function setGreeting(todaysGuest) {
+        let greeting = document.getElementById("greeting");
+
+        if (todaysGuest != "") {
+          greeting.textContent =
+            "Heute begrüßen wir den " + todaysGuest + " als Gast";
+        }
+      }
+      function getLastMatches() {}
+
+      function getMatchDetails() {}
+
       function updateData() {
         // hole Daten vom Server
 
@@ -53,6 +78,15 @@
         let time = dateTime.toLocaleTimeString();
         document.getElementById("datum").textContent = date;
         document.getElementById("uhrzeit").textContent = time;
+
+        let todayAsformattedDate =
+          dateTime.getFullYear().toString().slice(-2) + dateTime.getMonth() < 10
+            ? "0"
+            : "" + dateTime.getMonth().toString() + dateTime.getDay() < 10
+            ? "0"
+            : "" + dateTime.getDay().toString();
+
+        console.log("todayAsformattedDate: " + todayAsformattedDate);
         console.log("aktualisiert");
       }
       updateData();
