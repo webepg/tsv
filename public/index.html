@@ -79,15 +79,24 @@
         document.getElementById("datum").textContent = date;
         document.getElementById("uhrzeit").textContent = time;
 
+        console.log("year", dateTime.getFullYear().toString().slice(-2));
+        console.log(
+          "month",
+          (dateTime.getMonth() + 1 < 10 ? "0" : "") +
+            (dateTime.getMonth() + 1).toString()
+        );
+        console.log(
+          "day",
+          (dateTime.getDate() < 10 ? "0" : "") + dateTime.getDate().toString()
+        );
+
         let todayAsformattedDate =
           "" +
-            dateTime.getFullYear().toString().slice(-2) +
-            dateTime.getMonth() <
-          10
-            ? "0"
-            : "" + dateTime.getMonth().toString() + dateTime.getDay() < 10
-            ? "0"
-            : "" + dateTime.getDay().toString();
+          dateTime.getFullYear().toString().slice(-2) +
+          (dateTime.getMonth() + 1 < 10 ? "0" : "") +
+          (dateTime.getMonth() + 1).toString() +
+          (dateTime.getDate() < 10 ? "0" : "") +
+          dateTime.getDate().toString();
 
         console.log("todayAsformattedDate: " + todayAsformattedDate);
         console.log("aktualisiert");
