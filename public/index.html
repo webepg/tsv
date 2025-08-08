@@ -103,28 +103,17 @@
 
       function updateData() {
         // hole Daten vom Server
-
+        /*
         fetch("/api/data")
           .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.error("Fehler:", error));
-
+*/
         let dateTime = new Date();
         let date = dateTime.toLocaleDateString();
         let time = dateTime.toLocaleTimeString();
         document.getElementById("datum").textContent = date;
         document.getElementById("uhrzeit").textContent = time;
-
-        console.log("year", dateTime.getFullYear().toString().slice(-2));
-        console.log(
-          "month",
-          (dateTime.getMonth() + 1 < 10 ? "0" : "") +
-            (dateTime.getMonth() + 1).toString()
-        );
-        console.log(
-          "day",
-          (dateTime.getDate() < 10 ? "0" : "") + dateTime.getDate().toString()
-        );
 
         let todayAsformattedDate = formatDate(dateTime);
         getMatchDetails(todayAsformattedDate);

@@ -25,10 +25,9 @@ app.post("/api/match", (req, res) => {
   // Daten aus dem JSON-Body auswerten
   const matchData = req.body;
 
-  res.status(200).json({
-    message: "Daten erfolgreich empfangen",
-    data: JSON.stringify(matchData),
-  });
+  res
+    .status(200)
+    .json({ message: "Daten erfolgreich empfangen", data: matchData });
 });
 
 app.listen(port, () => {
