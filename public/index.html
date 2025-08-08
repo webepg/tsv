@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TSV</title>
+</head>
+<body>
+    <div id="ergebnis"></div>
+    <iframe
+      title="bfv"
+      width="100%"
+      height="500px"
+      id="myframe"
+      src="https://www.bfv.de/ergebnisse/spiel/-/02TJQLTFU0000000VS5489BTVV9SFN07"
+    ></iframe>
+
+    <script>
+      function updateData() {
+        const dateTime = new Date();
+        const date = dateTime.toLocaleDateString();
+        console.log("aktualisiert");
+      }
+      
+      updateData();
+      setInterval(updateData, 1000 * 60 * 10); // Aktualisiere das Datum alle 10 Minuten
+    </script>
+</body>
+<footer>
+    <a href="impressum.html">Impressum</a>
+</footer>
+</html>
