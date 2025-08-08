@@ -1,5 +1,6 @@
 // Basic Node.js server example
 const express = require("express");
+const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
 
