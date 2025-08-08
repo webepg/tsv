@@ -8,6 +8,8 @@
   <body>
     <h1>TSV</h1>
     <p>Das aktuelle Datum ist: <span id="datum"></span></p>
+    <p>Die aktuelle Uhrzeit ist: <span id="uhrzeit"></span></p>
+
     <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY">
       <a
         href="https://www.fupa.net/club/tsv-bad-griesbach"
@@ -46,8 +48,11 @@
           .then((data) => console.log(data))
           .catch((error) => console.error("Fehler:", error));
 
-        date = new Date().toLocaleDateString();
+        let dateTime = new Date();
+        let date = dateTime.toLocaleDateString();
+        let time = dateTime.toLocaleTimeString();
         document.getElementById("datum").textContent = date;
+        document.getElementById("uhrzeit").textContent = date;
         console.log("aktualisiert");
       }
       updateData();
