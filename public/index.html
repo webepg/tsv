@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TSV</title>
-</head>
-<body>
-    <div id="ergebnis"></div>
-    <iframe
-      title="bfv"
-      width="100%"
-      height="500px"
-      id="myframe"
-      src="https://www.bfv.de/ergebnisse/spiel/-/02TJQLTFU0000000VS5489BTVV9SFN07"
-    ></iframe>
+  </head>
+  <body>
+    <h1>TSV</h1>
+    <p>Das aktuelle Datum ist: <span id="datum"></span></p>
+    <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY">
+      <a
+        href="https://www.fupa.net/club/tsv-bad-griesbach"
+        target="_blank"
+        rel="noopener"
+        >TSV Bad Griesbach auf FuPa</a
+      >
+    </div>
+
+    <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy">
+      <a
+        href="https://www.fupa.net/club/tsv-bad-griesbach"
+        target="_blank"
+        rel="noopener"
+        >TSV Bad Griesbach auf FuPa</a
+      >
+    </div>
+
+    <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH">
+      <a
+        href="https://www.fupa.net/club/tsv-bad-griesbach"
+        target="_blank"
+        rel="noopener"
+        >TSV Bad Griesbach auf FuPa</a
+      >
+    </div>
+
+    <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
       function updateData() {
-        const dateTime = new Date();
-        const date = dateTime.toLocaleDateString();
+        // hole Daten vom Server
+
+        fetch("/api/data")
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error("Fehler:", error));
+
+        date = new Date().toLocaleDateString();
+        document.getElementById("datum").textContent = date;
         console.log("aktualisiert");
       }
-      
       updateData();
-      setInterval(updateData, 1000 * 60 * 10); // Aktualisiere das Datum alle 10 Minuten
+      setInterval(updateData, 1000 * 60 * 10); // Aktualisiere das Datum 10 min
     </script>
-</body>
-<footer>
+  </body>
+  <footer>
     <a href="impressum.html">Impressum</a>
-</footer>
+  </footer>
 </html>
