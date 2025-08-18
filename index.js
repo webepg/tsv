@@ -3,7 +3,8 @@ const express = require("express");
 const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
-const playwright = require("playwright");
+//const playwright = require("playwright");
+const puppeteer = require("puppeteer");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -33,6 +34,7 @@ app.post("/api/match", (req, res) => {
   res.status(200).json(match);
 });
 
+/*
 app.post("/api", (req, res) => {
   console.log("Request:", req.body);
   (async () => {
@@ -42,6 +44,31 @@ app.post("/api", (req, res) => {
       "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
     );
     await page.waitForLoadState("networkidle");
+
+    // Extrahieren von Daten direkt aus dem DOM
+    const title = await page.title();
+    const links = await page.$$eval("a", (links) =>
+      links.map((link) => link.href)
+    );
+
+    console.log(title);
+    console.log(links);
+    result = links;
+    await browser.close();
+  })();
+  res.status(200).json({});
+});
+*/
+
+app.post("/api", (req, res) => {
+  console.log("Request:", req.body);
+  (async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(
+      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
+    );
+    await page.waitForNetworkIdle();
 
     // Extrahieren von Daten direkt aus dem DOM
     const title = await page.title();
