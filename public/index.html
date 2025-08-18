@@ -168,6 +168,8 @@
       class="slide"
     ></div>
 
+    <img alt="Ergebnis" id="result" />
+
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
@@ -233,28 +235,25 @@
             if (!response.ok) {
               throw new Error("Fehler beim Senden der Daten");
             }
-            return response.json(); // Antwort als JSON parsen
+            return response.blob(); // Antwort als JSON parsen
           })
           .then((responseData) => {
-            console.log("Erfolg:", responseData);
+            const url = URL.createObjectURL(responseData);
+            const img = document.createElement("img");
+            img.src = url;
+            document.getElementById("result").replaceWith(img);
           })
           .catch((error) => {
             console.error("Fehler:", error);
           });
       }
 
-      function postData(blabla) {
-        let data = {};
+      function getAllMatches() {
         // POST-Request senden
-        fetch("/api", {
-          method: "POST", // HTTP-Methode
-          headers: {
-            "Content-Type": "application/json", // Header für JSON-Daten
-          },
-          body: JSON.stringify(data), // Daten in JSON umwandeln
+        fetch("/api/matches", {
+          method: "GET", // HTTP-Methode
         })
           .then((response) => {
-            console.log("Response: ", response);
             if (!response.ok) {
               throw new Error("Fehler beim Senden der Daten");
             }
@@ -278,7 +277,8 @@
           console.log("matches: ", hrefArray);
           matches = hrefArray;
 
-          postData();
+          getAllMatches();
+          getMatchDetails("test");
         }
 
         let dateTime = new Date();
@@ -301,8 +301,6 @@
           dateToFormat.getDate().toString()
         );
       }
-
-      function getLastMatches() {}
 
       // acting
 
