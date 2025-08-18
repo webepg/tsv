@@ -54,22 +54,27 @@ app.post("/api/scr", (req, res) => {
   res.status(200).json({});
 });
 
-const puppeteer = require("puppeteer");
+const playwright = require("playwright");
 
 app.get("/api/screenshot", async (req, res) => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(
-    "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
-  );
-  await page.waitForNavigation({ timeout: 60000 });
-  const screenshot = await page.screenshot({ encoding: "binary" });
-  res.set("Content-Type", "image/png");
-  res.send(screenshot);
-  await browser.close();
+  (async () => {
+    const browser = await playwright.chromium.launch();
+    const page = await browser.newPage();
+    await page.goto(
+      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
+    );
+    await page.waitForNavigation({ waitUntil: "networkidle2" });
+    const screenshot = await page.screenshot({ path: "screenshot.png" });
+    await browser.close();
+    res.set("Content-Disposition", `attachment; filename="screenshot.png"`);
+    res.set("Content-Type", "image/png");
+    res.send(screenshot);
+  })();
 });
 
-// Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
+// Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
+
+// Beste TSV Torschützen https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
