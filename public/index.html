@@ -34,7 +34,62 @@
           background-position: center;
         "
         class="slide"
-      ></div>
+      >
+        <div
+          style="
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 45px;
+          "
+        >
+          Wir begrüßen zum heutigen Heimspiel herzlich den
+        </div>
+        <div
+          id="opponent"
+          style="
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 45px;
+          "
+        ></div>
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            width: 25%;
+          "
+        >
+          <img
+            src="logo/tsv.png"
+            alt="TSV Logo"
+            style="width: 100%; height: auto"
+          />
+        </div>
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 25%;
+          "
+        >
+          <img
+            id="opponentLogo"
+            src="logo/tsv.png"
+            alt="Gegner Logo"
+            style="width: 100%; height: auto"
+          />
+        </div>
+      </div>
 
       <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide"></div>
 
@@ -113,8 +168,6 @@
       class="slide"
     ></div>
 
-    <img id="screenshot" />
-
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
@@ -125,7 +178,7 @@
       let slideshow = document.querySelector(".slideshow");
       let slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
-      let rotationTime = 20;
+      let rotationTime = 15;
       let matches = [];
 
       let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
@@ -158,6 +211,7 @@
         }
 
         if (todaysMatch) {
+          document.getElementById("opponent").innerHTML = todaysMatch.awayTeam;
           console.log(
             "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast"
           );
