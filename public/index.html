@@ -2,42 +2,137 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TSV</title>
   </head>
   <body>
-    <h1>TSV</h1>
-    <p>Das aktuelle Datum ist: <span id="datum"></span></p>
-    <p>Die aktuelle Uhrzeit ist: <span id="uhrzeit"></span></p>
+    <div class="slideshow">
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
 
-    <div><p id="greeting"></p></div>
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/greeting.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
 
-    <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY">
-      <a
-        href="https://www.fupa.net/club/tsv-bad-griesbach"
-        target="_blank"
-        rel="noopener"
-        >TSV Bad Griesbach auf FuPa</a
-      >
+      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide">
+        <a
+          href="https://www.fupa.net/club/tsv-bad-griesbach"
+          target="_blank"
+          rel="noopener"
+          >TSV Bad Griesbach auf FuPa</a
+        >
+      </div>
+
+      <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy" class="slide">
+        <a
+          href="https://www.fupa.net/club/tsv-bad-griesbach"
+          target="_blank"
+          rel="noopener"
+          >TSV Bad Griesbach auf FuPa</a
+        >
+      </div>
+
+      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH" class="slide">
+        <a
+          href="https://www.fupa.net/club/tsv-bad-griesbach"
+          target="_blank"
+          rel="noopener"
+          >TSV Bad Griesbach auf FuPa</a
+        >
+      </div>
     </div>
 
-    <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy">
-      <a
-        href="https://www.fupa.net/club/tsv-bad-griesbach"
-        target="_blank"
-        rel="noopener"
-        >TSV Bad Griesbach auf FuPa</a
-      >
-    </div>
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/sponsor-landing.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
 
-    <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH">
-      <a
-        href="https://www.fupa.net/club/tsv-bad-griesbach"
-        target="_blank"
-        rel="noopener"
-        >TSV Bad Griesbach auf FuPa</a
-      >
-    </div>
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/match.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
+
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/instragram.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
+
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/sponsor.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
+
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/sponsor-landing.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
 
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
@@ -53,13 +148,34 @@
         awayGoals: [{ minute: 76, additional: 0, goalscorer: "Auswärtstor" }],
       };*/
 
+      let slideshow = document.querySelector(".slideshow");
+      let slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+      let rotationTime = 15;
+
       let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
       //matchMap.set("250808", match);
 
       // methods
+      function nextSlide() {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      function prevSlide() {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      function startSlideshow() {
+        slides[0].classList.add("active");
+        setInterval(nextSlide, rotationTime * 1000); // alle 3 Sekunden zum nächsten Slide wechseln
+      }
+
       function setGreeting() {
         // Begrüßung setzen
-        let greeting = document.getElementById("greeting");
 
         if (matchMap.has(todayAsformattedDate)) {
           todaysMatch = matchMap.get(todayAsformattedDate);
@@ -68,8 +184,9 @@
         }
 
         if (todaysMatch) {
-          greeting.textContent =
-            "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast";
+          console.log(
+            "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast"
+          );
         }
       }
 
@@ -103,8 +220,8 @@
         let date = dateTime.toLocaleDateString();
         let time = dateTime.toLocaleTimeString();
 
-        document.getElementById("datum").textContent = date;
-        document.getElementById("uhrzeit").textContent = time;
+        console.log("datum: ", date);
+        console.log("uhrzeit: ", time);
 
         todayAsformattedDate = formatDate(dateTime);
 
@@ -129,6 +246,7 @@
       updateDateTime();
       setGreeting();
       setInterval(updateDateTime, 1000 * 60 * 10); // Aktualisiere das Datum 10 min
+      startSlideshow();
     </script>
   </body>
   <footer>
