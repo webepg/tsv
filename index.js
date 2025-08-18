@@ -62,7 +62,7 @@ app.get("/api/screenshot", async (req, res) => {
   await page.goto(
     "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
   );
-  await page.waitForNavigation({ waitUntil: "networkidle2" });
+  await page.waitForNavigation({ timeout: 60000 });
   const screenshot = await page.screenshot({ encoding: "binary" });
   res.set("Content-Type", "image/png");
   res.send(screenshot);
