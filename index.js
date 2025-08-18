@@ -36,6 +36,24 @@ app.post("/api/match", (req, res) => {
   res.status(200).json(match);
 });
 
+app.post("/api/scr", (req, res) => {
+  // Daten aus dem JSON-Body auswerten
+
+  const puppeteer = require("puppeteer");
+
+  (async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(
+      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
+    );
+    await page.waitForNavigation({ waitUntil: "networkidle2" });
+    await page.screenshot({ path: "public/screenshot.png" });
+    await browser.close();
+  })();
+  res.status(200).json();
+});
+
 // Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 
 app.listen(port, () => {

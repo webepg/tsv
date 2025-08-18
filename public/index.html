@@ -36,32 +36,11 @@
         class="slide"
       ></div>
 
-      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide">
-        <a
-          href="https://www.fupa.net/club/tsv-bad-griesbach"
-          target="_blank"
-          rel="noopener"
-          >TSV Bad Griesbach auf FuPa</a
-        >
-      </div>
+      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide"></div>
 
-      <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy" class="slide">
-        <a
-          href="https://www.fupa.net/club/tsv-bad-griesbach"
-          target="_blank"
-          rel="noopener"
-          >TSV Bad Griesbach auf FuPa</a
-        >
-      </div>
+      <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy" class="slide"></div>
 
-      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH" class="slide">
-        <a
-          href="https://www.fupa.net/club/tsv-bad-griesbach"
-          target="_blank"
-          rel="noopener"
-          >TSV Bad Griesbach auf FuPa</a
-        >
-      </div>
+      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH" class="slide"></div>
     </div>
 
     <div
@@ -99,7 +78,7 @@
         left: 0;
         height: 100vh;
         width: 100vw;
-        background-image: url('background/instragram.png');
+        background-image: url('background/instagram.png');
         background-size: contain;
         background-position: center;
       "
@@ -151,7 +130,8 @@
       let slideshow = document.querySelector(".slideshow");
       let slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
-      let rotationTime = 15;
+      let rotationTime = 20;
+      let matches = [];
 
       let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
       //matchMap.set("250808", match);
@@ -171,7 +151,7 @@
 
       function startSlideshow() {
         slides[0].classList.add("active");
-        setInterval(nextSlide, rotationTime * 1000); // alle 3 Sekunden zum nächsten Slide wechseln
+        setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
       }
 
       function setGreeting() {
@@ -215,13 +195,48 @@
           });
       }
 
+      function createScreenshot() {
+        const data = {};
+
+        // POST-Request senden
+        fetch("/api/scr", {
+          method: "POST", // HTTP-Methode
+          headers: {
+            "Content-Type": "application/json", // Header für JSON-Daten
+          },
+          body: JSON.stringify(data), // Daten in JSON umwandeln
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            console.log("Erfolg:", responseData);
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
+
       function updateDateTime() {
+        if (matches.length == 0) {
+          let hrefs = document.querySelectorAll('a[href*="match"]');
+          let hrefArray = [];
+          hrefs.forEach(function (href) {
+            hrefArray.push(href.getAttribute("href"));
+          });
+          console.log("matches: ", hrefArray);
+          matches = hrefArray;
+
+          createScreenshot();
+        }
+
         let dateTime = new Date();
         let date = dateTime.toLocaleDateString();
-        let time = dateTime.toLocaleTimeString();
 
         console.log("datum: ", date);
-        console.log("uhrzeit: ", time);
 
         todayAsformattedDate = formatDate(dateTime);
 
@@ -245,7 +260,7 @@
 
       updateDateTime();
       setGreeting();
-      setInterval(updateDateTime, 1000 * 60 * 10); // Aktualisiere das Datum 10 min
+      setInterval(updateDateTime, 1000 /** 60*/ * 10); // Aktualisiere das Datum 10 min
       startSlideshow();
     </script>
   </body>
