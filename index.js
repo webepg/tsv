@@ -4,10 +4,6 @@ const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
 
-/*app.get("/", (req, res) => {
-  res.send("Hello World!");
-});*/
-
 app.use(express.static(path.join(__dirname, "public")));
 
 // API-Route für Daten
@@ -61,7 +57,7 @@ app.get("/api/screenshot", async (req, res) => {
     const browser = await playwright.chromium.launch();
     const page = await browser.newPage();
     await page.goto(
-      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
+      "https://www.bfv.de/ergebnisse/spiel/-/02TJQLTF7O000000VS5489BTVV9SFN07"
     );
     await page.waitForNavigation({ waitUntil: "networkidle2" });
     const screenshot = await page.screenshot({ path: "screenshot.png" });
