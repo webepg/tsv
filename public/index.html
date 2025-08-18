@@ -113,6 +113,8 @@
       class="slide"
     ></div>
 
+    <img id="screenshot" />
+
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
@@ -212,6 +214,15 @@
           });
       }
 
+      function getScreenshot() {
+        fetch("/api/screenshot")
+          .then((response) => response.blob())
+          .then((blob) => {
+            const img = document.getElementById("screenshot");
+            img.src = URL.createObjectURL(blob);
+          });
+      }
+
       function updateDateTime() {
         if (matches.length == 0) {
           let hrefs = document.querySelectorAll('a[href*="match"]');
@@ -221,8 +232,8 @@
           });
           console.log("matches: ", hrefArray);
           matches = hrefArray;
-
-          createScreenshot();
+          getScreenshot();
+          //createScreenshot();
         }
 
         let dateTime = new Date();
