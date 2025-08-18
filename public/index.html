@@ -189,40 +189,6 @@
           });
       }
 
-      function createScreenshot() {
-        const data = {};
-
-        // POST-Request senden
-        fetch("/api/scr", {
-          method: "POST", // HTTP-Methode
-          headers: {
-            "Content-Type": "application/json", // Header für JSON-Daten
-          },
-          body: JSON.stringify(data), // Daten in JSON umwandeln
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.json(); // Antwort als JSON parsen
-          })
-          .then((responseData) => {
-            console.log("Erfolg:", responseData);
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
-      }
-
-      function getScreenshot() {
-        fetch("/api/screenshot")
-          .then((response) => response.blob())
-          .then((blob) => {
-            const img = document.getElementById("screenshot");
-            img.src = URL.createObjectURL(blob);
-          });
-      }
-
       function updateDateTime() {
         if (matches.length == 0) {
           let hrefs = document.querySelectorAll('a[href*="match"]');
@@ -232,8 +198,6 @@
           });
           console.log("matches: ", hrefArray);
           matches = hrefArray;
-          getScreenshot();
-          //createScreenshot();
         }
 
         let dateTime = new Date();
