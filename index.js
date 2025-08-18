@@ -54,6 +54,9 @@ app.post("/api/match", async (req, res) => {
       "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
     );
     await page.waitForNetworkIdle();
+
+    await page.click("#cmpbntyestxt");
+
     const screenshot = await page.screenshot({ encoding: "binary" });
     // Extrahieren von Daten direkt aus dem DOM
     const title = await page.title();
