@@ -168,7 +168,7 @@
       class="slide"
     ></div>
 
-    <img alt="Ergebnis" id="result" />
+    <img alt="Ergebnis" id="result" style="display: none" />
 
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
@@ -241,7 +241,9 @@
             const url = URL.createObjectURL(responseData);
             const img = document.createElement("img");
             img.src = url;
-            document.getElementById("result").replaceWith(img);
+            let imgContainer = document.getElementById("result");
+            imgContainer.src = img.src;
+            imgContainer.style.display = "block";
           })
           .catch((error) => {
             console.error("Fehler:", error);
@@ -267,20 +269,9 @@
           });
       }
 
+      function getTodaysMatch() {}
+
       function updateDateTime() {
-        if (matches.length == 0) {
-          let hrefs = document.querySelectorAll('a[href*="match"]');
-          let hrefArray = [];
-          hrefs.forEach(function (href) {
-            hrefArray.push(href.getAttribute("href"));
-          });
-          console.log("matches: ", hrefArray);
-          matches = hrefArray;
-
-          getAllMatches();
-          getMatchDetails("test");
-        }
-
         let dateTime = new Date();
         let date = dateTime.toLocaleDateString();
 
@@ -290,6 +281,21 @@
 
         console.log("todayAsformattedDate: " + todayAsformattedDate);
         console.log("aktualisiert");
+
+        if (matches.length == 0) {
+          /*
+          let hrefs = document.querySelectorAll('a[href*="match"]');
+          let hrefArray = [];
+          hrefs.forEach(function (href) {
+            hrefArray.push(href.getAttribute("href"));
+          });
+          console.log("matches: ", hrefArray);
+          matches = hrefArray;
+          */
+
+          getAllMatches();
+          getMatchDetails(todayAsformattedDate);
+        }
       }
 
       function formatDate(dateToFormat) {
@@ -303,7 +309,7 @@
       }
 
       // acting
-
+      setTimeout(updateDateTime, 1000);
       updateDateTime();
       setGreeting();
       startSlideshow();

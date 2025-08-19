@@ -3,7 +3,6 @@ const express = require("express");
 const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
-//const playwright = require("playwright");
 const puppeteer = require("puppeteer");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -11,27 +10,25 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/api/matches", async (req, res) => {
   console.log("Request:", req.body);
 
-  async function getMatchDetails() {
+  async function getAllMatchUrls() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(
-      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
+      "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/matches"
     );
     await page.waitForNetworkIdle();
 
     // Extrahieren von Daten direkt aus dem DOM
-    const title = await page.title();
     const links = await page.$$eval("a", (links) =>
-      links.map((link) => link.href)
+      links.map((link) => link.href).filter((href) => href.includes("/match/"))
     );
 
-    console.log(title);
     console.log(links);
     await browser.close();
     return links;
   }
 
-  let result = await getMatchDetails();
+  let result = await getAllMatchUrls();
 
   res.status(200).json(result);
 });
