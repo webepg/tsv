@@ -153,6 +153,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
       tsvScorers.push({
         goals: player["goals"],
         name: player["firstName"] + " " + player["lastName"],
+        img: player["image"]["path"] + "/320xauto.jpeg",
       });
     });
 
