@@ -4,72 +4,125 @@ const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
 const puppeteer = require("puppeteer");
+const bodyParser = require("body-parser");
+let matches = [];
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json()); // für JSON-Requests
 
-app.get("/api/matches", async (req, res) => {
+app.post("/api/matches", async (req, res) => {
   console.log("Request:", req.body);
 
-  async function getAllMatchUrls() {
+  let urls = req.body.urls;
+
+  async function getMatchData(url) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(
-      "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/matches"
-    );
-    await page.waitForNetworkIdle();
-
-    // Extrahieren von Daten direkt aus dem DOM
-    const links = await page.$$eval("a", (links) =>
-      links.map((link) => link.href).filter((href) => href.includes("/match/"))
-    );
-
-    console.log(links);
-    await browser.close();
-    return links;
-  }
-
-  let result = await getAllMatchUrls();
-
-  res.status(200).json(result);
-});
-
-app.post("/api/match", async (req, res) => {
-  console.log("Request:", req.body);
-
-  let match = {
-    formattedDate: "250808",
-    homeTeam: "Heimteam",
-    awayTeam: "Auswärtsteam",
-    homeGoals: [{ minute: 90, additional: 2, goalscorer: "Heimtor" }],
-    awayGoals: [{ minute: 105, additional: 0, goalscorer: "Auswärtstor" }],
-  };
-
-  async function getMatchDetails() {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(
-      "https://www.fupa.net/match/sv-haarbach-m1-tsv-bad-griesbach-m1-250629/info"
-    );
+    url = url + "/info";
+    await page.goto(url);
     await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 
-    const screenshot = await page.screenshot({ encoding: "binary" });
-    // Extrahieren von Daten direkt aus dem DOM
-    const title = await page.title();
-    const links = await page.$$eval("a", (links) =>
-      links.map((link) => link.href)
-    );
+    const matchPage = await page.evaluate(() => {
+      return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
+    });
 
-    console.log(title);
-    console.log(links);
+    let highlights = matchPage["matchInfo"]["highlights"];
+    console.log("highlights", highlights);
+
+    let match = {
+      formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
+      league: matchPage["matchInfo"]["competition"]["name"],
+      matchDay: matchPage["matchInfo"]["round"]["name"],
+      homeTeam: matchPage["matchInfo"]["homeTeamName"],
+      awayTeam: matchPage["matchInfo"]["awayTeamName"],
+      goals: [],
+      redCards: [],
+      yellowRedCards: [],
+      suspensions: [],
+      missedPenalties: [],
+    };
+
+    highlights.forEach((element) => {
+      if (element["type"] == "goal") {
+        match.goals.push({
+          team: element["team"]["slug"],
+          minute: element["minute"],
+          additionalMinute: element["additionalMinute"],
+          player: element["primaryRole"]
+            ? element["primaryRole"]["firstName"] +
+              " " +
+              element["primaryRole"]["lastName"]
+            : "Unbekannt",
+        });
+      }
+
+      if (element["type"] == "penaltyfail") {
+        match.missedPenalties.push({
+          team: element["team"]["slug"],
+          minute: element["minute"],
+          additionalMinute: element["additionalMinute"],
+          player: element["primaryRole"]
+            ? element["primaryRole"]["firstName"] +
+              " " +
+              element["primaryRole"]["lastName"]
+            : "Unbekannt",
+        });
+      }
+
+      if (element["type"] == "card" && element["subtype"] == "card_red") {
+        match.redCards.push({
+          team: element["team"]["slug"],
+          minute: element["minute"],
+          additionalMinute: element["additionalMinute"],
+          player: element["primaryRole"]
+            ? element["primaryRole"]["firstName"] +
+              " " +
+              element["primaryRole"]["lastName"]
+            : "Unbekannt",
+        });
+
+        if (
+          element["type"] == "card" &&
+          element["subtype"] == "card_yellow_red"
+        ) {
+          match.yellowRedCards.push({
+            team: element["team"]["slug"],
+            minute: element["minute"],
+            additionalMinute: element["additionalMinute"],
+            player: element["primaryRole"]
+              ? element["primaryRole"]["firstName"] +
+                " " +
+                element["primaryRole"]["lastName"]
+              : "Unbekannt",
+          });
+
+          if (element["type"] == "timepenalty") {
+            match.suspensions.push({
+              team: element["team"]["slug"],
+              minute: element["minute"],
+              additionalMinute: element["additionalMinute"],
+              player: element["primaryRole"]
+                ? element["primaryRole"]["firstName"] +
+                  " " +
+                  element["primaryRole"]["lastName"]
+                : "Unbekannt",
+            });
+          }
+        }
+      }
+    });
+
     await browser.close();
-    return screenshot;
+    return match;
   }
-
-  let result = await getMatchDetails();
-  res.set("Content-Type", "image/png");
-  res.send(result);
+  urls.forEach(async (url) => {
+    let result = await getMatchData(url);
+    matches.push(result);
+    matches = [...new Set(matches)];
+  });
+  res.status(200).json(matches);
 });
 
 // Beste TSV Torschützen https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats

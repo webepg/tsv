@@ -91,11 +91,14 @@
         </div>
       </div>
 
-      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide"></div>
+      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
 
-      <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy" class="slide"></div>
-
-      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH" class="slide"></div>
+      <!-- Alle Spiele. style="display: none" -->
+      <div>
+        <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy"></div>
+      </div>
+      <!-- class="slide"  -->
+      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH"></div>
     </div>
 
     <div
@@ -168,7 +171,7 @@
       class="slide"
     ></div>
 
-    <img alt="Ergebnis" id="result" style="display: none" />
+    <!--<img alt="Ergebnis" id="result" style="display: none" />-->
 
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
@@ -182,7 +185,6 @@
       let currentSlide = 0;
       let rotationTime = 15;
       let matches = [];
-
       let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
 
       // methods
@@ -220,40 +222,14 @@
         }
       }
 
-      function getMatchDetails(date) {
-        const data = {};
-
+      function getMatchDetails(url) {
         // POST-Request senden
         fetch("/api/match", {
           method: "POST", // HTTP-Methode
           headers: {
             "Content-Type": "application/json", // Header für JSON-Daten
           },
-          body: JSON.stringify(data), // Daten in JSON umwandeln
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.blob(); // Antwort als JSON parsen
-          })
-          .then((responseData) => {
-            const url = URL.createObjectURL(responseData);
-            const img = document.createElement("img");
-            img.src = url;
-            let imgContainer = document.getElementById("result");
-            imgContainer.src = img.src;
-            imgContainer.style.display = "block";
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
-      }
-
-      function getAllMatches() {
-        // POST-Request senden
-        fetch("/api/matches", {
-          method: "GET", // HTTP-Methode
+          body: JSON.stringify({ url: url }), // Daten in JSON umwandeln
         })
           .then((response) => {
             if (!response.ok) {
@@ -262,14 +238,36 @@
             return response.json(); // Antwort als JSON parsen
           })
           .then((responseData) => {
-            console.log("Erfolg:", responseData);
+            console.log("responseData", JSON.stringify(responseData));
           })
           .catch((error) => {
             console.error("Fehler:", error);
           });
       }
 
-      function getTodaysMatch() {}
+      function getAllMatchDetails(urls) {
+        // POST-Request senden
+        console.log("urls: " + urls);
+        fetch("/api/matches", {
+          method: "POST", // HTTP-Methode
+          headers: {
+            "Content-Type": "application/json", // Header für JSON-Daten
+          },
+          body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            console.log("responseData", JSON.stringify(responseData));
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
 
       function updateDateTime() {
         let dateTime = new Date();
@@ -283,19 +281,34 @@
         console.log("aktualisiert");
 
         if (matches.length == 0) {
-          /*
-          let hrefs = document.querySelectorAll('a[href*="match"]');
-          let hrefArray = [];
-          hrefs.forEach(function (href) {
-            hrefArray.push(href.getAttribute("href"));
-          });
-          console.log("matches: ", hrefArray);
-          matches = hrefArray;
-          */
-
-          getAllMatches();
-          getMatchDetails(todayAsformattedDate);
+          getAllMatchUrls();
+          getAllMatchDetails(matches);
+          /*getMatchDetails(
+            "https://www.fupa.net/match/tsv-bad-griesbach-m1-sv-aigen-a-inn-m1-250817"
+          );*/
         }
+      }
+
+      function getAllMatchUrls() {
+        let hrefs = document.querySelectorAll('a[href*="/match/"]');
+        let hrefArray = [];
+        hrefs.forEach(function (href) {
+          const trimmedHref = href.getAttribute("href").split("?")[0];
+          let date = trimmedHref.split("-").pop();
+          if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
+        });
+        console.log("matches: ", ...new Set(hrefArray));
+        matches = [...new Set(hrefArray)];
+      }
+
+      function postMatchUrls() {
+        fetch("/api/matches", {
+          method: "POST", // HTTP-Methode
+          headers: {
+            "Content-Type": "application/json", // Header für JSON-Daten
+          },
+          body: JSON.stringify(matches), // Daten in JSON umwandeln
+        });
       }
 
       function formatDate(dateToFormat) {
@@ -310,8 +323,8 @@
 
       // acting
       setTimeout(updateDateTime, 1000);
-      updateDateTime();
-      setGreeting();
+      //updateDateTime();
+      //setGreeting();
       startSlideshow();
     </script>
   </body>
