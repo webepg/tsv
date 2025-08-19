@@ -7,7 +7,6 @@ const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 let matches = [];
 let tsvScorers = [];
-let scorers = [];
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -31,7 +30,6 @@ app.post("/api/matches", async (req, res) => {
     });
 
     let highlights = matchPage["matchInfo"]["highlights"];
-    console.log("highlights", highlights);
 
     let match = {
       formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
@@ -147,7 +145,6 @@ app.get("/api/scorers/tsv", async (req, res) => {
     });
 
     let players = teamPlayerStatsPage["season"]["players"];
-    console.log("players", players);
 
     players.forEach((player) => {
       tsvScorers.push({
@@ -157,10 +154,8 @@ app.get("/api/scorers/tsv", async (req, res) => {
       });
     });
 
-    console.log("tsvScorers", tsvScorers);
-
     await browser.close();
-    return links;
+    return [...new Set(tsvScorers)];
   }
 
   let result = await getTsvScorers();

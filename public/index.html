@@ -115,6 +115,34 @@
     ></div>
 
     <div
+      id="tsvscorers"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/match.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
+    <div
+      id="bestscorers"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-image: url('background/match.png');
+        background-size: contain;
+        background-position: center;
+      "
+      class="slide"
+    ></div>
+    <div
       style="
         position: absolute;
         top: 0;
@@ -216,6 +244,44 @@
         }
       }
 
+      function getBestScorers() {
+        // Beste Torschützen
+        fetch("/api/scorers", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.blob(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            console.log("Erfolg:", responseData);
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
+
+      function getBestTsvScorers() {
+        // Beste TSV Torschützen
+        fetch("/api/scorers/tsv", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            console.log("Erfolg:", responseData);
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
+
       function getAllMatchDetails(urls) {
         // POST-Request senden
         fetch("/api/matches", {
@@ -241,14 +307,9 @@
 
       function updateDateTime() {
         let dateTime = new Date();
-        let date = dateTime.toLocaleDateString();
-
-        console.log("datum: ", date);
-
         todayAsformattedDate = formatDate(dateTime);
 
         console.log("todayAsformattedDate: " + todayAsformattedDate);
-        console.log("aktualisiert");
 
         if (matches.length == 0) {
           getAllMatchUrls();
@@ -268,16 +329,6 @@
         matchUrls = [...new Set(hrefArray)];
       }
 
-      function postMatchUrls() {
-        fetch("/api/matches", {
-          method: "POST", // HTTP-Methode
-          headers: {
-            "Content-Type": "application/json", // Header für JSON-Daten
-          },
-          body: JSON.stringify(matchUrls), // Daten in JSON umwandeln
-        });
-      }
-
       function formatDate(dateToFormat) {
         return (
           dateToFormat.getFullYear().toString().slice(-2) +
@@ -289,9 +340,11 @@
       }
 
       // acting
-      setTimeout(updateDateTime, 3000);
-      setTimeout(setGreeting, 7000);
-      setTimeout(startSlideshow, 10000);
+      setTimeout(updateDateTime, 5000);
+      setTimeout(setGreeting, 8000);
+      setTimeout(getBestScorers, 7000);
+      setTimeout(getBestTsvScorers, 7000);
+      setTimeout(startSlideshow, 15000);
     </script>
   </body>
   <footer>
