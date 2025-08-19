@@ -6,6 +6,8 @@ const port = process.env.PORT || 4000;
 const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 let matches = [];
+let tsvScorers = [];
+let scorers = [];
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -136,14 +138,26 @@ app.get("/api/scorers/tsv", async (req, res) => {
     );
     await page.waitForNetworkIdle();
 
-    // Extrahieren von Daten direkt aus dem DOM
-    const title = await page.title();
-    const links = await page.$$eval("a", (links) =>
-      links.map((link) => link.href)
-    );
+    await page.click("#cmpbntyestxt");
 
-    console.log(title);
-    console.log(links);
+    // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
+
+    const teamPlayerStatsPage = await page.evaluate(() => {
+      return window.REDUX_DATA["dataHistory"][0]["TeamPlayerStatsPage"];
+    });
+
+    let players = teamPlayerStatsPage["season"]["players"];
+    console.log("players", players);
+
+    players.forEach((player) => {
+      tsvScorers.push({
+        goals: player["goals"],
+        name: player["firstName"] + " " + player["lastName"],
+      });
+    });
+
+    console.log("tsvScorers", tsvScorers);
+
     await browser.close();
     return links;
   }
@@ -160,20 +174,18 @@ app.get("/api/scorers", async (req, res) => {
     await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers");
     await page.waitForNetworkIdle();
 
-    // Extrahieren von Daten direkt aus dem DOM
-    const title = await page.title();
-    const links = await page.$$eval("a", (links) =>
-      links.map((link) => link.href)
-    );
+    await page.click("#cmpbntyestxt");
 
-    console.log(title);
-    console.log(links);
+    const screenshot = await page.screenshot({ encoding: "binary" });
+
+    // Extrahieren von Daten direkt aus dem DOM
     await browser.close();
-    return links;
+    return screenshot;
   }
 
   let result = await getScorers();
-  res.status(200).json(result);
+  res.set("Content-Type", "image/png");
+  res.send(result);
 });
 
 app.listen(port, () => {
