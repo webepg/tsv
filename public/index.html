@@ -91,14 +91,15 @@
         </div>
       </div>
 
-      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
+      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide"></div>
 
-      <!-- Alle Spiele. style="display: none" -->
-      <div>
+      <!-- Alle Spiele.  -->
+
+      <div style="display: none">
         <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy"></div>
       </div>
-      <!-- class="slide"  -->
-      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH"></div>
+
+      <div id="fp-widget_root-30up876ol3S6CtR638pnh0skzMH" class="slide"></div>
     </div>
 
     <div
@@ -171,8 +172,6 @@
       class="slide"
     ></div>
 
-    <!--<img alt="Ergebnis" id="result" style="display: none" />-->
-
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
     <script>
@@ -184,8 +183,8 @@
       let slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
       let rotationTime = 15;
+      let matchUrls = [];
       let matches = [];
-      let matchMap = new Map(); // Map mit allen letzten Spiele, Datum als Schluessel
 
       // methods
       function nextSlide() {
@@ -207,12 +206,9 @@
 
       function setGreeting() {
         // Begrüßung setzen
-
-        if (matchMap.has(todayAsformattedDate)) {
-          todaysMatch = matchMap.get(todayAsformattedDate);
-        } else {
-          todaysMatch = getMatchDetails(todayAsformattedDate);
-        }
+        matches.forEach((match) => {
+          if (match.formattedDate == todayAsformattedDate) todaysMatch = match;
+        });
 
         if (todaysMatch) {
           document.getElementById("opponent").innerHTML = todaysMatch.awayTeam;
@@ -222,32 +218,8 @@
         }
       }
 
-      function getMatchDetails(url) {
-        // POST-Request senden
-        fetch("/api/match", {
-          method: "POST", // HTTP-Methode
-          headers: {
-            "Content-Type": "application/json", // Header für JSON-Daten
-          },
-          body: JSON.stringify({ url: url }), // Daten in JSON umwandeln
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.json(); // Antwort als JSON parsen
-          })
-          .then((responseData) => {
-            console.log("responseData", JSON.stringify(responseData));
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
-      }
-
       function getAllMatchDetails(urls) {
         // POST-Request senden
-        console.log("urls: " + urls);
         fetch("/api/matches", {
           method: "POST", // HTTP-Methode
           headers: {
@@ -282,10 +254,7 @@
 
         if (matches.length == 0) {
           getAllMatchUrls();
-          getAllMatchDetails(matches);
-          /*getMatchDetails(
-            "https://www.fupa.net/match/tsv-bad-griesbach-m1-sv-aigen-a-inn-m1-250817"
-          );*/
+          getAllMatchDetails(matchUrls);
         }
       }
 
@@ -297,8 +266,8 @@
           let date = trimmedHref.split("-").pop();
           if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
         });
-        console.log("matches: ", ...new Set(hrefArray));
-        matches = [...new Set(hrefArray)];
+        console.log("matchUrls: ", ...new Set(hrefArray));
+        matchUrls = [...new Set(hrefArray)];
       }
 
       function postMatchUrls() {
@@ -307,7 +276,7 @@
           headers: {
             "Content-Type": "application/json", // Header für JSON-Daten
           },
-          body: JSON.stringify(matches), // Daten in JSON umwandeln
+          body: JSON.stringify(matchUrls), // Daten in JSON umwandeln
         });
       }
 
@@ -322,10 +291,9 @@
       }
 
       // acting
-      setTimeout(updateDateTime, 1000);
-      //updateDateTime();
-      //setGreeting();
-      startSlideshow();
+      setTimeout(updateDateTime, 3000);
+      setTimeout(setGreeting, 7000);
+      setTimeout(startSlideshow, 10000);
     </script>
   </body>
   <footer>
