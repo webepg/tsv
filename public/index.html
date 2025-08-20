@@ -23,6 +23,7 @@
       ></div>
 
       <div
+        id="greeting"
         style="
           position: absolute;
           top: 0;
@@ -36,7 +37,6 @@
         class="slide"
       >
         <div
-          id="greeting"
           style="
             position: absolute;
             top: 3%;
@@ -46,7 +46,7 @@
             font-size: 45px;
           "
         >
-          Herzlich willkommen beim
+          Wir begrüßen zum heutigen Heimspiel herzlich den
         </div>
         <div
           id="opponent"
@@ -58,9 +58,7 @@
             text-align: center;
             font-size: 45px;
           "
-        >
-          TSV Bad Griesbach
-        </div>
+        ></div>
         <div
           style="
             position: absolute;
@@ -100,16 +98,11 @@
         <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy"></div>
       </div>
 
-      <!-- Tabelle -->
-      <div id="ranking" class="slide">
-        <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
-        <div id="bestscorers"></div>
-      </div>
-
+      <!-- Tabelle + torschützen -->
       <div
-        id="tsvscorers"
+        id="ranking"
+        class="slide"
         style="
-          position: absolute;
           top: 0;
           left: 0;
           height: 100vh;
@@ -118,11 +111,29 @@
           background-size: contain;
           background-position: center;
         "
-        class="slide"
-      ></div>
+      >
+        <table
+          style="
+            width: 98%;
+            height: 100%;
+            border-collapse: separate;
+            border-spacing: 20px;
+          "
+        >
+          <tr>
+            <td style="width: 50%; vertical-align: center">
+              <!-- First column -->
+              <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
+            </td>
+            <td style="width: 50%; vertical-align: center">
+              <div id="bestscorersDiv"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
       <div
-        id="bestscorers"
+        id="tsvscorers"
         style="
           position: absolute;
           top: 0;
@@ -201,6 +212,9 @@
       function nextSlide() {
         slides[currentSlide].classList.remove("active");
         currentSlide = (currentSlide + 1) % slides.length;
+        if (slides[currentSlide].id === "greeting") {
+          nextSlide();
+        }
         slides[currentSlide].classList.add("active");
       }
 
@@ -223,8 +237,6 @@
         });
 
         if (todaysMatch) {
-          document.getElementById("greeting").innerText =
-            "Wir begrüßen zum heutigen Heimspiel herzlich den";
           document.getElementById("opponent").innerText = todaysMatch.awayTeam;
           console.log(
             "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast"
@@ -247,9 +259,7 @@
             let blob = URL.createObjectURL(responseData);
             let img = document.createElement("img");
             img.src = blob;
-            img.width = 500;
-            img.height = 500;
-            document.getElementById("bestscorers").appendChild(img);
+            document.getElementById("bestscorersDiv").appendChild(img);
             console.log("Erfolg:", responseData);
           })
           .catch((error) => {
@@ -423,8 +433,8 @@
       setTimeout(setGreeting, 8000);
       setTimeout(getBestScorers, 7000);
       setTimeout(getBestTsvScorers, 7000);
-      setTimeout(startSlideshow, 15000);
-      //setTimeout(startSlideshow(), 5000);
+      //setTimeout(startSlideshow, 15000);
+      setTimeout(startSlideshow(), 5000);
     </script>
   </body>
   <footer>
