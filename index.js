@@ -3,8 +3,9 @@ const express = require("express");
 const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
-const puppeteer = require("puppeteer");
+//const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
+const playwright = require("playwright");
 let matches = [];
 let tsvScorers = [];
 
@@ -12,16 +13,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
 
 app.post("/api/matches", async (req, res) => {
-  console.log("Request:", req.body);
-
   let urls = req.body.urls;
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
 
   async function getMatchData(url) {
+    //const browser = await puppeteer.launch();
+    const browser = await playwright.chromium.launch();
+    //const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
     url = url + "/info";
     await page.goto(url);
-    await page.waitForNetworkIdle();
+    //await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 
@@ -113,9 +115,10 @@ app.post("/api/matches", async (req, res) => {
         }
       }
     });
+
+    await browser.close();
     return match;
   }
-  await browser.close();
   urls.forEach(async (url) => {
     let result = await getMatchData(url);
     matches.push(result);
@@ -128,10 +131,13 @@ app.post("/api/matches", async (req, res) => {
 
 app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    //const browser = await puppeteer.launch();
+    const browser = await playwright.chromium.launch();
+    //const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
     await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
-    await page.waitForNetworkIdle();
+    //await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 
@@ -140,8 +146,6 @@ app.get("/api/scorers/tsv", async (req, res) => {
     const teamPlayerStatsPage = await page.evaluate(() => {
       return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
     });
-
-    await browser.close();
 
     let players = teamPlayerStatsPage["data"]["players"];
 
@@ -154,6 +158,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
         });
     });
 
+    await browser.close();
     return [...new Set(tsvScorers)];
   }
 
@@ -164,10 +169,13 @@ app.get("/api/scorers/tsv", async (req, res) => {
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    //const browser = await puppeteer.launch();
+    const browser = await playwright.chromium.launch();
+    //const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
     await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers");
-    await page.waitForNetworkIdle();
+    //await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 
