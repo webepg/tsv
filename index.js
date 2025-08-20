@@ -7,7 +7,6 @@ const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 let matches = [];
 let tsvScorers = [];
-let screenshot;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -184,18 +183,19 @@ app.get("/api/scorers", async (req, res) => {
 
     await page.click("#cmpbntyestxt");
 
-    screenshot = await page.screenshot({ encoding: "binary" });
+    let screenshot = await page.screenshot({
+      encoding: "binary",
+      clip: { x: 0, y: 30, width: 800, height: 340 },
+    });
 
     // Extrahieren von Daten direkt aus dem DOM
     await browser.close();
     return screenshot;
   }
 
-  if (!screenshot) {
-    let result = await getScorers();
-  }
+  let result = await getScorers();
   res.set("Content-Type", "image/png");
-  res.send(screenshot);
+  res.send(result);
 });
 
 app.listen(port, () => {
