@@ -170,7 +170,6 @@ app.get("/api/sponsors", async (req, res) => {
   const fs = require("fs");
   const sponsorsPath = path.join(__dirname, "public", "sponsor");
   const files = fs.readdirSync(sponsorsPath);
-  console.log(files);
   res.status(200).json(files);
 });
 

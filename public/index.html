@@ -7,7 +7,7 @@
     <title>TSV</title>
   </head>
   <body>
-    <div class="slideshow">
+    <div id="slideshow" class="slideshow">
       <div
         style="
           position: absolute;
@@ -36,6 +36,7 @@
         class="slide"
       >
         <div
+          id="greeting"
           style="
             position: absolute;
             top: 3%;
@@ -45,7 +46,7 @@
             font-size: 45px;
           "
         >
-          Wir begrüßen zum heutigen Heimspiel herzlich den
+          Herzlich willkommen beim
         </div>
         <div
           id="opponent"
@@ -57,7 +58,9 @@
             text-align: center;
             font-size: 45px;
           "
-        ></div>
+        >
+          TSV Bad Griesbach
+        </div>
         <div
           style="
             position: absolute;
@@ -188,7 +191,7 @@
       let slideshow = document.querySelector(".slideshow");
       let slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
-      let rotationTime = 5;
+      let rotationTime = 15;
       let matchUrls = [];
       let matches = [];
       let retries = 0;
@@ -214,12 +217,15 @@
 
       function setGreeting() {
         // Begrüßung setzen
+
         matches.forEach((match) => {
           if (match.formattedDate == todayAsformattedDate) todaysMatch = match;
         });
 
         if (todaysMatch) {
-          document.getElementById("opponent").innerHTML = todaysMatch.awayTeam;
+          document.getElementById("greeting").innerText =
+            "Wir begrüßen zum heutigen Heimspiel herzlich den";
+          document.getElementById("opponent").innerText = todaysMatch.awayTeam;
           console.log(
             "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast"
           );
@@ -298,7 +304,7 @@
           });
       }
 
-      function updateDateTime() {
+      function updateData() {
         let dateTime = new Date();
         todayAsformattedDate = formatDate(dateTime);
 
@@ -333,19 +339,33 @@
       }
 
       function createMatchPages() {
-        const afterSponsorsDiv = document.getElementById("tsvscorers");
+        const tsvscorersDiv = document.getElementById("tsvscorers");
         matches.forEach((match) => {
           const newDiv = document.createElement("div");
-          newDiv.innerHTML =
-            "<div style='position: absolute;top: 0;left: 0;height: 100vh;width: 100vw;background-image: url('background/match.png');background-size: contain;background-position: center;" +
-            "class='slide'></div>"; // Optional: Füge hier deinen Inhalt ein
-          afterSponsorsDiv.parentNode.insertBefore(newDiv, afterSponsorsDiv);
+          newDiv.style.position = "absolute";
+          newDiv.style.top = "0";
+          newDiv.style.left = "0";
+          newDiv.style.height = "100vh";
+          newDiv.style.width = "100vw";
+          newDiv.style.backgroundImage = "url('background/sponsor.png')";
+          newDiv.style.backgroundSize = "contain";
+          newDiv.style.backgroundPosition = "center";
+          newDiv.className = "slide";
+
+          const img = document.createElement("img");
+          img.src = "sponsor/" + sponsor;
+          img.alt = "sponsor";
+          img.style.width = "50%";
+          img.style.height = "auto";
+
+          newDiv.appendChild(img);
+          tsvscorersDiv.insertBefore(newDiv, afterSponsorsDiv);
         });
+        slides = document.querySelectorAll(".slide");
       }
 
       function createSponsorPages() {
-        const afterSponsorsDiv = document.getElementById("aftersponsors");
-        console.log("afterSponsorsDiv", afterSponsorsDiv);
+        const afterSponsorsDiv = document.getElementById("afterSponsors");
 
         fetch("/api/sponsors", {
           method: "GET", // HTTP-Methode
@@ -358,19 +378,37 @@
           })
           .then((responseData) => {
             sponsors = responseData;
+            // Rest des Codes
             sponsors.forEach((sponsor) => {
-              console.log("sponsor DIV", sponsor);
               const newDiv = document.createElement("div");
-              newDiv.innerHTML =
-                "<div style='position: absolute;top: 0;left: 0;height: 100vh;width: 100vw;background-image: url('background/sponsor.png');background-size: contain;background-position: center;'class='slide'>" +
-                "<img src='sponsor/" +
-                sponsor +
-                "' alt='sponsor'style='width: 100%; height: auto'/></div>"; // Optional: Füge hier deinen Inhalt ein
-              afterSponsorsDiv.parentNode.insertBefore(
+              newDiv.style.position = "absolute";
+              newDiv.style.top = "0";
+              newDiv.style.left = "0";
+              newDiv.style.height = "100vh";
+              newDiv.style.width = "100vw";
+              newDiv.style.textAlign = "center";
+              newDiv.style.backgroundImage = "url('background/sponsor.png')";
+              newDiv.style.backgroundSize = "contain";
+              newDiv.style.backgroundPosition = "center";
+              newDiv.className = "slide";
+
+              const img = document.createElement("img");
+              img.src = "sponsor/" + sponsor;
+              img.alt = "sponsor";
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+
+              newDiv.appendChild(img);
+
+              afterSponsorsDiv.parentElement.insertBefore(
                 newDiv,
                 afterSponsorsDiv
               );
             });
+            slides = document.querySelectorAll(".slide");
+
             console.log("Erfolg:", responseData);
           })
           .catch((error) => {
@@ -381,12 +419,12 @@
       // acting
       createSponsorPages();
       createMatchPages();
-      //setTimeout(updateDateTime, 5000);
-      //setTimeout(setGreeting, 8000);
-      //setTimeout(getBestScorers, 7000);
-      //setTimeout(getBestTsvScorers, 7000);
-      //setTimeout(startSlideshow, 15000);
-      setTimeout(startSlideshow(), 5000);
+      setTimeout(updateData, 5000);
+      setTimeout(setGreeting, 8000);
+      setTimeout(getBestScorers, 7000);
+      setTimeout(getBestTsvScorers, 7000);
+      setTimeout(startSlideshow, 15000);
+      //setTimeout(startSlideshow(), 5000);
     </script>
   </body>
   <footer>
