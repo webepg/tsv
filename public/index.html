@@ -131,7 +131,7 @@
           </tr>
         </table>
       </div>
-
+      <!-- TSV Torschützen-->
       <div
         id="tsvscorers"
         style="
@@ -307,6 +307,8 @@
               console.log("Retry");
               retries++;
             }
+            matches = responseData;
+            createMatchPages();
             console.log("responseData", JSON.stringify(responseData));
           })
           .catch((error) => {
@@ -357,19 +359,18 @@
           newDiv.style.left = "0";
           newDiv.style.height = "100vh";
           newDiv.style.width = "100vw";
-          newDiv.style.backgroundImage = "url('background/sponsor.png')";
+          newDiv.style.backgroundImage = "url('background/match.png')";
           newDiv.style.backgroundSize = "contain";
           newDiv.style.backgroundPosition = "center";
           newDiv.className = "slide";
 
-          const img = document.createElement("img");
-          img.src = "sponsor/" + sponsor;
-          img.alt = "sponsor";
-          img.style.width = "50%";
-          img.style.height = "auto";
+          newDiv.style.textAlign = "center";
+          newDiv.style.color = "white";
+          newDiv.style.fontSize = "50px";
+          newDiv.innerText = match.homeTeam + " vs " + match.awayTeam;
 
-          newDiv.appendChild(img);
-          tsvscorersDiv.insertBefore(newDiv, afterSponsorsDiv);
+          console.log(newDiv.innerText);
+          tsvscorersDiv.parentElement.insertBefore(newDiv, tsvscorersDiv);
         });
         slides = document.querySelectorAll(".slide");
       }
@@ -428,13 +429,12 @@
 
       // acting
       createSponsorPages();
-      createMatchPages();
       setTimeout(updateData, 5000);
       setTimeout(setGreeting, 8000);
       setTimeout(getBestScorers, 7000);
       setTimeout(getBestTsvScorers, 7000);
-      //setTimeout(startSlideshow, 15000);
-      setTimeout(startSlideshow(), 5000);
+      setTimeout(startSlideshow, 15000);
+      //setTimeout(startSlideshow(), 5000);
     </script>
   </body>
   <footer>
