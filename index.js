@@ -15,10 +15,10 @@ app.post("/api/matches", async (req, res) => {
   console.log("Request:", req.body);
 
   let urls = req.body.urls;
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
 
   async function getMatchData(url) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
     url = url + "/info";
     await page.goto(url);
     await page.waitForNetworkIdle();
@@ -113,10 +113,9 @@ app.post("/api/matches", async (req, res) => {
         }
       }
     });
-
-    await browser.close();
     return match;
   }
+  await browser.close();
   urls.forEach(async (url) => {
     let result = await getMatchData(url);
     matches.push(result);
@@ -142,6 +141,8 @@ app.get("/api/scorers/tsv", async (req, res) => {
       return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
     });
 
+    await browser.close();
+
     let players = teamPlayerStatsPage["data"]["players"];
 
     players.forEach((player) => {
@@ -153,7 +154,6 @@ app.get("/api/scorers/tsv", async (req, res) => {
         });
     });
 
-    await browser.close();
     return [...new Set(tsvScorers)];
   }
 
