@@ -91,112 +91,92 @@
         </div>
       </div>
 
-      <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY" class="slide"></div>
-
       <!-- Alle Spiele.  -->
 
       <div style="display: none">
         <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy"></div>
       </div>
+
+      <!-- Tabelle -->
+      <div id="ranking" class="slide">
+        <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
+        <div id="bestscorers"></div>
+      </div>
+
+      <div
+        id="tsvscorers"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/match.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="bestscorers"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/match.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="beforeSponsors"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/sponsor-landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="afterSponsors"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/sponsor-landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/instagram.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
     </div>
-
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/sponsor-landing.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-
-    <div
-      id="tsvscorers"
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/match.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-    <div
-      id="bestscorers"
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/match.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/match.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/instagram.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/sponsor.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
-
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-image: url('background/sponsor-landing.png');
-        background-size: contain;
-        background-position: center;
-      "
-      class="slide"
-    ></div>
 
     <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
 
@@ -208,10 +188,11 @@
       let slideshow = document.querySelector(".slideshow");
       let slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
-      let rotationTime = 15;
+      let rotationTime = 5;
       let matchUrls = [];
       let matches = [];
       let retries = 0;
+      let sponsors = [];
 
       // methods
       function nextSlide() {
@@ -257,6 +238,12 @@
             return response.blob(); // Antwort als JSON parsen
           })
           .then((responseData) => {
+            let blob = URL.createObjectURL(responseData);
+            let img = document.createElement("img");
+            img.src = blob;
+            img.width = 500;
+            img.height = 500;
+            document.getElementById("bestscorers").appendChild(img);
             console.log("Erfolg:", responseData);
           })
           .catch((error) => {
@@ -299,7 +286,7 @@
             return response.json(); // Antwort als JSON parsen
           })
           .then((responseData) => {
-            if (responseData.length > 0 && retries < 2) {
+            if (responseData.length > 0 && retries < 1) {
               setTimeout(getAllMatchDetails, 5000);
               console.log("Retry");
               retries++;
@@ -345,12 +332,61 @@
         );
       }
 
+      function createMatchPages() {
+        const afterSponsorsDiv = document.getElementById("tsvscorers");
+        matches.forEach((match) => {
+          const newDiv = document.createElement("div");
+          newDiv.innerHTML =
+            "<div style='position: absolute;top: 0;left: 0;height: 100vh;width: 100vw;background-image: url('background/match.png');background-size: contain;background-position: center;" +
+            "class='slide'></div>"; // Optional: Füge hier deinen Inhalt ein
+          afterSponsorsDiv.parentNode.insertBefore(newDiv, afterSponsorsDiv);
+        });
+      }
+
+      function createSponsorPages() {
+        const afterSponsorsDiv = document.getElementById("aftersponsors");
+        console.log("afterSponsorsDiv", afterSponsorsDiv);
+
+        fetch("/api/sponsors", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            sponsors = responseData;
+            sponsors.forEach((sponsor) => {
+              console.log("sponsor DIV", sponsor);
+              const newDiv = document.createElement("div");
+              newDiv.innerHTML =
+                "<div style='position: absolute;top: 0;left: 0;height: 100vh;width: 100vw;background-image: url('background/sponsor.png');background-size: contain;background-position: center;'class='slide'>" +
+                "<img src='sponsor/" +
+                sponsor +
+                "' alt='sponsor'style='width: 100%; height: auto'/></div>"; // Optional: Füge hier deinen Inhalt ein
+              afterSponsorsDiv.parentNode.insertBefore(
+                newDiv,
+                afterSponsorsDiv
+              );
+            });
+            console.log("Erfolg:", responseData);
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
+
       // acting
-      setTimeout(updateDateTime, 5000);
-      setTimeout(setGreeting, 8000);
-      setTimeout(getBestScorers, 7000);
-      setTimeout(getBestTsvScorers, 7000);
-      setTimeout(startSlideshow, 15000);
+      createSponsorPages();
+      createMatchPages();
+      //setTimeout(updateDateTime, 5000);
+      //setTimeout(setGreeting, 8000);
+      //setTimeout(getBestScorers, 7000);
+      //setTimeout(getBestTsvScorers, 7000);
+      //setTimeout(startSlideshow, 15000);
+      setTimeout(startSlideshow(), 5000);
     </script>
   </body>
   <footer>
