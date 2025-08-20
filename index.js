@@ -131,9 +131,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(
-      "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats"
-    );
+    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
     await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
@@ -141,17 +139,18 @@ app.get("/api/scorers/tsv", async (req, res) => {
     // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
 
     const teamPlayerStatsPage = await page.evaluate(() => {
-      return window.REDUX_DATA["dataHistory"][0]["TeamPlayerStatsPage"];
+      return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
     });
 
-    let players = teamPlayerStatsPage["season"]["players"];
+    let players = teamPlayerStatsPage["data"]["players"];
 
     players.forEach((player) => {
-      tsvScorers.push({
-        goals: player["goals"],
-        name: player["firstName"] + " " + player["lastName"],
-        img: player["image"]["path"] + "/320xauto.jpeg",
-      });
+      if (player["goals"] > 0)
+        tsvScorers.push({
+          goals: player["goals"],
+          name: player["firstName"] + " " + player["lastName"],
+          img: player["image"]["path"] + "/320xauto.jpeg",
+        });
     });
 
     await browser.close();
