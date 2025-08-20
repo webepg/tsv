@@ -185,7 +185,7 @@ app.get("/api/scorers", async (req, res) => {
 
     let screenshot = await page.screenshot({
       encoding: "binary",
-      clip: { x: 0, y: 30, width: 800, height: 340 },
+      clip: { x: 0, y: 10, width: 800, height: 350 },
     });
 
     // Extrahieren von Daten direkt aus dem DOM
