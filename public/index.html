@@ -211,6 +211,7 @@
       let rotationTime = 15;
       let matchUrls = [];
       let matches = [];
+      let retries = 0;
 
       // methods
       function nextSlide() {
@@ -298,6 +299,11 @@
             return response.json(); // Antwort als JSON parsen
           })
           .then((responseData) => {
+            if (responseData.length > 0 && retries < 2) {
+              setTimeout(getAllMatchDetails, 5000);
+              console.log("Retry");
+              retries++;
+            }
             console.log("responseData", JSON.stringify(responseData));
           })
           .catch((error) => {
