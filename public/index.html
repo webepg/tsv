@@ -85,7 +85,6 @@
         >
           <img
             id="opponentLogo"
-            src="logo/tsv.png"
             alt="Gegner Logo"
             style="width: 100%; height: auto"
           />
@@ -207,6 +206,7 @@
       let matches = [];
       let retries = 0;
       let sponsors = [];
+      let tsvScorers = [];
 
       // methods
       function nextSlide() {
@@ -238,6 +238,7 @@
 
         if (todaysMatch) {
           document.getElementById("opponent").innerText = todaysMatch.awayTeam;
+          document.getElementById("opponentLogo").src = todaysMatch.awayTeamImg;
           console.log(
             "Heute begrüßen wir " + todaysMatch.awayTeam + " als Gast"
           );
@@ -279,6 +280,8 @@
             return response.json(); // Antwort als JSON parsen
           })
           .then((responseData) => {
+            tsvScorers = responseData;
+            createTsvScorerPage();
             console.log("Erfolg:", responseData);
           })
           .catch((error) => {
@@ -306,10 +309,11 @@
               setTimeout(getAllMatchDetails, 5000);
               console.log("Retry");
               retries++;
+            } else {
+              matches = responseData;
+              createMatchPages();
+              console.log("responseData", JSON.stringify(responseData));
             }
-            matches = responseData;
-            createMatchPages();
-            console.log("responseData", JSON.stringify(responseData));
           })
           .catch((error) => {
             console.error("Fehler:", error);
@@ -350,8 +354,64 @@
         );
       }
 
+      function createTsvScorerPage() {
+        const tsvscorersDiv = document.getElementById("tsvscorers");
+        const title = document.createElement("p");
+        title.style.textAlign = "center";
+        title.style.color = "white";
+        title.style.fontSize = "60px";
+        title.textContent = "Beste TSV Torschützen";
+        tsvscorersDiv.appendChild(title);
+
+        tsvScorers.sort((a, b) => {
+          return b.goals - a.goals;
+        });
+
+        tsvScorers.splice(5);
+        let percentage = 100 / tsvScorers.length;
+        console.log("tsvScorers: ", tsvScorers);
+
+        tsvScorers.forEach((tsvScorer) => {
+          let newDiv = document.createElement("div");
+          newDiv.style.float = "left";
+          newDiv.style.width = percentage + "%";
+          newDiv.style.textAlign = "center";
+
+          let img = document.createElement("img");
+          img.src = tsvScorer.img;
+          img.alt = tsvScorer.name;
+          img.style.top = "50%";
+
+          let pGoals = document.createElement("p");
+          pGoals.style.color = "#FFFFFF";
+          pGoals.style.fontSize = "40px";
+          pGoals.textContent = tsvScorer.goals + "x";
+
+          let pName = document.createElement("p");
+          pName.style.color = "#FFFFFF";
+          pName.style.fontSize = "30px";
+          pName.textContent = tsvScorer.name;
+
+          newDiv.appendChild(pGoals);
+          newDiv.appendChild(img);
+          newDiv.appendChild(pName);
+
+          tsvscorersDiv.appendChild(newDiv);
+        });
+
+        document.getElementById("tsvscorersDiv").style.width = "100%";
+      }
+
       function createMatchPages() {
         const tsvscorersDiv = document.getElementById("tsvscorers");
+
+        // nach Datum sortieren
+        matches.sort((a, b) => {
+          return Number(a.formattedDate) - Number(b.formattedDate);
+        });
+
+        console.log("sortierte matches: ", matches);
+
         matches.forEach((match) => {
           const newDiv = document.createElement("div");
           newDiv.style.position = "absolute";
@@ -366,10 +426,9 @@
 
           newDiv.style.textAlign = "center";
           newDiv.style.color = "white";
-          newDiv.style.fontSize = "50px";
-          newDiv.innerText = match.homeTeam + " vs " + match.awayTeam;
+          newDiv.style.fontSize = "60px";
+          newDiv.innerText = match.matchDay + " " + match.league;
 
-          console.log(newDiv.innerText);
           tsvscorersDiv.parentElement.insertBefore(newDiv, tsvscorersDiv);
         });
         slides = document.querySelectorAll(".slide");

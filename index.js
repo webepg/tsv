@@ -35,6 +35,12 @@ app.post("/api/matches", async (req, res) => {
       matchDay: matchPage["matchInfo"]["round"]["name"],
       homeTeam: matchPage["matchInfo"]["homeTeamName"],
       awayTeam: matchPage["matchInfo"]["awayTeamName"],
+      homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
+      awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
+      homeTeamImg:
+        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "300x300.jpeg",
+      awayTeamImg:
+        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "300x300.jpeg",
       goals: [],
       redCards: [],
       yellowRedCards: [],
