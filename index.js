@@ -38,9 +38,9 @@ app.post("/api/matches", async (req, res) => {
       homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
       awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
       homeTeamImg:
-        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "300x300.jpeg",
+        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200xauto.jpeg",
       awayTeamImg:
-        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "300x300.jpeg",
+        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200xauto.jpeg",
       goals: [],
       redCards: [],
       yellowRedCards: [],
@@ -59,6 +59,7 @@ app.post("/api/matches", async (req, res) => {
               " " +
               element["primaryRole"]["lastName"]
             : "Unbekannt",
+          goalType: element["subtype"],
         });
       }
 
