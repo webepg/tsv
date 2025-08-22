@@ -4,7 +4,6 @@ const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
 const puppeteer = require("puppeteer");
-const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 let matches = [];
