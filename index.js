@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 let matches = [];
 let tsvScorers = [];
@@ -18,8 +19,14 @@ app.post("/api/matches", async (req, res) => {
   async function getMatchData(urls) {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath:
+        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
     });
     const results = [];
 
@@ -129,8 +136,14 @@ app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath:
+        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
     });
     try {
       const page = await browser.newPage();
@@ -187,8 +200,14 @@ app.get("/api/scorers", async (req, res) => {
     let screenshot;
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath:
+        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
     });
     try {
       const page = await browser.newPage();
