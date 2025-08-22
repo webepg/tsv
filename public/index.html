@@ -279,6 +279,7 @@
           .then((responseData) => {
             tsvScorers = responseData;
             createTsvScorerPage();
+            getBestScorers();
             console.log("Erfolg:", responseData);
           })
           .catch((error) => {
@@ -308,6 +309,7 @@
               retries++;
             } else {
               matches = responseData;
+              setGreeting();
               createMatchPages();
               console.log("responseData", JSON.stringify(responseData));
             }
@@ -427,7 +429,7 @@
 
           let homeTeamDiv = document.createElement("div");
           homeTeamDiv.style.position = "absolute";
-          homeTeamDiv.style.top = "25%";
+          homeTeamDiv.style.top = "15";
           homeTeamDiv.style.left = "5%";
           homeTeamDiv.style.transform = "translateY(-50%)";
           homeTeamDiv.style.width = "20%";
@@ -440,7 +442,7 @@
 
           let awayTeamDiv = document.createElement("div");
           awayTeamDiv.style.position = "absolute";
-          awayTeamDiv.style.top = "25%";
+          awayTeamDiv.style.top = "15%";
           awayTeamDiv.style.right = "5%";
           awayTeamDiv.style.transform = "translateY(-50%)";
           awayTeamDiv.style.width = "20%";
@@ -602,9 +604,7 @@
       // acting
       createSponsorPages();
       setTimeout(updateData, 5000);
-      setTimeout(setGreeting, 8000);
-      setTimeout(getBestScorers, 7000);
-      setTimeout(getBestTsvScorers, 7000);
+      getBestTsvScorers();
       setTimeout(startSlideshow, 15000);
       //setTimeout(startSlideshow(), 5000);
     </script>
