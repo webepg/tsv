@@ -14,8 +14,102 @@ app.use(bodyParser.json()); // für JSON-Requests
 app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
-  async function getMatchData(url) {
+  async function getMatchDataNew(urls) {
     const browser = await puppeteer.launch();
+    const results = [];
+
+    for (const url of urls) {
+      const result = await getMatchDataForUrl(browser, url);
+      results.push(result);
+    }
+
+    await browser.close();
+    return results;
+  }
+
+  async function getMatchDataForUrl(browser, url) {
+    const page = await browser.newPage();
+    await page.goto(url);
+    await page.waitForNetworkIdle();
+    await page.click("#cmpbntyestxt");
+
+    const matchPage = await page.evaluate(() => {
+      return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
+    });
+
+    let highlights = matchPage["matchInfo"]["highlights"];
+
+    let match = {
+      formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
+      league: matchPage["matchInfo"]["competition"]["name"],
+      matchDay: matchPage["matchInfo"]["round"]["name"],
+      homeTeam: matchPage["matchInfo"]["homeTeamName"],
+      awayTeam: matchPage["matchInfo"]["awayTeamName"],
+      homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
+      awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
+      homeTeamImg:
+        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200xauto.jpeg",
+      awayTeamImg:
+        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200xauto.jpeg",
+      goals: [],
+      redCards: [],
+      yellowRedCards: [],
+      suspensions: [],
+      missedPenalties: [],
+    };
+
+    highlights.forEach((element) => {
+      const team = element.team.slug;
+      const minute = element.minute;
+      const additionalMinute = element.additionalMinute;
+      const player = element.primaryRole
+        ? `${element.primaryRole.firstName} ${element.primaryRole.lastName}`
+        : "Unbekannt";
+
+      switch (element.type) {
+        case "goal":
+          match.goals.push({
+            team,
+            minute,
+            additionalMinute,
+            player,
+            goalType: element.subtype,
+          });
+          break;
+        case "penaltyfail":
+          match.missedPenalties.push({
+            team,
+            minute,
+            additionalMinute,
+            player,
+          });
+          break;
+        case "card":
+          if (element.subtype === "card_red") {
+            match.redCards.push({ team, minute, additionalMinute, player });
+          } else if (element.subtype === "card_yellow_red") {
+            match.yellowRedCards.push({
+              team,
+              minute,
+              additionalMinute,
+              player,
+            });
+          }
+          break;
+        case "timepenalty":
+          match.suspensions.push({ team, minute, additionalMinute, player });
+          break;
+      }
+    });
+
+    await page.close();
+    return match;
+  }
+
+  async function getMatchData(url) {
+    const browser = await puppeteer.launch({
+      args: ["--max-old-space-size=256"],
+    });
     const page = await browser.newPage();
     url = url + "/info";
     await page.goto(url);
@@ -47,6 +141,52 @@ app.post("/api/matches", async (req, res) => {
       suspensions: [],
       missedPenalties: [],
     };
+
+    highlights.forEach((element) => {
+      const team = element.team.slug;
+      const minute = element.minute;
+      const additionalMinute = element.additionalMinute;
+      const player = element.primaryRole
+        ? `${element.primaryRole.firstName} ${element.primaryRole.lastName}`
+        : "Unbekannt";
+
+      switch (element.type) {
+        case "goal":
+          match.goals.push({
+            team,
+            minute,
+            additionalMinute,
+            player,
+            goalType: element.subtype,
+          });
+          break;
+        case "penaltyfail":
+          match.missedPenalties.push({
+            team,
+            minute,
+            additionalMinute,
+            player,
+          });
+          break;
+        case "card":
+          if (element.subtype === "card_red") {
+            match.redCards.push({ team, minute, additionalMinute, player });
+          } else if (element.subtype === "card_yellow_red") {
+            match.yellowRedCards.push({
+              team,
+              minute,
+              additionalMinute,
+              player,
+            });
+          }
+          break;
+        case "timepenalty":
+          match.suspensions.push({ team, minute, additionalMinute, player });
+          break;
+      }
+    });
+
+    /*
 
     highlights.forEach((element) => {
       if (element["type"] == "goal") {
@@ -117,18 +257,21 @@ app.post("/api/matches", async (req, res) => {
           }
         }
       }
-    });
+    });*/
 
     await browser.close();
     return match;
   }
 
   if (matches.length == 0) {
-    urls.forEach(async (url) => {
+    /*urls.forEach(async (url) => {
       let result = await getMatchData(url);
       matches.push(result);
       matches = [...new Set(matches)];
-    });
+    });*/
+
+    let result = await getMatchDataNew(urls);
+    matches = [...new Set(result)];
   }
 
   res.status(200).json(matches);
@@ -183,7 +326,9 @@ app.get("/api/sponsors", async (req, res) => {
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ["--max-old-space-size=256"],
+    });
     const page = await browser.newPage();
     await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers");
     await page.waitForNetworkIdle();
