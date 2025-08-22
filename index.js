@@ -33,81 +33,85 @@ app.post("/api/matches", async (req, res) => {
   }
 
   async function getMatchDataForUrl(browser, url) {
-    const page = await browser.newPage();
-    await page.goto(url, { timeout: 60000 });
-    await page.waitForNetworkIdle();
-    await page.click("#cmpbntyestxt");
+    try {
+      const page = await browser.newPage();
+      await page.goto(url, { timeout: 60000 });
+      await page.waitForNetworkIdle();
+      await page.click("#cmpbntyestxt");
 
-    const matchPage = await page.evaluate(() => {
-      return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
-    });
+      const matchPage = await page.evaluate(() => {
+        return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
+      });
 
-    let highlights = matchPage["matchInfo"]["highlights"];
+      let highlights = matchPage["matchInfo"]["highlights"];
 
-    let match = {
-      formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
-      league: matchPage["matchInfo"]["competition"]["name"],
-      matchDay: matchPage["matchInfo"]["round"]["name"],
-      homeTeam: matchPage["matchInfo"]["homeTeamName"],
-      awayTeam: matchPage["matchInfo"]["awayTeamName"],
-      homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
-      awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
-      homeTeamImg:
-        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200x200.jpeg",
-      awayTeamImg:
-        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200x200.jpeg",
-      goals: [],
-      redCards: [],
-      yellowRedCards: [],
-      suspensions: [],
-      missedPenalties: [],
-    };
+      let match = {
+        formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
+        league: matchPage["matchInfo"]["competition"]["name"],
+        matchDay: matchPage["matchInfo"]["round"]["name"],
+        homeTeam: matchPage["matchInfo"]["homeTeamName"],
+        awayTeam: matchPage["matchInfo"]["awayTeamName"],
+        homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
+        awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
+        homeTeamImg:
+          matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200x200.jpeg",
+        awayTeamImg:
+          matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200x200.jpeg",
+        goals: [],
+        redCards: [],
+        yellowRedCards: [],
+        suspensions: [],
+        missedPenalties: [],
+      };
 
-    highlights.forEach((element) => {
-      const team = element.team.slug;
-      const minute = element.minute;
-      const additionalMinute = element.additionalMinute;
-      const player = element.primaryRole
-        ? `${element.primaryRole.firstName} ${element.primaryRole.lastName}`
-        : "Unbekannt";
+      highlights.forEach((element) => {
+        const team = element.team.slug;
+        const minute = element.minute;
+        const additionalMinute = element.additionalMinute;
+        const player = element.primaryRole
+          ? `${element.primaryRole.firstName} ${element.primaryRole.lastName}`
+          : "Unbekannt";
 
-      switch (element.type) {
-        case "goal":
-          match.goals.push({
-            team,
-            minute,
-            additionalMinute,
-            player,
-            goalType: element.subtype,
-          });
-          break;
-        case "penaltyfail":
-          match.missedPenalties.push({
-            team,
-            minute,
-            additionalMinute,
-            player,
-          });
-          break;
-        case "card":
-          if (element.subtype === "card_red") {
-            match.redCards.push({ team, minute, additionalMinute, player });
-          } else if (element.subtype === "card_yellow_red") {
-            match.yellowRedCards.push({
+        switch (element.type) {
+          case "goal":
+            match.goals.push({
+              team,
+              minute,
+              additionalMinute,
+              player,
+              goalType: element.subtype,
+            });
+            break;
+          case "penaltyfail":
+            match.missedPenalties.push({
               team,
               minute,
               additionalMinute,
               player,
             });
-          }
-          break;
-        case "timepenalty":
-          match.suspensions.push({ team, minute, additionalMinute, player });
-          break;
-      }
-    });
-
-    await page.close();
+            break;
+          case "card":
+            if (element.subtype === "card_red") {
+              match.redCards.push({ team, minute, additionalMinute, player });
+            } else if (element.subtype === "card_yellow_red") {
+              match.yellowRedCards.push({
+                team,
+                minute,
+                additionalMinute,
+                player,
+              });
+            }
+            break;
+          case "timepenalty":
+            match.suspensions.push({ team, minute, additionalMinute, player });
+            break;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      await page.close();
+    }
     return match;
   }
 
@@ -128,32 +132,39 @@ app.get("/api/scorers/tsv", async (req, res) => {
       /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
-      timeout: 60000,
-    });
-    await page.waitForNetworkIdle();
+    try {
+      const page = await browser.newPage();
+      await page.goto(
+        "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26",
+        {
+          timeout: 60000,
+        }
+      );
+      await page.waitForNetworkIdle();
 
-    await page.click("#cmpbntyestxt");
+      await page.click("#cmpbntyestxt");
 
-    // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
+      // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
 
-    const teamPlayerStatsPage = await page.evaluate(() => {
-      return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
-    });
+      const teamPlayerStatsPage = await page.evaluate(() => {
+        return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
+      });
 
-    let players = teamPlayerStatsPage["data"]["players"];
+      let players = teamPlayerStatsPage["data"]["players"];
 
-    players.forEach((player) => {
-      if (player["goals"] > 0)
-        tsvScorers.push({
-          goals: player["goals"],
-          name: player["firstName"] + " " + player["lastName"],
-          img: player["image"]["path"] + "320xauto.jpeg",
-        });
-    });
-
-    await browser.close();
+      players.forEach((player) => {
+        if (player["goals"] > 0)
+          tsvScorers.push({
+            goals: player["goals"],
+            name: player["firstName"] + " " + player["lastName"],
+            img: player["image"]["path"] + "320xauto.jpeg",
+          });
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      await browser.close();
+    }
     return [...new Set(tsvScorers)];
   }
 
@@ -173,26 +184,31 @@ app.get("/api/sponsors", async (req, res) => {
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
+    let screenshot;
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
       /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
-      timeout: 60000,
-    });
-    await page.waitForNetworkIdle();
+    try {
+      const page = await browser.newPage();
+      await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
+        timeout: 60000,
+      });
+      await page.waitForNetworkIdle();
 
-    await page.click("#cmpbntyestxt");
+      await page.click("#cmpbntyestxt");
 
-    let screenshot = await page.screenshot({
-      encoding: "binary",
-      clip: { x: 0, y: 10, width: 800, height: 350 },
-    });
-
+      screenshot = await page.screenshot({
+        encoding: "binary",
+        clip: { x: 0, y: 10, width: 800, height: 350 },
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      await browser.close();
+    }
     // Extrahieren von Daten direkt aus dem DOM
-    await browser.close();
     return screenshot;
   }
 
