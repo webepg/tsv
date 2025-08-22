@@ -21,6 +21,7 @@ app.post("/api/matches", async (req, res) => {
     if (process.env.PUPPETEER_EXECUTABLE_PATH) {
       browser = await puppeteer.launch({
         ignoreHTTPSErrors: true,
+        headless: true,
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
           "--no-sandbox",
@@ -144,6 +145,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
     if (process.env.PUPPETEER_EXECUTABLE_PATH) {
       browser = await puppeteer.launch({
         ignoreHTTPSErrors: true,
+        headless: true,
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
           "--no-sandbox",
@@ -213,6 +215,7 @@ app.get("/api/scorers", async (req, res) => {
     if (process.env.PUPPETEER_EXECUTABLE_PATH) {
       browser = await puppeteer.launch({
         ignoreHTTPSErrors: true,
+        headless: true,
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
           "--no-sandbox",
