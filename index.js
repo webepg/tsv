@@ -18,7 +18,7 @@ app.post("/api/matches", async (req, res) => {
   async function getMatchData(urls) {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const results = [];
@@ -125,7 +125,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
@@ -175,7 +175,7 @@ app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
-      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      /*executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",*/
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
