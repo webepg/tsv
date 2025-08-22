@@ -30,7 +30,7 @@ app.post("/api/matches", async (req, res) => {
         ],
       });
     } else {
-      browser = await puppeteer.launch();
+      browser = await puppeteer.launch(puppeteer.executablePath());
     }
     const results = [];
 
@@ -44,8 +44,10 @@ app.post("/api/matches", async (req, res) => {
   }
 
   async function getMatchDataForUrl(browser, url) {
+    let page;
+    let match;
     try {
-      const page = await browser.newPage();
+      page = await browser.newPage();
       await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
       await page.click("#cmpbntyestxt");
@@ -56,7 +58,7 @@ app.post("/api/matches", async (req, res) => {
 
       let highlights = matchPage["matchInfo"]["highlights"];
 
-      let match = {
+      match = {
         formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
         league: matchPage["matchInfo"]["competition"]["name"],
         matchDay: matchPage["matchInfo"]["round"]["name"],
@@ -151,7 +153,7 @@ app.get("/api/scorers/tsv", async (req, res) => {
         ],
       });
     } else {
-      browser = await puppeteer.launch();
+      browser = await puppeteer.launch(puppeteer.executablePath());
     }
     try {
       const page = await browser.newPage();
@@ -220,7 +222,7 @@ app.get("/api/scorers", async (req, res) => {
         ],
       });
     } else {
-      browser = await puppeteer.launch();
+      browser = await puppeteer.launch(puppeteer.executablePath());
     }
 
     try {
