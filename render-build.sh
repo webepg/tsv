@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # exit on errorset -o errexit
 
+npx puppeteer browsers install chrome
+
 npm install
 # npm run build # uncomment if required
 
@@ -12,5 +14,3 @@ else
   echo "...Storing Puppeteer Cache in Build Cache" 
   cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
 fi
-
-npx puppeteer browsers install chrome
