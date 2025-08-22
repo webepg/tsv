@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path"); // Importiere das path Modul
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 let matches = [];
@@ -50,9 +50,9 @@ app.post("/api/matches", async (req, res) => {
       homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
       awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
       homeTeamImg:
-        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200xauto.jpeg",
+        matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200x200.jpeg",
       awayTeamImg:
-        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200xauto.jpeg",
+        matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200x200.jpeg",
       goals: [],
       redCards: [],
       yellowRedCards: [],

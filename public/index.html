@@ -432,27 +432,26 @@
           homeTeamDiv.style.top = "15";
           homeTeamDiv.style.left = "5%";
           homeTeamDiv.style.transform = "translateY(-50%)";
-          homeTeamDiv.style.width = "20%";
+          homeTeamDiv.style.width = "15%";
 
           let homeTeamLogo = document.createElement("img");
           homeTeamLogo.src = match.homeTeamImg;
           homeTeamLogo.alt = match.homeTeam;
-          homeTeamLogo.style.width = "50%";
+          homeTeamLogo.style.width = "100%";
           homeTeamLogo.style.height = "auto";
 
           let awayTeamDiv = document.createElement("div");
-          awayTeamDiv.style.position = "absolute";
-          awayTeamDiv.style.top = "15%";
-          awayTeamDiv.style.right = "5%";
-          awayTeamDiv.style.transform = "translateY(-50%)";
-          awayTeamDiv.style.width = "20%";
-          awayTeamDiv.style.float = "right";
+          awayTeamDiv.style.position = homeTeamDiv.style.position;
+          awayTeamDiv.style.top = homeTeamDiv.style.top;
+          awayTeamDiv.style.right = homeTeamDiv.style.left;
+          awayTeamDiv.style.transform = homeTeamDiv.style.transform;
+          awayTeamDiv.style.width = homeTeamDiv.style.width;
 
           let awayTeamLogo = document.createElement("img");
           awayTeamLogo.src = match.awayTeamImg;
           awayTeamLogo.alt = match.awayTeam;
-          awayTeamLogo.style.width = "50%";
-          awayTeamLogo.style.height = "auto";
+          awayTeamLogo.style.width = homeTeamLogo.style.width;
+          awayTeamLogo.style.height = homeTeamLogo.style.height;
 
           homeTeamDiv.appendChild(homeTeamLogo);
           newDiv.appendChild(homeTeamDiv);
