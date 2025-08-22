@@ -17,17 +17,21 @@ app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
   async function getMatchData(urls) {
-    const browser = await puppeteer.launch({
-      ignoreHTTPSErrors: true,
-      executablePath:
-        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-    });
+    let browser;
+    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+      browser = await puppeteer.launch({
+        ignoreHTTPSErrors: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+      });
+    } else {
+      browser = await puppeteer.launch();
+    }
     const results = [];
 
     for (const url of urls) {
@@ -134,17 +138,21 @@ app.post("/api/matches", async (req, res) => {
 
 app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
-    const browser = await puppeteer.launch({
-      ignoreHTTPSErrors: true,
-      executablePath:
-        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-    });
+    let browser;
+    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+      browser = await puppeteer.launch({
+        ignoreHTTPSErrors: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+      });
+    } else {
+      browser = await puppeteer.launch();
+    }
     try {
       const page = await browser.newPage();
       await page.goto(
@@ -198,17 +206,23 @@ app.get("/api/sponsors", async (req, res) => {
 app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
     let screenshot;
-    const browser = await puppeteer.launch({
-      ignoreHTTPSErrors: true,
-      executablePath:
-        process.env.PUPPETEER_EXECUTABLE_PATH || "/opt/bin/chromium",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-    });
+
+    let browser;
+    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+      browser = await puppeteer.launch({
+        ignoreHTTPSErrors: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+      });
+    } else {
+      browser = await puppeteer.launch();
+    }
+
     try {
       const page = await browser.newPage();
       await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
