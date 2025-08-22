@@ -491,13 +491,15 @@
 
           let homegoalscorersdiv = document.createElement("div");
           homegoalscorersdiv.style.display = "inline-block";
-          homegoalscorersdiv.style.width = "50%";
+          homegoalscorersdiv.style.width = "48%";
           homegoalscorersdiv.style.textAlign = "left";
+          homegoalscorersdiv.style.marginRight = "2%";
 
           let awaygoalscorersdiv = document.createElement("div");
           awaygoalscorersdiv.style.display = "inline-block";
-          awaygoalscorersdiv.style.width = "50%";
+          awaygoalscorersdiv.style.width = "48%";
           awaygoalscorersdiv.style.textAlign = "left";
+          awaygoalscorersdiv.style.marginLeft = "2%";
 
           match.goals.forEach((goal) => {
             console.log("goal", goal);
@@ -506,7 +508,7 @@
 
             let playerText = document.createElement("span");
             playerText.textContent =
-              goal.player + (goal.goaltype == "goal_own_goal" ? " (ET) " : " ");
+              goal.player + (goal.goalType == "goal_own_goal" ? " (ET) " : "");
 
             let minuteText = document.createElement("span");
             minuteText.textContent = goal.minute + "'";
@@ -516,12 +518,12 @@
             goalentry.appendChild(minuteText);
 
             goalentry.style.color = "white";
-            goalentry.style.fontSize = "40px";
+            goalentry.style.fontSize = "35px";
             goalentry.style.display = "block";
             goalentry.style.textAlign = "left;";
 
             let emptygoalentry = document.createElement("p");
-            emptygoalentry.innerText = " ";
+            emptygoalentry.innerHTML = "<br>";
 
             if (goal.team === match.homeTeamId) {
               homegoalscorersdiv.appendChild(goalentry);
