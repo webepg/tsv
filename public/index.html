@@ -238,7 +238,8 @@
 
         if (todaysMatch) {
           document.getElementById("opponent").innerText = todaysMatch.awayTeam;
-          document.getElementById("opponentLogo").src = todaysMatch.awayTeamImg;
+          document.getElementById("opponentLogo").src =
+            todaysMatch.awayTeamImg.replace("200x200", "300x300");
         }
       }
 
