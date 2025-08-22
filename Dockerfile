@@ -6,4 +6,4 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN ["node, index.js"]
+RUN ["node", "index.js"]
