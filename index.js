@@ -31,7 +31,7 @@ app.post("/api/matches", async (req, res) => {
 
   async function getMatchDataForUrl(browser, url) {
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 60000 });
     await page.waitForNetworkIdle();
     await page.click("#cmpbntyestxt");
 
@@ -124,7 +124,9 @@ app.get("/api/scorers/tsv", async (req, res) => {
       args: ["--max-old-space-size=256"],
     });
     const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
+    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
+      timeout: 60000,
+    });
     await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
@@ -171,7 +173,9 @@ app.get("/api/scorers", async (req, res) => {
       args: ["--max-old-space-size=256"],
     });
     const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers");
+    await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
+      timeout: 60000,
+    });
     await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
