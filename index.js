@@ -3,8 +3,9 @@ const express = require("express");
 const path = require("path"); // Importiere das path Modul
 const app = express();
 const port = process.env.PORT || 4000;
-//const puppeteer = require("puppeteer");
-const playwright = require("playwright-aws-lambda");
+const puppeteer = require("puppeteer");
+const { v4: uuid } = require("uuid");
+const fs = require("fs");
 const bodyParser = require("body-parser");
 let matches = [];
 let tsvScorers = [];
@@ -16,16 +17,15 @@ app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
   async function getMatchData(urls) {
-    /*const browser = await puppeteer.launch({
-      args: ["--max-old-space-size=384"],
-    });*/
-    let browser = await playwright.launchChromium({ headless: true });
-    const context = await browser.newContext();
-
+    const browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const results = [];
 
     for (const url of urls) {
-      const result = await getMatchDataForUrl(browser, context, url);
+      const result = await getMatchDataForUrl(browser, url);
       results.push(result);
     }
 
@@ -33,11 +33,10 @@ app.post("/api/matches", async (req, res) => {
     return results;
   }
 
-  async function getMatchDataForUrl(browser, context, url) {
-    //const page = await browser.newPage();
-    const page = await context.newPage();
+  async function getMatchDataForUrl(browser, url) {
+    const page = await browser.newPage();
     await page.goto(url, { timeout: 60000 });
-    //await page.waitForNetworkIdle();
+    await page.waitForNetworkIdle();
     await page.click("#cmpbntyestxt");
 
     const matchPage = await page.evaluate(() => {
@@ -125,17 +124,16 @@ app.post("/api/matches", async (req, res) => {
 
 app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
-    /*const browser = await puppeteer.launch({
-      args: ["--max-old-space-size=256"],
-    });*/
-    let browser = await playwright.launchChromium({ headless: true });
-    //const page = await browser.newPage();
-    const context = await browser.newContext();
-    const page = await context.newPage();
+    const browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    const page = await browser.newPage();
     await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
       timeout: 60000,
     });
-    //await page.waitForNetworkIdle();
+    await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 
@@ -168,7 +166,6 @@ app.get("/api/scorers/tsv", async (req, res) => {
 });
 
 app.get("/api/sponsors", async (req, res) => {
-  const fs = require("fs");
   const sponsorsPath = path.join(__dirname, "public", "sponsor");
   const files = fs.readdirSync(sponsorsPath);
   res.status(200).json(files);
@@ -177,18 +174,16 @@ app.get("/api/sponsors", async (req, res) => {
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
-    /*const browser = await puppeteer.launch({
-      args: ["--max-old-space-size=256"],
+    const browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      executablePath: process.env.CHROME_PATH || "/opt/bin/chromium",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
-    const page = await browser.newPage();*/
-    let browser = await playwright.launchChromium({ headless: true });
-    const context = await browser.newContext();
-    const page = await context.newPage();
-
+    const page = await browser.newPage();
     await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
       timeout: 60000,
     });
-    //await page.waitForNetworkIdle();
+    await page.waitForNetworkIdle();
 
     await page.click("#cmpbntyestxt");
 

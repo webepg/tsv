@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
+        "postinstall": "npx puppeteer install --path ./.cache/puppeteer",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -12,7 +13,6 @@
     "license": "ISC",
     "dependencies": {
         "express": "^5.1.0",
-        "playwright-aws-lambda": "^0.11.0",
-        "playwright-core": "^1.55.0"
+        "puppeteer": "^24.17.0"
     }
 }
