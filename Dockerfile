@@ -7,5 +7,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-CMD ["which", "google-chrome-stable"]
-#CMD ["node", "index.js"]
+#CMD ["which", "google-chrome-stable"]
+CMD ["node", "index.js"]
