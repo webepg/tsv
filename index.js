@@ -18,6 +18,7 @@ app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
   async function getMatchData(urls) {
+    console.log("getMatchData urls", urls);
     let browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
       headless: true,
@@ -45,6 +46,9 @@ app.post("/api/matches", async (req, res) => {
   async function getMatchDataForUrl(browser, url) {
     let page;
     let match;
+
+    console.log("getMatchDataForUrl url", url);
+
     try {
       page = await browser.newPage();
       await page.goto(url, { timeout: 90000 });
