@@ -14,6 +14,10 @@ let screenshot;
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
 
+app.get("/api/matches", (req, res) => {
+  res.status(200).json(matches);
+});
+
 app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
@@ -139,12 +143,12 @@ app.post("/api/matches", async (req, res) => {
     return match;
   }
 
-  if (matches.length == 0) {
-    let result = await getMatchData(urls);
-    matches = [...new Set(result)];
-  }
+  //if (matches.length == 0) {
+  /*let result =*/ await getMatchData(urls);
+  matches = [...new Set(result)];
+  //}
 
-  res.status(200).json(matches);
+  res.status(200).json();
 });
 
 // Beste TSV Torschützen https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats
