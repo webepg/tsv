@@ -208,6 +208,7 @@
       let retries = 0;
       let sponsors = [];
       let tsvScorers = [];
+      let isRunning = false;
 
       // methods
       function nextSlide() {
@@ -318,6 +319,11 @@
           matches.length < matchUrls.length
         );
 
+        if (isRunning) {
+          return;
+        }
+        isRunning = true;
+
         if (matches.length == 0 || matches.length < matchUrls.length) {
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
@@ -346,6 +352,7 @@
               console.error("Fehler:", error);
             });
         }
+        isRunning = false;
       }
 
       function getAllMatchDetails(urls) {
