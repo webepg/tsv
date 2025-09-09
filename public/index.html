@@ -316,7 +316,7 @@
       }
 
       function getMatchData() {
-        if (matches.length == 0) {
+        if (matches.length == 0 || matches.length < matchUrls.length) {
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
             headers: {
