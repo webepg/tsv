@@ -58,8 +58,9 @@ app.post("/api/matches", async (req, res) => {
 
   async function getMatchDataForUrl(browser, url) {
     console.log("getMatchDataForUrl url", url);
+    let page;
     try {
-      const page = await browser.newPage();
+      page = await browser.newPage();
       await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
       const cmpbntyestxt = await page.$("#cmpbntyestxt");
