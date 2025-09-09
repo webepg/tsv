@@ -8,6 +8,8 @@ const fs = require("fs");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 let matches = [];
+let matchUrls = [];
+let doneUrls = [];
 let tsvScorers = [];
 let screenshot;
 
@@ -20,6 +22,7 @@ app.get("/api/matches", (req, res) => {
 
 app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
+  matchUrls = urls;
 
   async function getMatchData(urls) {
     console.log("getMatchData urls", urls);
@@ -55,7 +58,7 @@ app.post("/api/matches", async (req, res) => {
 
     try {
       page = await browser.newPage();
-      await page.goto(url, { timeout: 90000 });
+      await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
 
       const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
@@ -133,9 +136,9 @@ app.post("/api/matches", async (req, res) => {
             break;
         }
       });
+      doneUrls.push(url);
     } catch (e) {
       console.log(e);
-      console.log("getMatchDataForUrl retry");
     } finally {
       await page.close();
     }
