@@ -325,10 +325,14 @@
           })
             .then((response) => {
               matches = responseData;
+              console.log("responseData Teil", JSON.stringify(responseData));
               if (matchUrls.length == matches.length) {
                 setGreeting();
                 createMatchPages();
-                console.log("responseData", JSON.stringify(responseData));
+                console.log(
+                  "responseData fertig",
+                  JSON.stringify(responseData)
+                );
               } else {
                 console.log("getMatchData retry");
                 setTimeout(getMatchData, 2000); // 5 Sekunden warten();

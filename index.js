@@ -41,7 +41,7 @@ app.post("/api/matches", async (req, res) => {
       matches.push(await getMatchDataForUrl(browser, url));
       setTimeout(() => {
         console.log("Pause");
-      }, 2000);
+      }, 1000);
     }
 
     await browser.close();
@@ -55,7 +55,7 @@ app.post("/api/matches", async (req, res) => {
 
     try {
       page = await browser.newPage();
-      await page.goto(url, { timeout: 60000 });
+      await page.goto(url, { timeout: 90000 });
       await page.waitForNetworkIdle();
 
       const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
@@ -136,18 +136,14 @@ app.post("/api/matches", async (req, res) => {
     } catch (e) {
       console.log(e);
       console.log("getMatchDataForUrl retry");
-      await page.close();
-      await getMatchDataForUrl(browser, url);
     } finally {
       await page.close();
     }
+    console.log("Match", match);
     return match;
   }
 
-  //if (matches.length == 0) {
   await getMatchData(urls);
-
-  //}
 
   res.status(200).json();
 });
