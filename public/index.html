@@ -312,7 +312,31 @@
         }
       }
 
-      function getMatchData() {
+      async function getMatchData() {
+        const delay = 5000; // Konstante für die Verzögerung
+        while (matches.length < matchUrls.length) {
+          try {
+            const response = await fetch("/api/matches", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            matches = await response.json();
+          } catch (error) {
+            console.error("Fehler:", error);
+          }
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+        if (matchUrls.length == matches.length) {
+          setGreeting();
+          createMatchPages();
+          setTimeout(startSlideshow, 5000);
+          console.log("responseData fertig", response);
+        }
+      }
+
+      /*function getMatchData() {
         console.log("matches.length == 0?", matches.length == 0);
         console.log(
           "matches.length < matchUrls.length?",
@@ -350,7 +374,7 @@
               console.error("Fehler:", error);
             });
         }
-      }
+      }*/
 
       function getAllMatchDetails(urls) {
         // POST-Request senden
@@ -370,9 +394,7 @@
       function updateData() {
         let dateTime = new Date();
         todayAsformattedDate = formatDate(dateTime);
-
         console.log("todayAsformattedDate: " + todayAsformattedDate);
-
         getAllMatchUrls();
       }
 
@@ -658,7 +680,7 @@
       // acting
       createSponsorPages();
       setTimeout(getBestTsvScorers, 3000);
-      setTimeout(updateData, 8000);
+      setTimeout(updateData, 10000);
     </script>
   </body>
   <footer>
