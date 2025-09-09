@@ -214,9 +214,9 @@
       function nextSlide() {
         slides[currentSlide].classList.remove("active");
         currentSlide = (currentSlide + 1) % slides.length;
-        if (slides[currentSlide].id === "greeting") {
-          nextSlide();
-        }
+        //if (slides[currentSlide].id === "greeting") {
+        //  nextSlide();
+        //}
         slides[currentSlide].classList.add("active");
       }
 
@@ -373,9 +373,7 @@
 
         console.log("todayAsformattedDate: " + todayAsformattedDate);
 
-        if (matches.length == 0) {
-          setTimeout(getAllMatchUrls, 5000); // 5 Sekunden warten();
-        }
+        getAllMatchUrls();
       }
 
       function getAllMatchUrls() {
@@ -391,7 +389,7 @@
 
         if (matchUrls.length == 0) {
           console.log("getAllMatchUrls retry");
-          //setTimeout(getAllMatchUrls, 3000); // 5 Sekunden warten();
+          setTimeout(getAllMatchUrls, 3000);
         } else {
           console.log("matchUrls: ", matchUrls);
           getAllMatchDetails(matchUrls);
