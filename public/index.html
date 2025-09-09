@@ -264,47 +264,51 @@
 
       function getBestScorers() {
         // Beste Torschützen
-        fetch("/api/scorers", {
-          method: "GET", // HTTP-Methode
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.blob(); // Antwort als JSON parsen
+        if (document.getElementById("bestscorersDiv").children.length == 0) {
+          fetch("/api/scorers", {
+            method: "GET", // HTTP-Methode
           })
-          .then((responseData) => {
-            let blob = URL.createObjectURL(responseData);
-            let img = document.createElement("img");
-            img.src = blob;
-            document.getElementById("bestscorersDiv").appendChild(img);
-            console.log("Erfolg:", responseData);
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Fehler beim Senden der Daten");
+              }
+              return response.blob(); // Antwort als JSON parsen
+            })
+            .then((responseData) => {
+              let blob = URL.createObjectURL(responseData);
+              let img = document.createElement("img");
+              img.src = blob;
+              document.getElementById("bestscorersDiv").appendChild(img);
+              console.log("Erfolg:", responseData);
+            })
+            .catch((error) => {
+              console.error("Fehler:", error);
+            });
+        }
       }
 
       function getBestTsvScorers() {
         // Beste TSV Torschützen
-        fetch("/api/scorers/tsv", {
-          method: "GET", // HTTP-Methode
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.json(); // Antwort als JSON parsen
+        if (tsvScorers.length == 0) {
+          fetch("/api/scorers/tsv", {
+            method: "GET", // HTTP-Methode
           })
-          .then((responseData) => {
-            tsvScorers = responseData;
-            createTsvScorerPage();
-            getBestScorers();
-            console.log("Erfolg:", responseData);
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Fehler beim Senden der Daten");
+              }
+              return response.json(); // Antwort als JSON parsen
+            })
+            .then((responseData) => {
+              tsvScorers = responseData;
+              createTsvScorerPage();
+              getBestScorers();
+              console.log("Erfolg:", responseData);
+            })
+            .catch((error) => {
+              console.error("Fehler:", error);
+            });
+        }
       }
 
       function getAllMatchDetails(urls) {
@@ -325,8 +329,10 @@
             })
             .then((responseData) => {
               if (responseData.length == 0 && retries < 1) {
-                setTimeout(getAllMatchDetails, 2000);
-                console.log("getAllMatchDetails Retry");
+                setTimeout(function () {
+                  console.log("getAllMatchDetails Retry");
+                  getAllMatchDetails(urls);
+                }, 2000);
                 retries++;
               } else {
                 matches = responseData;
