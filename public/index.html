@@ -227,8 +227,8 @@
 
       function startSlideshow() {
         slides[0].classList.add("active");
-        if (slides[slides.length - 1]) {
-          getAllMatchDetails(matchUrls);
+        if (slides[slides.length - 1] && matches.length == matchUrls.length) {
+          getMatchData();
         }
 
         setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
