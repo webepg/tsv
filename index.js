@@ -207,6 +207,8 @@ async function getTsvScorers() {
 
     let players = teamPlayerStatsPage["data"]["players"];
 
+    console.log("players", players);
+
     players.forEach((player) => {
       if (player["goals"] > 0)
         tsvScorers.push({

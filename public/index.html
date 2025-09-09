@@ -325,11 +325,11 @@
           })
             .then((response) => {
               matches = response;
-              console.log("responseData Teil", JSON.stringify(response));
+              console.log("responseData Teil", response);
               if (matchUrls.length == matches.length) {
                 setGreeting();
                 createMatchPages();
-                console.log("responseData fertig", JSON.stringify(response));
+                console.log("responseData fertig", response);
               } else {
                 console.log("getMatchData retry");
                 setTimeout(getMatchData, 2000); // 5 Sekunden warten();
@@ -649,7 +649,7 @@
       setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
       setTimeout(startSlideshow, 15000);
-      setTimeout(getMatchData, 10000);
+      //setTimeout(getMatchData, 10000);
       //setTimeout(startSlideshow(), 5000);
     </script>
   </body>
