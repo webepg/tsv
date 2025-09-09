@@ -387,10 +387,7 @@
 
         matchUrls = [...new Set(hrefArray)];
 
-        if (matchUrls.length == 0) {
-          console.log("getAllMatchUrls retry");
-          setTimeout(getAllMatchUrls, 3000);
-        } else {
+        if (matchUrls.length > 0) {
           console.log("matchUrls: ", matchUrls);
           getAllMatchDetails(matchUrls);
           setTimeout(getMatchData, 5000);
@@ -661,7 +658,7 @@
       // acting
       createSponsorPages();
       setTimeout(getBestTsvScorers, 3000);
-      setTimeout(updateData, 5000);
+      setTimeout(updateData, 8000);
     </script>
   </body>
   <footer>
