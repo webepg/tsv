@@ -62,7 +62,10 @@ app.post("/api/matches", async (req, res) => {
       const page = await browser.newPage();
       await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
-      await page.$("#cmpbntyestxt")?.click();
+      const cmpbntyestxt = await page.$("#cmpbntyestxt");
+      if (cmpbntyestxt) {
+        await cmpbntyestxt.click();
+      }
 
       const { matchInfo } = await page.evaluate(
         () => window.REDUX_DATA.dataHistory[0].MatchPage
@@ -109,7 +112,7 @@ app.post("/api/matches", async (req, res) => {
       console.log(e);
       return null;
     } finally {
-      await page?.close();
+      await page.close();
     }
   }
 
