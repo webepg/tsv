@@ -386,7 +386,7 @@
 
         if (matchUrls.length == 0) {
           console.log("getAllMatchUrls retry");
-          getAllMatchUrls();
+          setTimeout(getAllMatchUrls, 3000); // 5 Sekunden warten();
         } else {
           console.log("matchUrls: ", matchUrls);
           getAllMatchDetails(matchUrls);
