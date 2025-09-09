@@ -263,13 +263,9 @@ async function getScorers() {
   return screenshot;
 }
 
-app.on("ready", () => {
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
   console.log("Server bereit");
   getTsvScorers();
   getScorers();
-  // Hier kannst du deinen Event ausführen
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
 });
