@@ -322,7 +322,6 @@
             headers: {
               "Content-Type": "application/json", // Header für JSON-Daten
             },
-            body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
           })
             .then((response) => {
               matches = responseData;
@@ -332,7 +331,7 @@
                 console.log("responseData", JSON.stringify(responseData));
               } else {
                 console.log("getMatchData retry");
-                getMatchData();
+                setTimeout(getMatchData, 2000); // 5 Sekunden warten();
               }
             })
             .catch((error) => {
@@ -349,6 +348,7 @@
             headers: {
               "Content-Type": "application/json", // Header für JSON-Daten
             },
+            body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
           })
             .then((response) => {
               if (!response.ok) {
