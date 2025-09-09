@@ -43,7 +43,7 @@ app.post("/api/matches", async (req, res) => {
       ],
     });
 
-    while (!doneUrls.containsAll(matchUrls)) {
+    while (!containsAll(doneUrls, matchUrls)) {
       let difference = matchUrls.filter((url) => !doneUrls.includes(url));
       let result = await getMatchDataForUrl(browser, difference[0]);
 
