@@ -51,10 +51,6 @@ app.post("/api/matches", async (req, res) => {
         matches.push(result);
         console.log("doneUrl", doneUrls);
       }
-
-      setTimeout(() => {
-        console.log("Pause");
-      }, 500);
     }
 
     /*for (const url of urls) {
@@ -215,6 +211,7 @@ async function getTsvScorers() {
           goals: player["goals"],
           name: player["firstName"] + " " + player["lastName"],
           img: player["image"]["path"] + "320xauto.jpeg",
+          matches: player["matches"],
         });
     });
   } catch (e) {

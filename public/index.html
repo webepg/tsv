@@ -316,6 +316,12 @@
       }
 
       function getMatchData() {
+        console.log("matches.length == 0?", matches.length == 0);
+        console.log(
+          "matches.length < matchUrls.length?",
+          matches.length < matchUrls.length
+        );
+
         if (matches.length == 0 || matches.length < matchUrls.length) {
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
@@ -326,13 +332,17 @@
             .then((response) => {
               matches = response;
               console.log("responseData Teil", response);
+              console.log(
+                "matchUrls.length == matches.length?",
+                matchUrls.length == matches.length
+              );
               if (matchUrls.length == matches.length) {
                 setGreeting();
                 createMatchPages();
                 console.log("responseData fertig", response);
               } else {
                 console.log("getMatchData retry");
-                setTimeout(getMatchData, 2000); // 5 Sekunden warten();
+                setTimeout(getMatchData, 1000); // 5 Sekunden warten();
               }
             })
             .catch((error) => {
@@ -648,7 +658,7 @@
       createSponsorPages();
       setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
-      setTimeout(startSlideshow, 15000);
+      setTimeout(startSlideshow, 30000);
       //setTimeout(getMatchData, 10000);
       //setTimeout(startSlideshow(), 5000);
     </script>
