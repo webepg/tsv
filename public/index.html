@@ -234,28 +234,31 @@
         // Begrüßung setzen
         let lastMatch;
 
-        matches.forEach((match) => {
-          if (match.formattedDate == todayAsformattedDate) {
-            todaysMatch = match;
-          }
-          if (
-            match.formattedDate < todayAsformattedDate &&
-            match.homeTeam == "TSV Bad Griesbach"
-          ) {
-            lastMatch = match;
-          }
-        });
+        if (matches.length > 0) {
+          matches.forEach((match) => {
+            if (match.formattedDate == todayAsformattedDate) {
+              todaysMatch = match;
+            }
+            if (
+              match.formattedDate < todayAsformattedDate &&
+              match.homeTeam == "TSV Bad Griesbach"
+            ) {
+              lastMatch = match;
+            }
+          });
 
-        if (todaysMatch) {
-          document.getElementById("opponent").innerText = todaysMatch.awayTeam;
-          document.getElementById("opponentLogo").src =
-            todaysMatch.awayTeamImg.replace("200x200", "300x300");
-        } else {
-          document.getElementById("greetingtext").innerText =
-            "Wir begrüßten zum letzten Heimspiel den";
-          document.getElementById("opponent").innerText = lastMatch.awayTeam;
-          document.getElementById("opponentLogo").src =
-            lastMatch.awayTeamImg.replace("200x200", "300x300");
+          if (todaysMatch) {
+            document.getElementById("opponent").innerText =
+              todaysMatch.awayTeam;
+            document.getElementById("opponentLogo").src =
+              todaysMatch.awayTeamImg.replace("200x200", "300x300");
+          } else {
+            document.getElementById("greetingtext").innerText =
+              "Wir begrüßten zum letzten Heimspiel den";
+            document.getElementById("opponent").innerText = lastMatch.awayTeam;
+            document.getElementById("opponentLogo").src =
+              lastMatch.awayTeamImg.replace("200x200", "300x300");
+          }
         }
       }
 

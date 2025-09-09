@@ -9,6 +9,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 let matches = [];
 let tsvScorers = [];
+let screenshot;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -141,62 +142,59 @@ app.post("/api/matches", async (req, res) => {
 
 // Beste TSV Torschützen https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats
 
-app.get("/api/scorers/tsv", async (req, res) => {
-  async function getTsvScorers() {
-    let browser = await puppeteer.launch({
-      ignoreHTTPSErrors: true,
-      headless: true,
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
+async function getTsvScorers() {
+  let browser = await puppeteer.launch({
+    ignoreHTTPSErrors: true,
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : puppeteer.executablePath(),
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
+      timeout: 90000,
     });
+    await page.waitForNetworkIdle();
 
     try {
-      const page = await browser.newPage();
-      await page.goto(
-        "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26",
-        {
-          timeout: 90000,
-        }
-      );
-      await page.waitForNetworkIdle();
-
-      try {
-        await page.click("#cmpbntyestxt");
-      } catch (e) {
-        console.log(e);
-      }
-
-      // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
-
-      const teamPlayerStatsPage = await page.evaluate(() => {
-        return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
-      });
-
-      let players = teamPlayerStatsPage["data"]["players"];
-
-      players.forEach((player) => {
-        if (player["goals"] > 0)
-          tsvScorers.push({
-            goals: player["goals"],
-            name: player["firstName"] + " " + player["lastName"],
-            img: player["image"]["path"] + "320xauto.jpeg",
-          });
-      });
+      await page.click("#cmpbntyestxt");
     } catch (e) {
       console.log(e);
-    } finally {
-      await browser.close();
     }
-    return [...new Set(tsvScorers)];
-  }
 
+    // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
+
+    const teamPlayerStatsPage = await page.evaluate(() => {
+      return window.REDUX_DATA["dataHistory"][0]["TeamPlayersPage"];
+    });
+
+    let players = teamPlayerStatsPage["data"]["players"];
+
+    players.forEach((player) => {
+      if (player["goals"] > 0)
+        tsvScorers.push({
+          goals: player["goals"],
+          name: player["firstName"] + " " + player["lastName"],
+          img: player["image"]["path"] + "320xauto.jpeg",
+        });
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    await browser.close();
+  }
+  return [...new Set(tsvScorers)];
+}
+
+app.get("/api/scorers/tsv", async (req, res) => {
   if (tsvScorers.length == 0) {
     let result = await getTsvScorers();
     console.log("tsvscorers", result);
@@ -212,52 +210,62 @@ app.get("/api/sponsors", async (req, res) => {
 
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
-  async function getScorers() {
-    let screenshot;
-
-    let browser = await puppeteer.launch({
-      ignoreHTTPSErrors: true,
-      headless: true,
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-    });
-
-    try {
-      const page = await browser.newPage();
-      await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
-        timeout: 90000,
-      });
-      await page.waitForNetworkIdle();
-
-      try {
-        await page.click("#cmpbntyestxt");
-      } catch (e) {
-        console.log(e);
-      }
-
-      screenshot = await page.screenshot({
-        encoding: "binary",
-        clip: { x: 0, y: 10, width: 800, height: 350 },
-      });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      await browser.close();
-    }
-    // Extrahieren von Daten direkt aus dem DOM
-    return screenshot;
+  let result;
+  if (!screenshot) {
+    result = await getScorers();
+  } else {
+    result = screenshot;
   }
-
-  let result = await getScorers();
   res.set("Content-Type", "image/png");
   res.send(result);
+});
+
+async function getScorers() {
+  let browser = await puppeteer.launch({
+    ignoreHTTPSErrors: true,
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : puppeteer.executablePath(),
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
+      timeout: 90000,
+    });
+    await page.waitForNetworkIdle();
+
+    try {
+      await page.click("#cmpbntyestxt");
+    } catch (e) {
+      console.log(e);
+    }
+
+    screenshot = await page.screenshot({
+      encoding: "binary",
+      clip: { x: 0, y: 10, width: 800, height: 350 },
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    await browser.close();
+  }
+  // Extrahieren von Daten direkt aus dem DOM
+  return screenshot;
+}
+
+app.on("ready", () => {
+  console.log("Server bereit");
+  getTsvScorers();
+  getScorers();
+  // Hier kannst du deinen Event ausführen
 });
 
 app.listen(port, () => {
