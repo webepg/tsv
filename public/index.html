@@ -208,7 +208,7 @@
       let retries = 0;
       let sponsors = [];
       let tsvScorers = [];
-      let intervalId;
+      let isRunning = false;
 
       // methods
       function nextSlide() {
@@ -319,7 +319,10 @@
           matches.length < matchUrls.length
         );
 
+        if (isRunning) return;
+
         if (matches.length == 0 || matches.length < matchUrls.length) {
+          isRunning = true;
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
             headers: {
@@ -337,8 +340,10 @@
                 setGreeting();
                 createMatchPages();
                 setTimeout(startSlideshow, 5000);
-                clearInterval(intervalId);
                 console.log("responseData fertig", response);
+              } else {
+                isRunning = false;
+                setTimeout(getMatchData, 5000);
               }
             })
             .catch((error) => {
@@ -390,6 +395,7 @@
         } else {
           console.log("matchUrls: ", matchUrls);
           getAllMatchDetails(matchUrls);
+          setTimeout(getMatchData, 5000);
         }
       }
 
@@ -414,7 +420,7 @@
 
         tsvScorers.sort((a, b) => {
           if (a.goals === b.goals) {
-            return b.matches - a.matches;
+            return a.matches - b.matches;
           } else {
             return b.goals - a.goals;
           }
@@ -658,9 +664,6 @@
       createSponsorPages();
       setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
-      intervalId = setInterval(function () {
-        getMatchData();
-      }, 5000);
     </script>
   </body>
   <footer>
