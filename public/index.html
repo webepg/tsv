@@ -374,7 +374,7 @@
         console.log("todayAsformattedDate: " + todayAsformattedDate);
 
         if (matches.length == 0) {
-          getAllMatchUrls();
+          setTimeout(getAllMatchUrls, 5000); // 5 Sekunden warten();
         }
       }
 
