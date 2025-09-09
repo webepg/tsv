@@ -208,6 +208,7 @@
       let retries = 0;
       let sponsors = [];
       let tsvScorers = [];
+      let isRunning = false;
 
       // methods
       function nextSlide() {
@@ -227,10 +228,6 @@
 
       function startSlideshow() {
         slides[0].classList.add("active");
-        if (slides[slides.length - 1] && matches.length == matchUrls.length) {
-          getMatchData();
-        }
-
         setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
       }
 
@@ -322,6 +319,10 @@
           matches.length < matchUrls.length
         );
 
+        if (isRunning) {
+          return;
+        }
+
         if (matches.length == 0 || matches.length < matchUrls.length) {
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
@@ -330,6 +331,7 @@
             },
           })
             .then((response) => {
+              isRunning = true;
               matches = response;
               console.log("responseData Teil", response);
               console.log(
@@ -343,8 +345,9 @@
               } else {
                 console.log("getMatchData retry");
                 setTimeout(function () {
+                  isRunning = false;
                   getMatchData();
-                }, 2000); // 1 Sekunden warten();
+                }, 5000); // 5 Sekunden warten();
               }
             })
             .catch((error) => {
