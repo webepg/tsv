@@ -54,10 +54,11 @@ app.post("/api/matches", async (req, res) => {
       await page.goto(url, { timeout: 90000 });
       await page.waitForNetworkIdle();
 
-      try {
-        await page.click("#cmpbntyestxt");
-      } catch (e) {
-        console.log(e);
+      const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
+      if (cmpbntyestxtElement) {
+        await cmpbntyestxtElement.click();
+      } else {
+        console.log("Element #cmpbntyestxt nicht gefunden");
       }
 
       const matchPage = await page.evaluate(() => {
@@ -168,10 +169,11 @@ async function getTsvScorers() {
     });
     await page.waitForNetworkIdle();
 
-    try {
-      await page.click("#cmpbntyestxt");
-    } catch (e) {
-      console.log(e);
+    const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
+    if (cmpbntyestxtElement) {
+      await cmpbntyestxtElement.click();
+    } else {
+      console.log("Element #cmpbntyestxt nicht gefunden");
     }
 
     // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
@@ -246,10 +248,11 @@ async function getScorers() {
     });
     await page.waitForNetworkIdle();
 
-    try {
-      await page.click("#cmpbntyestxt");
-    } catch (e) {
-      console.log(e);
+    const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
+    if (cmpbntyestxtElement) {
+      await cmpbntyestxtElement.click();
+    } else {
+      console.log("Element #cmpbntyestxt nicht gefunden");
     }
 
     screenshot = await page.screenshot({
