@@ -20,9 +20,12 @@ app.get("/api/matches", (req, res) => {
   res.status(200).json(matches);
 });
 
+function containsAll(arr1, arr2) {
+  return arr2.every((url) => arr1.includes(url));
+}
+
 app.post("/api/matches", async (req, res) => {
-  let urls = req.body.urls;
-  matchUrls = urls;
+  matchUrls = req.body.urls;
 
   async function getMatchData(urls) {
     console.log("getMatchData urls", urls);
@@ -40,12 +43,26 @@ app.post("/api/matches", async (req, res) => {
       ],
     });
 
-    for (const url of urls) {
+    while (!doneUrls.containsAll(matchUrls)) {
+      let difference = matchUrls.filter((url) => !doneUrls.includes(url));
+      let result = await getMatchDataForUrl(browser, difference[0]);
+
+      if (result) {
+        matches.push(result);
+        console.log("doneUrl", doneUrls);
+      }
+
+      setTimeout(() => {
+        console.log("Pause");
+      }, 500);
+    }
+
+    /*for (const url of urls) {
       matches.push(await getMatchDataForUrl(browser, url));
       setTimeout(() => {
         console.log("Pause");
       }, 1000);
-    }
+    }*/
 
     await browser.close();
   }
