@@ -53,13 +53,6 @@ app.post("/api/matches", async (req, res) => {
       }
     }
 
-    /*for (const url of urls) {
-      matches.push(await getMatchDataForUrl(browser, url));
-      setTimeout(() => {
-        console.log("Pause");
-      }, 1000);
-    }*/
-
     await browser.close();
   }
 

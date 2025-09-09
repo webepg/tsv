@@ -208,7 +208,6 @@
       let retries = 0;
       let sponsors = [];
       let tsvScorers = [];
-      let isRunning = false;
 
       // methods
       function nextSlide() {
@@ -319,12 +318,7 @@
           matches.length < matchUrls.length
         );
 
-        if (isRunning) {
-          return;
-        }
-
         if (matches.length == 0 || matches.length < matchUrls.length) {
-          isRunning = true;
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
             headers: {
@@ -341,13 +335,11 @@
               if (matchUrls.length == matches.length) {
                 setGreeting();
                 createMatchPages();
+                setTimeout(startSlideshow, 5000);
                 console.log("responseData fertig", response);
               } else {
                 console.log("getMatchData retry");
-                setTimeout(function () {
-                  isRunning = false;
-                  getMatchData();
-                }, 5000); // 5 Sekunden warten();
+                setTimeout(getMatchData, 5000); // 5 Sekunden warten();
               }
             })
             .catch((error) => {
@@ -667,9 +659,6 @@
       createSponsorPages();
       setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
-      setTimeout(startSlideshow, 30000);
-      //setTimeout(getMatchData, 10000);
-      //setTimeout(startSlideshow(), 5000);
     </script>
   </body>
   <footer>
