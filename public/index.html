@@ -342,7 +342,9 @@
                 console.log("responseData fertig", response);
               } else {
                 console.log("getMatchData retry");
-                setTimeout(getMatchData, 1000); // 5 Sekunden warten();
+                setTimeout(function () {
+                  getMatchData();
+                }, 2000); // 1 Sekunden warten();
               }
             })
             .catch((error) => {
