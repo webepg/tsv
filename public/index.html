@@ -304,7 +304,7 @@
             return response.json(); // Antwort als JSON parsen
           })
           .then((responseData) => {
-            if (responseData.length > 0 && retries < 1) {
+            if (responseData.length == 0 && retries < 1) {
               setTimeout(getAllMatchDetails, 2000);
               console.log("Retry");
               retries++;
