@@ -57,6 +57,64 @@ app.post("/api/matches", async (req, res) => {
   }
 
   async function getMatchDataForUrl(browser, url) {
+    console.log("getMatchDataForUrl url", url);
+    try {
+      const page = await browser.newPage();
+      await page.goto(url, { timeout: 60000 });
+      await page.waitForNetworkIdle();
+      await page.$("#cmpbntyestxt")?.click();
+
+      const { matchInfo } = await page.evaluate(
+        () => window.REDUX_DATA.dataHistory[0].MatchPage
+      );
+
+      const match = {
+        formattedDate: matchInfo.slug.split("-").pop(),
+        league: matchInfo.competition.name,
+        matchDay: matchInfo.round.name,
+        homeTeam: matchInfo.homeTeamName,
+        awayTeam: matchInfo.awayTeamName,
+        homeTeamId: matchInfo.homeTeam.slug,
+        awayTeamId: matchInfo.awayTeam.slug,
+        homeTeamImg: `${matchInfo.homeTeam.image.path}200x200.jpeg`,
+        awayTeamImg: `${matchInfo.awayTeam.image.path}200x200.jpeg`,
+        goals: [],
+        redCards: [],
+        yellowRedCards: [],
+        suspensions: [],
+        missedPenalties: [],
+      };
+
+      matchInfo.highlights.forEach(
+        ({ team, minute, additionalMinute, primaryRole, type, subtype }) => {
+          const player = primaryRole
+            ? `${primaryRole.firstName} ${primaryRole.lastName}`
+            : "Unbekannt";
+          const event = { team: team.slug, minute, additionalMinute, player };
+
+          if (type === "goal")
+            match.goals.push({ ...event, goalType: subtype });
+          else if (type === "penaltyfail") match.missedPenalties.push(event);
+          else if (type === "card" && subtype === "card_red")
+            match.redCards.push(event);
+          else if (type === "card" && subtype === "card_yellow_red")
+            match.yellowRedCards.push(event);
+          else if (type === "timepenalty") match.suspensions.push(event);
+        }
+      );
+
+      doneUrls.push(url);
+      return match;
+    } catch (e) {
+      console.log(e);
+      return null;
+    } finally {
+      await page?.close();
+    }
+  }
+
+  /*
+  async function getMatchDataForUrl(browser, url) {
     let page;
     let match;
 
@@ -150,7 +208,7 @@ app.post("/api/matches", async (req, res) => {
     }
     console.log("Match", match);
     return match;
-  }
+  }*/
 
   await getMatchData(matchUrls);
 

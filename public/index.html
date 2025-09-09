@@ -332,49 +332,9 @@
           setGreeting();
           createMatchPages();
           setTimeout(startSlideshow, 5000);
-          console.log("responseData fertig", response);
+          console.log("getMatchData fertig");
         }
       }
-
-      /*function getMatchData() {
-        console.log("matches.length == 0?", matches.length == 0);
-        console.log(
-          "matches.length < matchUrls.length?",
-          matches.length < matchUrls.length
-        );
-
-        if (isRunning) return;
-
-        if (matches.length == 0 || matches.length < matchUrls.length) {
-          isRunning = true;
-          fetch("/api/matches", {
-            method: "GET", // HTTP-Methode
-            headers: {
-              "Content-Type": "application/json", // Header für JSON-Daten
-            },
-          })
-            .then((response) => {
-              isRunning = false;
-              matches = response;
-              console.log("responseData Teil", response);
-              console.log(
-                "matchUrls.length == matches.length?",
-                matchUrls.length == matches.length
-              );
-              if (matchUrls.length == matches.length) {
-                setGreeting();
-                createMatchPages();
-                setTimeout(startSlideshow, 5000);
-                console.log("responseData fertig", response);
-              } else {
-                setTimeout(getMatchData, 5000);
-              }
-            })
-            .catch((error) => {
-              console.error("Fehler:", error);
-            });
-        }
-      }*/
 
       function getAllMatchDetails(urls) {
         // POST-Request senden
