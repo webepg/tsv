@@ -417,7 +417,11 @@
         tsvscorersDiv.appendChild(title);
 
         tsvScorers.sort((a, b) => {
-          return b.goals - a.goals;
+          if (a.goals === b.goals) {
+            return b.matches - a.matches;
+          } else {
+            return b.goals - a.goals;
+          }
         });
 
         tsvScorers.splice(5);
