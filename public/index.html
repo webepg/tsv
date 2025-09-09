@@ -328,7 +328,9 @@
 
         if (matches.length == 0) {
           getAllMatchUrls();
-          getAllMatchDetails(matchUrls);
+          setTimeout(function () {
+            getAllMatchDetails(matchUrls);
+          }, 2000);
         }
       }
 
@@ -340,8 +342,9 @@
           let date = trimmedHref.split("-").pop();
           if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
         });
-        //console.log("matchUrls: ", ...new Set(hrefArray));
+
         matchUrls = [...new Set(hrefArray)];
+        console.log("matchUrls: ", matchUrls);
       }
 
       function formatDate(dateToFormat) {
