@@ -35,8 +35,7 @@ app.post("/api/matches", async (req, res) => {
     const results = [];
 
     for (const url of urls) {
-      const result = await getMatchDataForUrl(browser, url);
-      results.push(result);
+      results.push(await getMatchDataForUrl(browser, url));
     }
 
     await browser.close();
@@ -131,6 +130,8 @@ app.post("/api/matches", async (req, res) => {
       });
     } catch (e) {
       console.log(e);
+      console.log("getMatchDataForUrl retry");
+      getMatchDataForUrl(browser, url);
     } finally {
       await page.close();
     }
@@ -265,7 +266,6 @@ async function getScorers() {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-  console.log("Server bereit");
   getTsvScorers();
   getScorers();
 });
