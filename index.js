@@ -131,7 +131,8 @@ app.post("/api/matches", async (req, res) => {
     } catch (e) {
       console.log(e);
       console.log("getMatchDataForUrl retry");
-      getMatchDataForUrl(browser, url);
+      await page.close();
+      await getMatchDataForUrl(browser, url);
     } finally {
       await page.close();
     }
