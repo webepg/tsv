@@ -163,7 +163,7 @@ app.post("/api/matches", async (req, res) => {
     return match;
   }
 
-  await getMatchData(urls);
+  await getMatchData(matchUrls);
 
   res.status(200).json();
 });
