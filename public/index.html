@@ -255,7 +255,7 @@
               todaysMatch.awayTeamImg.replace("200x200", "300x300");
           } else {
             document.getElementById("greetingtext").innerText =
-              "Wir begrüßten zum letzten Heimspiel den";
+              "Wir begrüßten beim letzten Heimspiel den";
             document.getElementById("opponent").innerText = lastMatch.awayTeam;
             document.getElementById("opponentLogo").src =
               lastMatch.awayTeamImg.replace("200x200", "300x300");
@@ -330,6 +330,7 @@
             },
           })
             .then((response) => {
+              isRunning = false;
               matches = response;
               console.log("responseData Teil", response);
               console.log(
@@ -342,7 +343,6 @@
                 setTimeout(startSlideshow, 5000);
                 console.log("responseData fertig", response);
               } else {
-                isRunning = false;
                 setTimeout(getMatchData, 5000);
               }
             })
