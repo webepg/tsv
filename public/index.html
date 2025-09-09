@@ -309,34 +309,36 @@
 
       function getAllMatchDetails(urls) {
         // POST-Request senden
-        fetch("/api/matches", {
-          method: "POST", // HTTP-Methode
-          headers: {
-            "Content-Type": "application/json", // Header für JSON-Daten
-          },
-          body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.json(); // Antwort als JSON parsen
+        if (matches.length == 0) {
+          fetch("/api/matches", {
+            method: "POST", // HTTP-Methode
+            headers: {
+              "Content-Type": "application/json", // Header für JSON-Daten
+            },
+            body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
           })
-          .then((responseData) => {
-            if (responseData.length == 0 && retries < 1) {
-              setTimeout(getAllMatchDetails, 2000);
-              console.log("Retry");
-              retries++;
-            } else {
-              matches = responseData;
-              setGreeting();
-              createMatchPages();
-              console.log("responseData", JSON.stringify(responseData));
-            }
-          })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Fehler beim Senden der Daten");
+              }
+              return response.json(); // Antwort als JSON parsen
+            })
+            .then((responseData) => {
+              if (responseData.length == 0 && retries < 1) {
+                setTimeout(getAllMatchDetails, 2000);
+                console.log("getAllMatchDetails Retry");
+                retries++;
+              } else {
+                matches = responseData;
+                setGreeting();
+                createMatchPages();
+                console.log("responseData", JSON.stringify(responseData));
+              }
+            })
+            .catch((error) => {
+              console.error("Fehler:", error);
+            });
+        }
       }
 
       function updateData() {
@@ -347,9 +349,6 @@
 
         if (matches.length == 0) {
           getAllMatchUrls();
-          setTimeout(function () {
-            getAllMatchDetails(matchUrls);
-          }, 5000);
         }
       }
 
@@ -363,7 +362,14 @@
         });
 
         matchUrls = [...new Set(hrefArray)];
-        console.log("matchUrls: ", matchUrls);
+
+        if (matchUrls.length == 0) {
+          console.log("getAllMatchUrls retry");
+          getAllMatchUrls();
+        } else {
+          console.log("matchUrls: ", matchUrls);
+          getAllMatchDetails(matchUrls);
+        }
       }
 
       function formatDate(dateToFormat) {
