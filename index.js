@@ -17,22 +17,19 @@ app.post("/api/matches", async (req, res) => {
   let urls = req.body.urls;
 
   async function getMatchData(urls) {
-    let browser;
-    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-      browser = await puppeteer.launch({
-        ignoreHTTPSErrors: true,
-        headless: true,
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--single-process",
-          "--no-zygote",
-        ],
-      });
-    } else {
-      browser = await puppeteer.launch(puppeteer.executablePath());
-    }
+    let browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+    });
     const results = [];
 
     for (const url of urls) {
@@ -51,7 +48,12 @@ app.post("/api/matches", async (req, res) => {
       page = await browser.newPage();
       await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
-      await page.click("#cmpbntyestxt");
+
+      try {
+        await page.click("#cmpbntyestxt");
+      } catch (e) {
+        console.log(e);
+      }
 
       const matchPage = await page.evaluate(() => {
         return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
@@ -141,22 +143,20 @@ app.post("/api/matches", async (req, res) => {
 
 app.get("/api/scorers/tsv", async (req, res) => {
   async function getTsvScorers() {
-    let browser;
-    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-      browser = await puppeteer.launch({
-        ignoreHTTPSErrors: true,
-        headless: true,
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--single-process",
-          "--no-zygote",
-        ],
-      });
-    } else {
-      browser = await puppeteer.launch(puppeteer.executablePath());
-    }
+    let browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+    });
+
     try {
       const page = await browser.newPage();
       await page.goto(
@@ -167,7 +167,11 @@ app.get("/api/scorers/tsv", async (req, res) => {
       );
       await page.waitForNetworkIdle();
 
-      await page.click("#cmpbntyestxt");
+      try {
+        await page.click("#cmpbntyestxt");
+      } catch (e) {
+        console.log(e);
+      }
 
       // Extrahieren von Daten direkt aus dem DO    await page.click("#cmpbntyestxt");
 
@@ -211,22 +215,19 @@ app.get("/api/scorers", async (req, res) => {
   async function getScorers() {
     let screenshot;
 
-    let browser;
-    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-      browser = await puppeteer.launch({
-        ignoreHTTPSErrors: true,
-        headless: true,
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--single-process",
-          "--no-zygote",
-        ],
-      });
-    } else {
-      browser = await puppeteer.launch(puppeteer.executablePath());
-    }
+    let browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+    });
 
     try {
       const page = await browser.newPage();
@@ -235,7 +236,11 @@ app.get("/api/scorers", async (req, res) => {
       });
       await page.waitForNetworkIdle();
 
-      await page.click("#cmpbntyestxt");
+      try {
+        await page.click("#cmpbntyestxt");
+      } catch (e) {
+        console.log(e);
+      }
 
       screenshot = await page.screenshot({
         encoding: "binary",
