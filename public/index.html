@@ -324,6 +324,7 @@
         }
 
         if (matches.length == 0 || matches.length < matchUrls.length) {
+          isRunning = true;
           fetch("/api/matches", {
             method: "GET", // HTTP-Methode
             headers: {
@@ -331,7 +332,6 @@
             },
           })
             .then((response) => {
-              isRunning = true;
               matches = response;
               console.log("responseData Teil", response);
               console.log(
