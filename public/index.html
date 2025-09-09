@@ -354,11 +354,11 @@
               if (!response.ok) {
                 throw new Error("Fehler beim Senden der Daten");
               }
-              return response.json(); // Antwort als JSON parsen
+              //return response.json(); // Antwort als JSON parsen
             })
-            .then(() => {
+            /*.then(() => {
               getMatchData();
-            })
+            })*/
             .catch((error) => {
               console.error("Fehler:", error);
             });
@@ -658,6 +658,7 @@
       setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
       setTimeout(startSlideshow, 15000);
+      setTimeout(getMatchData, 10000);
       //setTimeout(startSlideshow(), 5000);
     </script>
   </body>

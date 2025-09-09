@@ -36,14 +36,15 @@ app.post("/api/matches", async (req, res) => {
         "--no-zygote",
       ],
     });
-    const results = [];
 
     for (const url of urls) {
-      results.push(await getMatchDataForUrl(browser, url));
+      matches.push(await getMatchDataForUrl(browser, url));
+      setTimeout(() => {
+        console.log("Pause");
+      }, 2000);
     }
 
     await browser.close();
-    return results;
   }
 
   async function getMatchDataForUrl(browser, url) {
@@ -144,8 +145,8 @@ app.post("/api/matches", async (req, res) => {
   }
 
   //if (matches.length == 0) {
-  /*let result =*/ await getMatchData(urls);
-  matches = [...new Set(result)];
+  await getMatchData(urls);
+
   //}
 
   res.status(200).json();
