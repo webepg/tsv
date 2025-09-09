@@ -349,19 +349,9 @@
               "Content-Type": "application/json", // Header für JSON-Daten
             },
             body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Fehler beim Senden der Daten");
-              }
-              //return response.json(); // Antwort als JSON parsen
-            })
-            /*.then(() => {
-              getMatchData();
-            })*/
-            .catch((error) => {
-              console.error("Fehler:", error);
-            });
+          }).catch((error) => {
+            console.error("Fehler:", error);
+          });
         }
       }
 
