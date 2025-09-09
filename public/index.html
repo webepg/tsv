@@ -328,17 +328,15 @@
               return response.json(); // Antwort als JSON parsen
             })
             .then((responseData) => {
-              if (responseData.length == 0 && retries < 1) {
-                setTimeout(function () {
-                  console.log("getAllMatchDetails Retry");
-                  getAllMatchDetails(urls);
-                }, 2000);
+              if (responseData.length == 0 && retries < 2) {
+                console.log("getAllMatchDetails Retry");
                 retries++;
+                getAllMatchDetails(urls);
               } else {
                 matches = responseData;
+                console.log("responseData", JSON.stringify(responseData));
                 setGreeting();
                 createMatchPages();
-                console.log("responseData", JSON.stringify(responseData));
               }
             })
             .catch((error) => {
@@ -637,8 +635,8 @@
 
       // acting
       createSponsorPages();
+      setTimeout(getBestTsvScorers, 3000);
       setTimeout(updateData, 5000);
-      getBestTsvScorers();
       setTimeout(startSlideshow, 15000);
       //setTimeout(startSlideshow(), 5000);
     </script>

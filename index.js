@@ -51,7 +51,7 @@ app.post("/api/matches", async (req, res) => {
 
     try {
       page = await browser.newPage();
-      await page.goto(url, { timeout: 90000 });
+      await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
 
       const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
@@ -165,7 +165,7 @@ async function getTsvScorers() {
   try {
     const page = await browser.newPage();
     await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
-      timeout: 90000,
+      timeout: 60000,
     });
     await page.waitForNetworkIdle();
 
@@ -216,12 +216,7 @@ app.get("/api/sponsors", async (req, res) => {
 
 // Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
 app.get("/api/scorers", async (req, res) => {
-  let result;
-  if (!screenshot) {
-    result = await getScorers();
-  } else {
-    result = screenshot;
-  }
+  let result = screenshot ? screenshot : await getScorers();
   res.set("Content-Type", "image/png");
   res.send(result);
 });
