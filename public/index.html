@@ -291,7 +291,7 @@
         // Beste TSV Torschützen
         if (tsvScorers.length == 0) {
           fetch("/api/scorers/tsv", {
-            method: "GET", // HTTP-Methode
+            method: "POST", // HTTP-Methode
             headers: {
               "Content-Type": "application/json", // Header für JSON-Daten
             },
