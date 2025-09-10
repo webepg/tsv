@@ -12,6 +12,9 @@ let matchUrls = [];
 let doneUrls = [];
 let tsvScorers = [];
 let screenshot;
+let isMatchDataRunning = false;
+let isScorersRunning = false;
+let isTsvScorersRunning = false;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -52,7 +55,7 @@ app.post("/api/matches", async (req, res) => {
         console.log("doneUrl", doneUrls);
       }
     }
-
+    isMatchDataRunning = false;
     await browser.close();
   }
 
@@ -117,14 +120,17 @@ app.post("/api/matches", async (req, res) => {
     }
   }
 
-  await getMatchData(matchUrls);
+  if (!isMatchDataRunning) {
+    isMatchDataRunning = true;
+    await getMatchData(matchUrls);
+  }
 
   res.status(200).json();
 });
 
-// Beste TSV Torschützen https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26/playerstats
+// Beste TSV Torschützen
 
-async function getTsvScorers() {
+async function getTsvScorers(url) {
   let browser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
     headless: true,
@@ -141,8 +147,8 @@ async function getTsvScorers() {
 
   try {
     const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
-      timeout: 30000,
+    await page.goto(url, {
+      timeout: 60000,
     });
     await page.waitForNetworkIdle();
 
@@ -175,14 +181,19 @@ async function getTsvScorers() {
   } catch (e) {
     console.log(e);
   } finally {
+    isTsvScorersRunning = false;
     await browser.close();
   }
   return [...new Set(tsvScorers)];
 }
 
-app.get("/api/scorers/tsv", async (req, res) => {
-  if (tsvScorers.length == 0) {
-    let result = await getTsvScorers();
+app.post("/api/scorers/tsv", async (req, res) => {
+  let url = req.body.url;
+  //
+
+  if (tsvScorers.length == 0 && !isTsvScorersRunning) {
+    isTsvScorersRunning = true;
+    let result = await getTsvScorers(url);
     console.log("tsvscorers", result);
   }
   res.status(200).json(tsvScorers);
@@ -194,14 +205,21 @@ app.get("/api/sponsors", async (req, res) => {
   res.status(200).json(files);
 });
 
-// Alle Torschützen https://www.fupa.net/league/a-klasse-pocking/scorers
+// Alle Torschützen
 app.get("/api/scorers", async (req, res) => {
-  let result = screenshot ? screenshot : await getScorers();
-  res.set("Content-Type", "image/png");
-  res.send(result);
+  let url = req.body.url;
+  if (!screenshot && !isScorersRunning) {
+    isScorersRunning = true;
+    screenshot = await getScorers(url);
+  } else if (screenshot) {
+    res.set("Content-Type", "image/png");
+    res.send(screenshot);
+  } else {
+    res.status(200).json();
+  }
 });
 
-async function getScorers() {
+async function getScorers(url) {
   let browser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
     headless: true,
@@ -218,8 +236,8 @@ async function getScorers() {
 
   try {
     const page = await browser.newPage();
-    await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
-      timeout: 30000,
+    await page.goto(url, {
+      timeout: 60000,
     });
     await page.waitForNetworkIdle();
 
@@ -237,6 +255,7 @@ async function getScorers() {
   } catch (e) {
     console.log(e);
   } finally {
+    isScorersRunning = false;
     await browser.close();
   }
   // Extrahieren von Daten direkt aus dem DOM
