@@ -594,6 +594,9 @@
             sponsors.forEach((sponsor) => {
               const newDiv = document.createElement("div");
               newDiv.className = "slide sponsor-slide";
+              newDiv.style.backgroundImage = "url('background/sponsor.png')";
+              newDiv.style.backgroundSize = "contain";
+              newDiv.style.backgroundPosition = "center";
               newDiv.innerHTML = `
                     <img src="sponsor/${sponsor}" alt="${sponsor}" 
                          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
