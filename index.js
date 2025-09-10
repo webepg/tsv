@@ -61,7 +61,7 @@ app.post("/api/matches", async (req, res) => {
     let page;
     try {
       page = await browser.newPage();
-      await page.goto(url, { timeout: 30000 });
+      await page.goto(url, { timeout: 60000 });
       await page.waitForNetworkIdle();
       const cmpbntyestxt = await page.$("#cmpbntyestxt");
       if (cmpbntyestxt) {
