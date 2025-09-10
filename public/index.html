@@ -496,7 +496,7 @@
           score.style.transform = "translate(-50%, -50%)";
           score.style.textAlign = "center";
           score.style.color = "white";
-          score.style.fontSize = "130px";
+          score.style.fontSize = "150px";
 
           match.goals.sort((a, b) => {
             if (a.minute === b.minute) {
@@ -525,12 +525,14 @@
           homegoalscorersdiv.style.width = "48%";
           homegoalscorersdiv.style.textAlign = "left";
           homegoalscorersdiv.style.marginRight = "2%";
+          homegoalscorersdiv.style.height = "65%";
 
           let awaygoalscorersdiv = document.createElement("div");
           awaygoalscorersdiv.style.display = "inline-block";
           awaygoalscorersdiv.style.width = "48%";
           awaygoalscorersdiv.style.textAlign = "left";
           awaygoalscorersdiv.style.marginLeft = "2%";
+          awaygoalscorersdiv.style.height = "65%";
 
           match.goals.forEach((goal) => {
             console.log("goal", goal);
