@@ -206,7 +206,7 @@ app.get("/api/sponsors", async (req, res) => {
 });
 
 // Alle Torschützen
-app.get("/api/scorers", async (req, res) => {
+app.post("/api/scorers", async (req, res) => {
   let url = req.body.url;
   if (!screenshot && !isScorersRunning) {
     isScorersRunning = true;
