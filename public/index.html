@@ -582,35 +582,55 @@
       }
 
       function createSponsorPages() {
-        fetch("/api/sponsors")
-          .then((response) => {
-            if (!response.ok)
-              throw new Error("Fehler beim Abrufen der Sponsoren");
-            return response.json();
-          })
-          .then((sponsors) => {
-            const afterSponsorsDiv = document.getElementById("afterSponsors");
+        let afterSponsorsDiv = document.getElementById("afterSponsors");
 
+        fetch("/api/sponsors", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            sponsors = responseData;
+            // Rest des Codes
             sponsors.forEach((sponsor) => {
-              const newDiv = document.createElement("div");
-              newDiv.className = "slide sponsor-slide";
+              let newDiv = document.createElement("div");
+              newDiv.style.position = "absolute";
+              newDiv.style.top = "0";
+              newDiv.style.left = "0";
+              newDiv.style.height = "100vh";
+              newDiv.style.width = "100vw";
+              newDiv.style.textAlign = "center";
               newDiv.style.backgroundImage = "url('background/sponsor.png')";
               newDiv.style.backgroundSize = "contain";
               newDiv.style.backgroundPosition = "center";
-              newDiv.innerHTML = `
-                    <img src="sponsor/${sponsor}" alt="${sponsor}" 
-                         style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
-                `;
+              newDiv.className = "slide";
+
+              let img = document.createElement("img");
+              img.src = "sponsor/" + sponsor;
+              img.alt = "sponsor";
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+
+              newDiv.appendChild(img);
+
               afterSponsorsDiv.parentElement.insertBefore(
                 newDiv,
                 afterSponsorsDiv
               );
             });
-
-            // Update slides collection
             slides = document.querySelectorAll(".slide");
+
+            console.log("Erfolg:", responseData);
           })
-          .catch((error) => console.error("Fehler:", error));
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
       }
 
       // acting
