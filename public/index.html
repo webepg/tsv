@@ -214,9 +214,6 @@
       function nextSlide() {
         slides[currentSlide].classList.remove("active");
         currentSlide = (currentSlide + 1) % slides.length;
-        //if (slides[currentSlide].id === "greeting") {
-        //  nextSlide();
-        //}
         slides[currentSlide].classList.add("active");
       }
 
@@ -232,34 +229,30 @@
       }
 
       function setGreeting() {
-        // Begrüßung setzen
-        let lastMatch;
+        const greetingText = document.getElementById("greetingtext");
+        const opponentText = document.getElementById("opponent");
+        const opponentLogo = document.getElementById("opponentLogo");
 
-        if (matches.length > 0) {
-          matches.forEach((match) => {
-            if (match.formattedDate == todayAsformattedDate) {
-              todaysMatch = match;
-            }
-            if (
-              match.formattedDate < todayAsformattedDate &&
-              match.homeTeam == "TSV Bad Griesbach"
-            ) {
-              lastMatch = match;
-            }
-          });
+        // Find today's match or last home match
+        const todaysMatch = matches.find(
+          (m) => m.formattedDate === todayAsformattedDate
+        );
+        const lastHomeMatch = matches
+          .filter(
+            (m) =>
+              m.formattedDate < todayAsformattedDate &&
+              m.homeTeam === "TSV Bad Griesbach"
+          )
+          .pop();
 
-          if (todaysMatch) {
-            document.getElementById("opponent").innerText =
-              todaysMatch.awayTeam;
-            document.getElementById("opponentLogo").src =
-              todaysMatch.awayTeamImg.replace("200x200", "300x300");
-          } else {
-            document.getElementById("greetingtext").innerText =
-              "Wir begrüßten beim letzten Heimspiel den";
-            document.getElementById("opponent").innerText = lastMatch.awayTeam;
-            document.getElementById("opponentLogo").src =
-              lastMatch.awayTeamImg.replace("200x200", "300x300");
-          }
+        const match = todaysMatch || lastHomeMatch;
+
+        if (match) {
+          greetingText.innerText = todaysMatch
+            ? "Wir begrüßen zum heutigen Heimspiel herzlich den"
+            : "Wir begrüßten beim letzten Heimspiel den";
+          opponentText.innerText = match.awayTeam;
+          opponentLogo.src = match.awayTeamImg.replace("200x200", "300x300");
         }
       }
 
@@ -586,55 +579,32 @@
       }
 
       function createSponsorPages() {
-        let afterSponsorsDiv = document.getElementById("afterSponsors");
-
-        fetch("/api/sponsors", {
-          method: "GET", // HTTP-Methode
-        })
+        fetch("/api/sponsors")
           .then((response) => {
-            if (!response.ok) {
-              throw new Error("Fehler beim Senden der Daten");
-            }
-            return response.json(); // Antwort als JSON parsen
+            if (!response.ok)
+              throw new Error("Fehler beim Abrufen der Sponsoren");
+            return response.json();
           })
-          .then((responseData) => {
-            sponsors = responseData;
-            // Rest des Codes
+          .then((sponsors) => {
+            const afterSponsorsDiv = document.getElementById("afterSponsors");
+
             sponsors.forEach((sponsor) => {
-              let newDiv = document.createElement("div");
-              newDiv.style.position = "absolute";
-              newDiv.style.top = "0";
-              newDiv.style.left = "0";
-              newDiv.style.height = "100vh";
-              newDiv.style.width = "100vw";
-              newDiv.style.textAlign = "center";
-              newDiv.style.backgroundImage = "url('background/sponsor.png')";
-              newDiv.style.backgroundSize = "contain";
-              newDiv.style.backgroundPosition = "center";
-              newDiv.className = "slide";
-
-              let img = document.createElement("img");
-              img.src = "sponsor/" + sponsor;
-              img.alt = "sponsor";
-              img.style.position = "absolute";
-              img.style.top = "50%";
-              img.style.left = "50%";
-              img.style.transform = "translate(-50%, -50%)";
-
-              newDiv.appendChild(img);
-
+              const newDiv = document.createElement("div");
+              newDiv.className = "slide sponsor-slide";
+              newDiv.innerHTML = `
+                    <img src="sponsor/${sponsor}" alt="${sponsor}" 
+                         style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
+                `;
               afterSponsorsDiv.parentElement.insertBefore(
                 newDiv,
                 afterSponsorsDiv
               );
             });
-            slides = document.querySelectorAll(".slide");
 
-            console.log("Erfolg:", responseData);
+            // Update slides collection
+            slides = document.querySelectorAll(".slide");
           })
-          .catch((error) => {
-            console.error("Fehler:", error);
-          });
+          .catch((error) => console.error("Fehler:", error));
       }
 
       // acting

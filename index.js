@@ -61,7 +61,7 @@ app.post("/api/matches", async (req, res) => {
     let page;
     try {
       page = await browser.newPage();
-      await page.goto(url, { timeout: 60000 });
+      await page.goto(url, { timeout: 30000 });
       await page.waitForNetworkIdle();
       const cmpbntyestxt = await page.$("#cmpbntyestxt");
       if (cmpbntyestxt) {
@@ -117,103 +117,6 @@ app.post("/api/matches", async (req, res) => {
     }
   }
 
-  /*
-  async function getMatchDataForUrl(browser, url) {
-    let page;
-    let match;
-
-    console.log("getMatchDataForUrl url", url);
-
-    try {
-      page = await browser.newPage();
-      await page.goto(url, { timeout: 60000 });
-      await page.waitForNetworkIdle();
-
-      const cmpbntyestxtElement = await page.$("#cmpbntyestxt");
-      if (cmpbntyestxtElement) {
-        await cmpbntyestxtElement.click();
-      } else {
-        console.log("Element #cmpbntyestxt nicht gefunden");
-      }
-
-      const matchPage = await page.evaluate(() => {
-        return window.REDUX_DATA["dataHistory"][0]["MatchPage"];
-      });
-
-      let highlights = matchPage["matchInfo"]["highlights"];
-
-      match = {
-        formattedDate: matchPage["matchInfo"]["slug"].split("-").pop(),
-        league: matchPage["matchInfo"]["competition"]["name"],
-        matchDay: matchPage["matchInfo"]["round"]["name"],
-        homeTeam: matchPage["matchInfo"]["homeTeamName"],
-        awayTeam: matchPage["matchInfo"]["awayTeamName"],
-        homeTeamId: matchPage["matchInfo"]["homeTeam"]["slug"],
-        awayTeamId: matchPage["matchInfo"]["awayTeam"]["slug"],
-        homeTeamImg:
-          matchPage["matchInfo"]["homeTeam"]["image"]["path"] + "200x200.jpeg",
-        awayTeamImg:
-          matchPage["matchInfo"]["awayTeam"]["image"]["path"] + "200x200.jpeg",
-        goals: [],
-        redCards: [],
-        yellowRedCards: [],
-        suspensions: [],
-        missedPenalties: [],
-      };
-
-      highlights.forEach((element) => {
-        const team = element.team.slug;
-        const minute = element.minute;
-        const additionalMinute = element.additionalMinute;
-        const player = element.primaryRole
-          ? `${element.primaryRole.firstName} ${element.primaryRole.lastName}`
-          : "Unbekannt";
-
-        switch (element.type) {
-          case "goal":
-            match.goals.push({
-              team,
-              minute,
-              additionalMinute,
-              player,
-              goalType: element.subtype,
-            });
-            break;
-          case "penaltyfail":
-            match.missedPenalties.push({
-              team,
-              minute,
-              additionalMinute,
-              player,
-            });
-            break;
-          case "card":
-            if (element.subtype === "card_red") {
-              match.redCards.push({ team, minute, additionalMinute, player });
-            } else if (element.subtype === "card_yellow_red") {
-              match.yellowRedCards.push({
-                team,
-                minute,
-                additionalMinute,
-                player,
-              });
-            }
-            break;
-          case "timepenalty":
-            match.suspensions.push({ team, minute, additionalMinute, player });
-            break;
-        }
-      });
-      doneUrls.push(url);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      await page.close();
-    }
-    console.log("Match", match);
-    return match;
-  }*/
-
   await getMatchData(matchUrls);
 
   res.status(200).json();
@@ -239,7 +142,7 @@ async function getTsvScorers() {
   try {
     const page = await browser.newPage();
     await page.goto("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26", {
-      timeout: 60000,
+      timeout: 30000,
     });
     await page.waitForNetworkIdle();
 
@@ -316,7 +219,7 @@ async function getScorers() {
   try {
     const page = await browser.newPage();
     await page.goto("https://www.fupa.net/league/a-klasse-pocking/scorers", {
-      timeout: 90000,
+      timeout: 30000,
     });
     await page.waitForNetworkIdle();
 
