@@ -205,9 +205,9 @@ app.get("/api/sponsors", async (req, res) => {
   res.status(200).json(files);
 });
 
-app.get("/api/logo", async (req, res) => {
-  const sponsorsPath = path.join(__dirname, "public", "logo");
-  const files = fs.readdirSync(sponsorsPath);
+app.get("/api/logos", async (req, res) => {
+  const logoPath = path.join(__dirname, "public", "logo");
+  const files = fs.readdirSync(logoPath);
   res.status(200).json(files);
 });
 
