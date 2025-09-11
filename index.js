@@ -31,7 +31,7 @@ app.post("/api/matches", async (req, res) => {
   matchUrls = req.body.urls;
 
   async function getMatchData(urls) {
-    console.log("getMatchData urls", urls);
+    //console.log("getMatchData urls", urls);
     let browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
       headless: true,
@@ -169,7 +169,7 @@ async function getTsvScorers(url) {
 
     let players = teamPlayerStatsPage["data"]["players"];
 
-    console.log("players", players);
+    //console.log("players", players);
 
     players.forEach((player) => {
       if (player["goals"] > 0)
@@ -196,7 +196,7 @@ app.post("/api/scorers/tsv", async (req, res) => {
   if (tsvScorers.length == 0 && !isTsvScorersRunning) {
     isTsvScorersRunning = true;
     let result = await getTsvScorers(url);
-    console.log("tsvscorers", result);
+    //console.log("tsvscorers", result);
   }
   res.status(200).json(tsvScorers);
 });
@@ -213,7 +213,7 @@ app.get("/api/logos", async (req, res) => {
   const filteredFiles = files.filter(
     (file) => file.endsWith(".jpg") || file.endsWith(".jpeg")
   );
-  console.log("logos", filteredFiles);
+  //console.log("logos", filteredFiles);
 
   res.status(200).json(filteredFiles);
 });

@@ -282,7 +282,7 @@
               let img = document.createElement("img");
               img.src = blob;
               document.getElementById("bestscorersDiv").appendChild(img);
-              console.log("Erfolg:", responseData);
+              //console.log("Erfolg:", responseData);
             })
             .catch((error) => {
               console.error("Fehler:", error);
@@ -311,7 +311,7 @@
               tsvScorers = responseData;
               createTsvScorerPage();
               getBestScorers();
-              console.log("Erfolg:", responseData);
+              //console.log("Erfolg:", responseData);
             })
             .catch((error) => {
               console.error("Fehler:", error);
@@ -444,9 +444,10 @@
 
       function getLogoForTeam(team) {
         logos.forEach((logo) => {
-          console.log("logo: ", logo);
+          //console.log("logo: ", logo);
           let logoWithoutEnding = logo.split(".")[0];
           if (logoWithoutEnding == team) {
+            console.log("Treffer logo: ", logo);
             return logo;
           }
         });
@@ -462,7 +463,7 @@
         });
 
         matches.forEach((match) => {
-          console.log("match: ", match);
+          //console.log("match: ", match);
 
           let newDiv = document.createElement("div");
           newDiv.style.position = "absolute";
@@ -491,6 +492,7 @@
 
           let homeTeamLogo = document.createElement("img");
           let homeTeamLogoLocal = getLogoForTeam(match.homeTeamSlug);
+          console.log("homeTeamLogoLocal", homeTeamLogoLocal);
           homeTeamLogo.src = homeTeamLogoLocal
             ? homeTeamLogoLocal
             : match.homeTeamImg;
@@ -507,6 +509,7 @@
 
           let awayTeamLogo = document.createElement("img");
           let awayTeamLogoLocal = getLogoForTeam(match.awayTeamSlug);
+          console.log("awayTeamLogoLocal", awayTeamLogoLocal);
           awayTeamLogo.src = awayTeamLogoLocal
             ? awayTeamLogoLocal
             : match.awayTeamImg;
@@ -622,7 +625,7 @@
           })
           .then((responseData) => {
             logos = responseData;
-            console.log("logos", logos);
+            //console.log("logos", logos);
           });
       }
 
@@ -671,7 +674,7 @@
             });
             slides = document.querySelectorAll(".slide");
 
-            console.log("Erfolg:", responseData);
+            //console.log("Erfolg:", responseData);
           })
           .catch((error) => {
             console.error("Fehler:", error);
