@@ -254,9 +254,10 @@
             : "Wir begrüßten beim letzten Heimspiel den";
           opponentText.innerText = match.awayTeam;
           let awayTeamLogo = getLogoForTeam(match.awayTeamSlug);
-          opponentLogo.src = awayTeamLogo
-            ? awayTeamLogo
-            : match.awayTeamImg.replace("200x200", "300x300");
+          opponentLogo.src =
+            awayTeamLogo != null
+              ? awayTeamLogo
+              : match.awayTeamImg.replace("200x200", "300x300");
         }
       }
 
@@ -493,9 +494,8 @@
           let homeTeamLogo = document.createElement("img");
           let homeTeamLogoLocal = getLogoForTeam(match.homeTeamSlug);
           console.log("homeTeamLogoLocal", homeTeamLogoLocal);
-          homeTeamLogo.src = homeTeamLogoLocal
-            ? homeTeamLogoLocal
-            : match.homeTeamImg;
+          homeTeamLogo.src =
+            homeTeamLogoLocal != null ? homeTeamLogoLocal : match.homeTeamImg;
           homeTeamLogo.alt = match.homeTeam;
           homeTeamLogo.style.width = "100%";
           homeTeamLogo.style.height = "auto";
@@ -510,9 +510,8 @@
           let awayTeamLogo = document.createElement("img");
           let awayTeamLogoLocal = getLogoForTeam(match.awayTeamSlug);
           console.log("awayTeamLogoLocal", awayTeamLogoLocal);
-          awayTeamLogo.src = awayTeamLogoLocal
-            ? awayTeamLogoLocal
-            : match.awayTeamImg;
+          awayTeamLogo.src =
+            awayTeamLogoLocal != null ? awayTeamLogoLocal : match.awayTeamImg;
           awayTeamLogo.alt = match.awayTeam;
           awayTeamLogo.style.width = homeTeamLogo.style.width;
           awayTeamLogo.style.height = homeTeamLogo.style.height;
