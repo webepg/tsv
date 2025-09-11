@@ -253,7 +253,7 @@
             ? "Wir begrüßen zum heutigen Heimspiel herzlich den"
             : "Wir begrüßten beim letzten Heimspiel den";
           opponentText.innerText = match.awayTeam;
-          let awayTeamLogo = getLogoForTeam(match.awayTeam);
+          let awayTeamLogo = getLogoForTeam(match.awayTeamSlug);
           opponentLogo.src = awayTeamLogo
             ? awayTeamLogo
             : match.awayTeamImg.replace("200x200", "300x300");
@@ -490,7 +490,7 @@
           homeTeamDiv.style.width = "15%";
 
           let homeTeamLogo = document.createElement("img");
-          let homeTeamLogoLocal = getLogoForTeam(match.homeTeam);
+          let homeTeamLogoLocal = getLogoForTeam(match.homeTeamSlug);
           homeTeamLogo.src = homeTeamLogoLocal
             ? homeTeamLogoLocal
             : match.homeTeamImg;
@@ -506,7 +506,7 @@
           awayTeamDiv.style.width = homeTeamDiv.style.width;
 
           let awayTeamLogo = document.createElement("img");
-          let awayTeamLogoLocal = getLogoForTeam(match.awayTeam);
+          let awayTeamLogoLocal = getLogoForTeam(match.awayTeamSlug);
           awayTeamLogo.src = awayTeamLogoLocal
             ? awayTeamLogoLocal
             : match.awayTeamImg;

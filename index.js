@@ -83,6 +83,8 @@ app.post("/api/matches", async (req, res) => {
         awayTeam: matchInfo.awayTeamName,
         homeTeamId: matchInfo.homeTeam.slug,
         awayTeamId: matchInfo.awayTeam.slug,
+        homeTeamSlug: matchInfo.homeTeam.clubSlug,
+        awayTeamSlug: matchInfo.awayTeam.clubSlug,
         homeTeamImg: `${matchInfo.homeTeam.image.path}200x200.jpeg`,
         awayTeamImg: `${matchInfo.awayTeam.image.path}200x200.jpeg`,
         goals: [],
