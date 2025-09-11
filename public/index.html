@@ -613,13 +613,17 @@
       function getLogos() {
         fetch("/api/logos", {
           method: "GET", // HTTP-Methode
-        }).then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler beim Senden der Daten");
-          }
-          logos = response;
-          console.log("Erfolg:", logos);
-        });
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            logos = responseData;
+            console.log("logos", logos);
+          });
       }
 
       function createSponsorPages() {
