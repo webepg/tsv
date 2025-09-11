@@ -445,7 +445,7 @@
       function getLogoForTeam(team) {
         logos.forEach((logo) => {
           console.log("logo: ", logo);
-          let logoWithoutEnding = logo.img.split(".")[0];
+          let logoWithoutEnding = logo.split(".")[0];
           if (logoWithoutEnding == team) {
             return logo;
           }
