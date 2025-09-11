@@ -210,8 +210,12 @@ app.get("/api/sponsors", async (req, res) => {
 app.get("/api/logos", async (req, res) => {
   const logoPath = path.join(__dirname, "public", "logo");
   const files = fs.readdirSync(logoPath);
-  console.log("logos", files);
-  res.status(200).json(files);
+  const filteredFiles = files.filter(
+    (file) => file.endsWith(".jpg") || file.endsWith(".jpeg")
+  );
+  console.log("logos", filteredFiles);
+
+  res.status(200).json(filteredFiles);
 });
 
 // Alle Torschützen
