@@ -427,12 +427,12 @@
 
           let pGoals = document.createElement("p");
           pGoals.style.color = "#FFFFFF";
-          pGoals.style.fontSize = "40px";
+          pGoals.style.fontSize = "60px";
           pGoals.textContent = tsvScorer.goals + "x";
 
           let pName = document.createElement("p");
           pName.style.color = "#FFFFFF";
-          pName.style.fontSize = "30px";
+          pName.style.fontSize = "40px";
           pName.textContent = tsvScorer.name;
 
           newDiv.appendChild(pGoals);
@@ -445,7 +445,8 @@
 
       function getLogoForTeam(team) {
         logos.forEach((logo) => {
-          //console.log("logo: ", logo);
+          console.log("logo: ", logo);
+          console.log("team: ", team);
           let logoWithoutEnding = logo.split(".")[0];
           if (logoWithoutEnding == team) {
             console.log("Treffer logo: ", logo);
