@@ -2,3 +2,4 @@ node_modules/
 .cache
 .vscode
 compose.yaml
+.DS_Store

@@ -210,9 +210,7 @@ app.get("/api/sponsors", async (req, res) => {
 app.get("/api/logos", async (req, res) => {
   const logoPath = path.join(__dirname, "public", "logo");
   const files = fs.readdirSync(logoPath);
-  const filteredFiles = files.filter(
-    (file) => file.endsWith(".jpg") || file.endsWith(".jpeg")
-  );
+  const filteredFiles = files.filter((file) => file.endsWith(".png"));
   //console.log("logos", filteredFiles);
 
   res.status(200).json(filteredFiles);
