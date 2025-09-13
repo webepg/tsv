@@ -430,14 +430,27 @@
           pGoals.style.fontSize = "60px";
           pGoals.textContent = tsvScorer.goals + "x";
 
-          let pName = document.createElement("p");
+          /*let pName = document.createElement("p");
           pName.style.color = "#FFFFFF";
+          pName.style.fontSize = "40px";
+          pName.textContent = tsvScorer.name;*/
+
+          let container = document.createElement("div");
+          container.style.backgroundColor = "#FFFFFF";
+          container.style.padding = "10px";
+          container.style.borderRadius = "5px";
+
+          let pName = document.createElement("p");
+          pName.style.color = "red";
           pName.style.fontSize = "40px";
           pName.textContent = tsvScorer.name;
 
+          container.appendChild(pName);
+
           newDiv.appendChild(pGoals);
           newDiv.appendChild(img);
-          newDiv.appendChild(pName);
+          document.body.appendChild(container);
+          //newDiv.appendChild(pName);
 
           tsvscorersDiv.appendChild(newDiv);
         });
