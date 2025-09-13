@@ -461,7 +461,7 @@
         logos.forEach((logoItem) => {
           const logoWithoutEnding = logoItem.split(".")[0];
           if (logoWithoutEnding === team) {
-            logo = logoItem;
+            logo = "logo/" + logoItem;
             return; // Exit the loop after finding the logo
           }
         });
