@@ -299,6 +299,6 @@ app.listen(port, () => {
     matchFile = fs.readFileSync(path.join(__dirname, "matches.json"), "utf8");
     matches = JSON.parse(matchFile);
   }
-  getTsvScorers("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
+  //getTsvScorers("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
   getScorers("https://www.fupa.net/league/a-klasse-pocking/scorers");
 });

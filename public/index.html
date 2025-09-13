@@ -433,13 +433,10 @@
           pGoals.textContent = tsvScorer.goals + "x";
 
           let pName = document.createElement("p");
-          //pName.style.color = "#FFFFFF";
           pName.style.backgroundColor = "white";
           pName.style.color = "red";
           pName.style.fontSize = "40px";
           pName.textContent = tsvScorer.name;
-
-          container.appendChild(pName);
 
           newDiv.appendChild(pGoals);
           newDiv.appendChild(img);
@@ -458,13 +455,6 @@
             return; // Exit the loop after finding the logo
           }
         });
-        console.log("logo: ", logo);
-        console.log("team: ", team);
-        if (logo) {
-          console.log("Treffer logo: ", logo, " für Team ", team);
-        } else {
-          console.log("null für team: ", team);
-        }
         return logo;
       }
 
@@ -696,7 +686,7 @@
       // acting
       createSponsorPages();
       getLogos();
-      setTimeout(getBestTsvScorers, 8000);
+      getBestTsvScorers();
       setTimeout(updateData, 12000);
     </script>
   </body>
