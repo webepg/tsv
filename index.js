@@ -237,6 +237,8 @@ app.post("/api/scorers", async (req, res) => {
   if (!screenshot && !isScorersRunning) {
     isScorersRunning = true;
     screenshot = await getScorers(url);
+    res.set("Content-Type", "image/png");
+    res.send(screenshot);
   } else if (screenshot) {
     res.set("Content-Type", "image/png");
     res.send(screenshot);
