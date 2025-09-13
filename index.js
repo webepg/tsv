@@ -7,6 +7,7 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 require("dotenv").config();
 const bodyParser = require("body-parser");
+const { url } = require("inspector");
 let matches = [];
 let matchUrls = [];
 let doneUrls = [];
@@ -15,6 +16,7 @@ let screenshot;
 let isMatchDataRunning = false;
 let isScorersRunning = false;
 let isTsvScorersRunning = false;
+let matchFile;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); // für JSON-Requests
@@ -46,6 +48,10 @@ app.post("/api/matches", async (req, res) => {
       ],
     });
 
+    if (matches.length == urls.length) {
+      return;
+    }
+
     while (!containsAll(doneUrls, matchUrls)) {
       let difference = matchUrls.filter((url) => !doneUrls.includes(url));
       let result = await getMatchDataForUrl(browser, difference[0]);
@@ -56,6 +62,14 @@ app.post("/api/matches", async (req, res) => {
       }
     }
     isMatchDataRunning = false;
+
+    try {
+      const data = JSON.stringify(matches, null, 2);
+      fs.writeFileSync(path.join(__dirname, "match.json"), data);
+    } catch (error) {
+      console.error("Fehler beim Schreiben der match.json-Datei:", error);
+    }
+
     await browser.close();
   }
 
@@ -275,6 +289,13 @@ async function getScorers(url) {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+  // Prüfen, ob die Datei matches.json existiert
+  if (fs.existsSync(path.join(__dirname, "matches.json"))) {
+    console.log("Matches.json vorhanden");
+    // Datei einlesen und in matches laden
+    matchFile = fs.readFileSync(path.join(__dirname, "matches.json"), "utf8");
+    matches = JSON.parse(matchFile);
+  }
   getTsvScorers();
   getScorers();
 });
