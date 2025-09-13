@@ -457,17 +457,22 @@
       }
 
       function getLogoForTeam(team) {
-        logos.forEach((logo) => {
-          console.log("logo: ", logo);
-          console.log("team: ", team);
-          let logoWithoutEnding = logo.split(".")[0];
-          if (logoWithoutEnding == team) {
-            console.log("Treffer logo: ", logo, " für Team ", team);
-            return logo;
+        let logo = null;
+        logos.forEach((logoItem) => {
+          const logoWithoutEnding = logoItem.split(".")[0];
+          if (logoWithoutEnding === team) {
+            logo = logoItem;
+            return; // Exit the loop after finding the logo
           }
         });
-        console.log("null für team: ", team);
-        return null;
+        console.log("logo: ", logo);
+        console.log("team: ", team);
+        if (logo) {
+          console.log("Treffer logo: ", logo, " für Team ", team);
+        } else {
+          console.log("null für team: ", team);
+        }
+        return logo;
       }
 
       function createMatchPages() {
