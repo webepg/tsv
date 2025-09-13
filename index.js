@@ -297,6 +297,6 @@ app.listen(port, () => {
     matchFile = fs.readFileSync(path.join(__dirname, "matches.json"), "utf8");
     matches = JSON.parse(matchFile);
   }
-  getTsvScorers();
+  getTsvScorers("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
   getScorers();
 });
