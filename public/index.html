@@ -449,10 +449,11 @@
           console.log("team: ", team);
           let logoWithoutEnding = logo.split(".")[0];
           if (logoWithoutEnding == team) {
-            console.log("Treffer logo: ", logo);
+            console.log("Treffer logo: ", logo, " für Team ", team);
             return logo;
           }
         });
+        console.log("null für logo: ", logo, " für Team ", team);
         return null;
       }
 

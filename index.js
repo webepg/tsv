@@ -66,6 +66,7 @@ app.post("/api/matches", async (req, res) => {
     try {
       const data = JSON.stringify(matches, null, 2);
       fs.writeFileSync(path.join(__dirname, "matches.json"), data);
+      console.log("Schreiben erfolgreich");
     } catch (error) {
       console.error("Fehler beim Schreiben der match.json-Datei:", error);
     }
