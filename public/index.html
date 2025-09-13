@@ -72,7 +72,7 @@
           <img
             src="logo/tsv-bad-griesbach.png"
             alt="TSV Logo"
-            style="width: 100%; height: auto"
+            style="width: 100%; max-width: 80%; max-height: 80%; height: auto"
           />
         </div>
         <div
@@ -87,7 +87,7 @@
           <img
             id="opponentLogo"
             alt="Gegner Logo"
-            style="width: 100%; height: auto"
+            style="width: 100%; max-width: 80%; max-height: 80%; height: auto"
           />
         </div>
       </div>
@@ -430,17 +430,9 @@
           pGoals.style.fontSize = "60px";
           pGoals.textContent = tsvScorer.goals + "x";
 
-          /*let pName = document.createElement("p");
-          pName.style.color = "#FFFFFF";
-          pName.style.fontSize = "40px";
-          pName.textContent = tsvScorer.name;*/
-
-          let container = document.createElement("div");
-          container.style.backgroundColor = "#FFFFFF";
-          container.style.padding = "10px";
-          container.style.borderRadius = "5px";
-
           let pName = document.createElement("p");
+          //pName.style.color = "#FFFFFF";
+          pName.style.backgroundColor = "white";
           pName.style.color = "red";
           pName.style.fontSize = "40px";
           pName.textContent = tsvScorer.name;
@@ -449,8 +441,7 @@
 
           newDiv.appendChild(pGoals);
           newDiv.appendChild(img);
-          newDiv.appendChild(container);
-          //newDiv.appendChild(pName);
+          newDiv.appendChild(pName);
 
           tsvscorersDiv.appendChild(newDiv);
         });
