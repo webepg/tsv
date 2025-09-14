@@ -469,6 +469,9 @@
         });
 
         matches.forEach((match) => {
+          if (match.formattedDate == todayAsformattedDate) {
+            return;
+          }
           //console.log("match: ", match);
 
           let newDiv = document.createElement("div");
