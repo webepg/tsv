@@ -52,6 +52,10 @@ app.post("/api/matches", async (req, res) => {
       return;
     }
 
+    matches.forEach((match) => {
+      doneUrls.push(match.url);
+    });
+
     while (!containsAll(doneUrls, matchUrls)) {
       let difference = matchUrls.filter((url) => !doneUrls.includes(url));
       let result = await getMatchDataForUrl(browser, difference[0]);
@@ -91,6 +95,7 @@ app.post("/api/matches", async (req, res) => {
       );
 
       const match = {
+        url: url,
         formattedDate: matchInfo.slug.split("-").pop(),
         league: matchInfo.competition.name,
         matchDay: matchInfo.round.name,
