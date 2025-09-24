@@ -67,13 +67,14 @@ app.post("/api/matches", async (req, res) => {
     }
     isMatchDataRunning = false;
 
+    /*
     try {
       const data = JSON.stringify(matches, null, 2);
       fs.writeFileSync(path.join(__dirname, "matches.json"), data);
       console.log("Schreiben erfolgreich");
     } catch (error) {
       console.error("Fehler beim Schreiben der match.json-Datei:", error);
-    }
+    }*/
 
     await browser.close();
   }
@@ -303,6 +304,8 @@ app.listen(port, () => {
     // Datei einlesen und in matches laden
     matchFile = fs.readFileSync(path.join(__dirname, "matches.json"), "utf8");
     matches = JSON.parse(matchFile);
+    matches = matches.filter((match) => match.url !== undefined);
+    console.log("eingelesene matches", matches);
   }
   //getTsvScorers("https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26");
   getScorers("https://www.fupa.net/league/a-klasse-pocking/scorers");
