@@ -688,5 +688,478 @@
         "yellowRedCards": [],
         "suspensions": [],
         "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/svg-ruhstorfrott-m1-tsv-bad-griesbach-m1-250725",
+        "formattedDate": "250725",
+        "league": "A-Klasse Pocking",
+        "matchDay": "1. Spieltag",
+        "homeTeam": "SG Ruhstorf / Indling",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "sg-ruhstorf-indling-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "svg-ruhstorfrott",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/64DdkObVUD74/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 33,
+                "additionalMinute": 0,
+                "player": "Johannes Ortner",
+                "goalType": "goal_headed"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 47,
+                "additionalMinute": 0,
+                "player": "Paul Papst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 53,
+                "additionalMinute": 0,
+                "player": "Luca Pflieger",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 85,
+                "additionalMinute": 0,
+                "player": "Juri Kun",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-tsv-djk-malching-m1-250803",
+        "formattedDate": "250803",
+        "league": "A-Klasse Pocking",
+        "matchDay": "2. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "TSV-DJK Malching",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "tsv-djk-malching-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "tsv-djk-malching",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/94ze4H9PqGgj/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-djk-malching-m1-2025-26",
+                "minute": 38,
+                "additionalMinute": 0,
+                "player": "Adelin Maricosu",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 45,
+                "additionalMinute": 2,
+                "player": "Niiamaddin Mamedov",
+                "goalType": "goal_own_goal"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 60,
+                "additionalMinute": 0,
+                "player": "Paul Papst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-djk-malching-m1-2025-26",
+                "minute": 62,
+                "additionalMinute": 0,
+                "player": "Patrik Schön",
+                "goalType": "goal_own_goal"
+            },
+            {
+                "team": "tsv-djk-malching-m1-2025-26",
+                "minute": 68,
+                "additionalMinute": 0,
+                "player": "Adelin Maricosu",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 73,
+                "additionalMinute": 0,
+                "player": "Maximilian Ebertseder",
+                "goalType": "goal_own_goal"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 88,
+                "additionalMinute": 0,
+                "player": "Luca Pflieger"
+            }
+        ],
+        "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-karpfham-m2-tsv-bad-griesbach-m1-250810",
+        "formattedDate": "250810",
+        "league": "A-Klasse Pocking",
+        "matchDay": "3. Spieltag",
+        "homeTeam": "TSV Karpfham II",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "tsv-karpfham-m2-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "tsv-karpfham",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/Ko9nfbPC3gMh/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-karpfham-m2-2025-26",
+                "minute": 29,
+                "additionalMinute": 0,
+                "player": "Dominic Graf",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-karpfham-m2-2025-26",
+                "minute": 44,
+                "additionalMinute": 0,
+                "player": "Daniel Apfel",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-karpfham-m2-2025-26",
+                "minute": 72,
+                "additionalMinute": 0,
+                "player": "Maximilian Peschel",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [
+            {
+                "team": "tsv-karpfham-m2-2025-26",
+                "minute": 23,
+                "additionalMinute": 0,
+                "player": "Dominic Graf"
+            }
+        ]
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-sv-aigen-a-inn-m1-250817",
+        "formattedDate": "250817",
+        "league": "A-Klasse Pocking",
+        "matchDay": "4. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "SV Aigen a. Inn",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "sv-aigen-a-inn-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "sv-aigen-a-inn",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/team/VDYlokheDHN5/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 25,
+                "additionalMinute": 0,
+                "player": "Florian Landbrecht",
+                "goalType": "goal_distance_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 27,
+                "additionalMinute": 0,
+                "player": "Waldemar Horst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 84,
+                "additionalMinute": 0,
+                "player": "Sebastian Wagner",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [
+            {
+                "team": "sv-aigen-a-inn-m1-2025-26",
+                "minute": 33,
+                "additionalMinute": 0,
+                "player": "Dominik Schneider"
+            }
+        ]
+    },
+    {
+        "url": "https://www.fupa.net/match/djk-sv-hartkirchen-m1-tsv-bad-griesbach-m1-250823",
+        "formattedDate": "250823",
+        "league": "A-Klasse Pocking",
+        "matchDay": "5. Spieltag",
+        "homeTeam": "SG Hartkirchen / Pocking",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "sg-hartkirchen-pocking-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "djk-sv-hartkirchen",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/team/V8V9Kuyk0y0c/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 30,
+                "additionalMinute": 0,
+                "player": "Thomas Winklhofer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 40,
+                "additionalMinute": 0,
+                "player": "Christian Hallhuber",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 45,
+                "additionalMinute": 2,
+                "player": "Daniel Militky",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 51,
+                "additionalMinute": 0,
+                "player": "Sebastian Wagner",
+                "goalType": "penalty_hand"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 67,
+                "additionalMinute": 0,
+                "player": "Irinel Munteanu",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 0,
+                "player": "Jan Skala",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 51,
+                "additionalMinute": 0,
+                "player": "Johannes Krenn"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 74,
+                "additionalMinute": 0,
+                "player": "Irinel Munteanu"
+            }
+        ],
+        "suspensions": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 68,
+                "additionalMinute": 0,
+                "player": "Patrik Schön"
+            }
+        ],
+        "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/djk-sv-weng-m1-tsv-bad-griesbach-m1-250907",
+        "formattedDate": "250907",
+        "league": "A-Klasse Pocking",
+        "matchDay": "7. Spieltag",
+        "homeTeam": "DJK-SV Weng",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "djk-sv-weng-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "djk-sv-weng",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/5ikUmaYLf0pl/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "djk-sv-weng-m1-2025-26",
+                "minute": 56,
+                "additionalMinute": 0,
+                "player": "Jürgen Morawietz",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "djk-sv-weng-m1-2025-26",
+                "minute": 63,
+                "additionalMinute": 0,
+                "player": "David Buzhala",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 78,
+                "additionalMinute": 0,
+                "player": "Johannes Ortner"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 79,
+                "additionalMinute": 0,
+                "player": "Luca Pflieger"
+            }
+        ],
+        "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-djk-sv-dorfbach-mr2-250914",
+        "formattedDate": "250914",
+        "league": "A-Klasse Pocking",
+        "matchDay": "8. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "DJK-SV Dorfbach II",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "djk-sv-dorfbach-mr2-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "djk-sv-dorfbach",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/team/JGafUdchjP4s/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 8,
+                "additionalMinute": 0,
+                "player": "Waldemar Horst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 11,
+                "additionalMinute": 0,
+                "player": "Waldemar Horst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 20,
+                "additionalMinute": 0,
+                "player": "Waldemar Horst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 22,
+                "additionalMinute": 0,
+                "player": "Juri Kun",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "djk-sv-dorfbach-mr2-2025-26",
+                "minute": 25,
+                "additionalMinute": 0,
+                "player": "Alexander Stümpfl",
+                "goalType": "goal_free_kick"
+            },
+            {
+                "team": "djk-sv-dorfbach-mr2-2025-26",
+                "minute": 29,
+                "additionalMinute": 0,
+                "player": "Alexander Stümpfl",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 51,
+                "additionalMinute": 0,
+                "player": "Luca Pflieger",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "djk-sv-dorfbach-mr2-2025-26",
+                "minute": 52,
+                "additionalMinute": 0,
+                "player": "Benjamin Hellmeier",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 72,
+                "additionalMinute": 0,
+                "player": "Sebastian Wagner",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 79,
+                "additionalMinute": 0,
+                "player": "Rares Hopide",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/sv-wuerding-m1-tsv-bad-griesbach-m1-250920",
+        "formattedDate": "250920",
+        "league": "A-Klasse Pocking",
+        "matchDay": "9. Spieltag",
+        "homeTeam": "SV Würding",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "sv-wuerding-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "sv-wuerding",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/team/JH3D5OkH8vEE/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "sv-wuerding-m1-2025-26",
+                "minute": 4,
+                "additionalMinute": 0,
+                "player": "Jonas Kampelsberger",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sv-wuerding-m1-2025-26",
+                "minute": 15,
+                "additionalMinute": 0,
+                "player": "Jonas Kampelsberger",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sv-wuerding-m1-2025-26",
+                "minute": 42,
+                "additionalMinute": 0,
+                "player": "Simon Lüftl",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": []
     }
 ]
