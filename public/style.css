@@ -1,7 +1,7 @@
 .slideshow {
   position: relative;
-  width: 100%; /* Breite der Slideshow */
-  height: 100%; /* Höhe der Slideshow */
+  width: 800px; /* Breite der Slideshow */
+  height: 600px; /* Höhe der Slideshow */
 }
 
 .slide {
