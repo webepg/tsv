@@ -610,7 +610,7 @@
             //goalscorers.appendChild(goalentry);
           });
 
-          if (match.verdict !== "") {
+          if (match.verdict === "") {
             score.textContent = homegoals + ":" + awaygoals;
           } else {
             if (match.verdict == "Nichtantritt GAST") {
