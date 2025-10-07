@@ -609,8 +609,15 @@
             }
             //goalscorers.appendChild(goalentry);
           });
-
-          score.textContent = homegoals + ":" + awaygoals;
+          if (match.verdict != "") {
+            score.textContent = homegoals + ":" + awaygoals;
+          } else {
+            if (match.verdict == "Nichtantritt GAST") {
+              score.textContent = "X:0";
+            } else {
+              score.textContent = "0:X";
+            }
+          }
 
           newDiv.appendChild(score);
           goalscorers.appendChild(homegoalscorersdiv);
