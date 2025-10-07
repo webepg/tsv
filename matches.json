@@ -533,5 +533,60 @@
         "yellowRedCards": [],
         "suspensions": [],
         "missedPenalties": []
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-rsv-kirchham-m1-251003",
+        "formattedDate": "251003",
+        "league": "A-Klasse Pocking",
+        "matchDay": "11. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "RSV Kirchham",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "rsv-kirchham-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "rsv-kirchham",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/FABYOSflmgTW/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 10,
+                "additionalMinute": 0,
+                "player": "Leon Hoffmann",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "rsv-kirchham-m1-2025-26",
+                "minute": 42,
+                "additionalMinute": 0,
+                "player": "Benedikt Göschl",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "rsv-kirchham-m1-2025-26",
+                "minute": 63,
+                "additionalMinute": 0,
+                "player": "Lukas Hager",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "rsv-kirchham-m1-2025-26",
+                "minute": 89,
+                "additionalMinute": 0,
+                "player": "Felix Klingseisen",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 74,
+                "additionalMinute": 0,
+                "player": "Luca Pflieger"
+            }
+        ],
+        "suspensions": [],
+        "missedPenalties": []
     }
 ]
