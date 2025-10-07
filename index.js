@@ -104,7 +104,7 @@ app.post("/api/matches", async (req, res) => {
         yellowRedCards: [],
         suspensions: [],
         missedPenalties: [],
-        verdict: matchinfo.verdict ? matchinfo.verdict : "",
+        verdict: matchInfo.verdict ? matchInfo.verdict : "",
       };
 
       matchInfo.highlights.forEach(
