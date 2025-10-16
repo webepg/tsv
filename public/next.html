@@ -388,7 +388,7 @@
         let nextMatch = Array.from(hrefs).find((href) => {
           let trimmedHref = href.getAttribute("href").split("?")[0];
           let date = trimmedHref.split("-").pop();
-          return date > todayAsformattedDate;
+          if (date > todayAsformattedDate) return trimmedHref;
         });
 
         console.log("nextMatch Array: ", nextMatch);
@@ -398,6 +398,8 @@
           let date = trimmedHref.split("-").pop();
           if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
         });
+
+        hrefArray.push(nextMatch);
 
         matchUrls = [...new Set(hrefArray)];
 
