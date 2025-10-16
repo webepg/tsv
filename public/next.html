@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TSV</title>
+  </head>
+  <body>
+    <div id="slideshow" class="slideshow">
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="greeting"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/greeting.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      >
+        <div
+          id="greetingtext"
+          style="
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 45px;
+          "
+        >
+          Wir begrüßen zum heutigen Heimspiel herzlich den
+        </div>
+        <div
+          id="opponent"
+          style="
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 45px;
+          "
+        ></div>
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            width: 25%;
+            align-items: center;
+          "
+        >
+          <img
+            src="logo/tsv-bad-griesbach.png"
+            alt="TSV Logo"
+            style="width: 100%; height: auto"
+          />
+        </div>
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 25%;
+            align-items: center;
+          "
+        >
+          <img
+            id="opponentLogo"
+            alt="Gegner Logo"
+            style="width: 100%; height: auto"
+          />
+        </div>
+      </div>
+
+      <!-- Alle Spiele.  -->
+
+      <div style="display: none">
+        <div id="fp-widget_root-30ufC8OsKlDm8nB8bAdu6VCJToy"></div>
+      </div>
+
+      <!-- Tabelle + torschützen -->
+      <div
+        id="ranking"
+        class="slide"
+        style="
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/match.png');
+          background-size: contain;
+          background-position: center;
+        "
+      >
+        <table
+          style="
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 95%;
+            height: 100%;
+            border-collapse: separate;
+            border-spacing: 20px;
+          "
+        >
+          <tr>
+            <td style="width: 50%; vertical-align: center">
+              <!-- First column -->
+              <div id="fp-widget_root-30ueRUuun8ZlIZ3mrpLYKQoyEuY"></div>
+            </td>
+            <td style="width: 50%; vertical-align: center">
+              <div id="bestscorersDiv"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- TSV Torschützen-->
+      <div
+        id="tsvscorers"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/match.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="beforeSponsors"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/sponsor-landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        id="afterSponsors"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/sponsor-landing.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          background-image: url('background/instagram.png');
+          background-size: contain;
+          background-position: center;
+        "
+        class="slide"
+      ></div>
+    </div>
+
+    <script src="https://widget-api.fupa.net/vendor/widget.js?v1"></script>
+
+    <script>
+      // data
+      let todayAsformattedDate;
+      let todaysMatch;
+
+      let slideshow = document.querySelector(".slideshow");
+      let slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+      let rotationTime = 15;
+      let matchUrls = [];
+      let matches = [];
+      let retries = 0;
+      let sponsors = [];
+      let logos = [];
+      let tsvScorers = [];
+      let isRunning = false;
+
+      // methods
+      function nextSlide() {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      function prevSlide() {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      function startSlideshow() {
+        slides[0].classList.add("active");
+        setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
+      }
+
+      function setGreeting() {
+        const greetingText = document.getElementById("greetingtext");
+        const opponentText = document.getElementById("opponent");
+        const opponentLogo = document.getElementById("opponentLogo");
+
+        // Find today's match or last home match
+        const todaysMatch = matches.find(
+          (m) => m.formattedDate === todayAsformattedDate
+        );
+        const lastHomeMatch = matches
+          .filter(
+            (m) =>
+              m.formattedDate < todayAsformattedDate &&
+              m.homeTeam === "TSV Bad Griesbach"
+          )
+          .pop();
+
+        const nextHomeMatch = matches
+          .sort((a, b) => a.formattedDate.localeCompare(b.formattedDate))
+          .find(
+            (m) =>
+              m.formattedDate > todayAsformattedDate &&
+              m.homeTeam === "TSV Bad Griesbach"
+          );
+
+        console.log("todaysMatch", todaysMatch);
+
+        const match = todaysMatch || nextHomeMatch;
+
+        if (match) {
+          greetingText.innerText =
+            "Wir begrüßen zum heutigen Heimspiel herzlich den";
+          opponentText.innerText = match.awayTeam;
+          let awayTeamLogo = getLogoForTeam(match.awayTeamSlug);
+          opponentLogo.src =
+            awayTeamLogo != null
+              ? awayTeamLogo
+              : match.awayTeamImg.replace("200x200", "300x300");
+        }
+      }
+
+      function getBestScorers() {
+        let url = "https://www.fupa.net/league/a-klasse-pocking/scorers";
+        // Beste Torschützen
+        if (document.getElementById("bestscorersDiv").children.length == 0) {
+          fetch("/api/scorers", {
+            method: "POST", // HTTP-Methode
+            headers: {
+              "Content-Type": "application/json", // Header für JSON-Daten
+            },
+            body: JSON.stringify({ url: url }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Fehler beim Senden der Daten");
+              }
+              return response.blob(); // Antwort als JSON parsen
+            })
+            .then((responseData) => {
+              let blob = URL.createObjectURL(responseData);
+              let img = document.createElement("img");
+              img.src = blob;
+              document.getElementById("bestscorersDiv").appendChild(img);
+              //console.log("Erfolg:", responseData);
+            })
+            .catch((error) => {
+              console.error("Fehler:", error);
+            });
+        }
+      }
+
+      function getBestTsvScorers() {
+        let url = "https://www.fupa.net/team/tsv-bad-griesbach-m1-2025-26";
+        // Beste TSV Torschützen
+        if (tsvScorers.length == 0) {
+          fetch("/api/scorers/tsv", {
+            method: "POST", // HTTP-Methode
+            headers: {
+              "Content-Type": "application/json", // Header für JSON-Daten
+            },
+            body: JSON.stringify({ url: url }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Fehler beim Senden der Daten");
+              }
+              return response.json(); // Antwort als JSON parsen
+            })
+            .then((responseData) => {
+              tsvScorers = responseData;
+              createTsvScorerPage();
+              getBestScorers();
+              //console.log("Erfolg:", responseData);
+            })
+            .catch((error) => {
+              console.error("Fehler:", error);
+            });
+        }
+      }
+
+      async function getMatchData() {
+        const delay = 5000; // Konstante für die Verzögerung
+        while (matches.length < matchUrls.length) {
+          try {
+            const response = await fetch("/api/matches", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            matches = await response.json();
+          } catch (error) {
+            console.error("Fehler:", error);
+          }
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+        if (matchUrls.length == matches.length) {
+          setGreeting();
+          createMatchPages();
+          setTimeout(startSlideshow, 5000);
+          console.log("getMatchData fertig");
+        }
+      }
+
+      function getAllMatchDetails(urls) {
+        // POST-Request senden
+        if (matches.length == 0) {
+          fetch("/api/matches", {
+            method: "POST", // HTTP-Methode
+            headers: {
+              "Content-Type": "application/json", // Header für JSON-Daten
+            },
+            body: JSON.stringify({ urls: urls }), // Daten in JSON umwandeln
+          }).catch((error) => {
+            console.error("Fehler:", error);
+          });
+        }
+      }
+
+      function updateData() {
+        let dateTime = new Date();
+        todayAsformattedDate = formatDate(dateTime);
+        console.log("todayAsformattedDate: " + todayAsformattedDate);
+        getAllMatchUrls();
+      }
+
+      function getAllMatchUrls() {
+        let hrefs = document.querySelectorAll('a[href*="/match/"]');
+        let hrefArray = [];
+        hrefs.forEach(function (href) {
+          let trimmedHref = href.getAttribute("href").split("?")[0];
+          let date = trimmedHref.split("-").pop();
+          if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
+        });
+
+        matchUrls = [...new Set(hrefArray)];
+
+        if (matchUrls.length > 0) {
+          console.log("matchUrls: ", matchUrls);
+          getAllMatchDetails(matchUrls);
+          setTimeout(getMatchData, 5000);
+        }
+      }
+
+      function formatDate(dateToFormat) {
+        return (
+          dateToFormat.getFullYear().toString().slice(-2) +
+          (dateToFormat.getMonth() + 1 < 10 ? "0" : "") +
+          (dateToFormat.getMonth() + 1).toString() +
+          (dateToFormat.getDate() < 10 ? "0" : "") +
+          dateToFormat.getDate().toString()
+        );
+      }
+
+      function createTsvScorerPage() {
+        let tsvscorersDiv = document.getElementById("tsvscorers");
+        let title = document.createElement("p");
+        title.style.textAlign = "center";
+        title.style.color = "white";
+        title.style.fontSize = "60px";
+        title.textContent = "Beste TSV Torschützen";
+        tsvscorersDiv.appendChild(title);
+
+        tsvScorers.sort((a, b) => {
+          if (a.goals === b.goals) {
+            return a.matches - b.matches;
+          } else {
+            return b.goals - a.goals;
+          }
+        });
+
+        tsvScorers.splice(5);
+        let percentage = 100 / tsvScorers.length;
+
+        tsvScorers.forEach((tsvScorer) => {
+          let newDiv = document.createElement("div");
+          newDiv.style.float = "left";
+          newDiv.style.width = percentage + "%";
+          newDiv.style.textAlign = "center";
+
+          let img = document.createElement("img");
+          img.src = tsvScorer.img;
+          img.alt = tsvScorer.name;
+          img.style.top = "50%";
+
+          let pGoals = document.createElement("p");
+          pGoals.style.color = "#FFFFFF";
+          pGoals.style.fontSize = "60px";
+          pGoals.textContent = tsvScorer.goals + "x";
+
+          let pName = document.createElement("p");
+          pName.style.backgroundColor = "white";
+          pName.style.color = "red";
+          pName.style.fontSize = "40px";
+          pName.textContent = tsvScorer.name;
+
+          newDiv.appendChild(pGoals);
+          newDiv.appendChild(img);
+          newDiv.appendChild(pName);
+
+          tsvscorersDiv.appendChild(newDiv);
+        });
+      }
+
+      function getLogoForTeam(team) {
+        let logo = null;
+        logos.forEach((logoItem) => {
+          const logoWithoutEnding = logoItem.split(".")[0];
+          if (logoWithoutEnding === team) {
+            logo = "logo/" + logoItem;
+            return; // Exit the loop after finding the logo
+          }
+        });
+        return logo;
+      }
+
+      function createMatchPages() {
+        let tsvscorersDiv = document.getElementById("tsvscorers");
+
+        // nach Datum sortieren
+        matches.sort((a, b) => {
+          return Number(a.formattedDate) - Number(b.formattedDate);
+        });
+
+        matches.forEach((match) => {
+          if (match.formattedDate == todayAsformattedDate) {
+            return;
+          }
+          //console.log("match: ", match);
+
+          let newDiv = document.createElement("div");
+          newDiv.style.position = "absolute";
+          newDiv.style.top = "0";
+          newDiv.style.left = "0";
+          newDiv.style.height = "100vh";
+          newDiv.style.width = "100vw";
+          newDiv.style.backgroundImage = "url('background/match.png')";
+          newDiv.style.backgroundSize = "contain";
+          newDiv.style.backgroundPosition = "center";
+          newDiv.className = "slide";
+
+          let title = document.createElement("p");
+          title.style.textAlign = "center";
+          title.style.color = "white";
+          title.style.fontSize = "60px";
+          title.textContent = match.matchDay + " " + match.league;
+          newDiv.appendChild(title);
+
+          let homeTeamDiv = document.createElement("div");
+          homeTeamDiv.style.position = "absolute";
+          homeTeamDiv.style.top = "15";
+          homeTeamDiv.style.left = "5%";
+          homeTeamDiv.style.transform = "translateY(-50%)";
+          homeTeamDiv.style.width = "15%";
+
+          let homeTeamLogo = document.createElement("img");
+          let homeTeamLogoLocal = getLogoForTeam(match.homeTeamSlug);
+          console.log("homeTeamLogoLocal", homeTeamLogoLocal);
+          homeTeamLogo.src =
+            homeTeamLogoLocal != null ? homeTeamLogoLocal : match.homeTeamImg;
+          homeTeamLogo.alt = match.homeTeam;
+          homeTeamLogo.style.width = "100%";
+          homeTeamLogo.style.height = "auto";
+
+          let awayTeamDiv = document.createElement("div");
+          awayTeamDiv.style.position = homeTeamDiv.style.position;
+          awayTeamDiv.style.top = homeTeamDiv.style.top;
+          awayTeamDiv.style.right = homeTeamDiv.style.left;
+          awayTeamDiv.style.transform = homeTeamDiv.style.transform;
+          awayTeamDiv.style.width = homeTeamDiv.style.width;
+
+          let awayTeamLogo = document.createElement("img");
+          let awayTeamLogoLocal = getLogoForTeam(match.awayTeamSlug);
+          console.log("awayTeamLogoLocal", awayTeamLogoLocal);
+          awayTeamLogo.src =
+            awayTeamLogoLocal != null ? awayTeamLogoLocal : match.awayTeamImg;
+          awayTeamLogo.alt = match.awayTeam;
+          awayTeamLogo.style.width = homeTeamLogo.style.width;
+          awayTeamLogo.style.height = homeTeamLogo.style.height;
+
+          homeTeamDiv.appendChild(homeTeamLogo);
+          newDiv.appendChild(homeTeamDiv);
+
+          awayTeamDiv.appendChild(awayTeamLogo);
+          newDiv.appendChild(awayTeamDiv);
+
+          let score = document.createElement("p");
+          score.style.position = "absolute";
+          score.style.top = "10%";
+          score.style.left = "50%";
+          score.style.transform = "translate(-50%, -50%)";
+          score.style.textAlign = "center";
+          score.style.color = "white";
+          score.style.fontSize = "150px";
+
+          match.goals.sort((a, b) => {
+            if (a.minute === b.minute) {
+              return a.additionalMinute - b.additionalMinute;
+            } else {
+              return a.minute - b.minute;
+            }
+          });
+
+          let homegoals = match.goals.filter(
+            (x) => x.team === match.homeTeamId
+          ).length;
+          let awaygoals = match.goals.filter(
+            (x) => x.team === match.awayTeamId
+          ).length;
+
+          let goalscorers = document.createElement("div");
+          goalscorers.style.position = "absolute";
+          goalscorers.style.left = "50%"; // 25% vom linken Rand
+          goalscorers.style.top = "60%"; // 60% vom oberen Rand
+          goalscorers.style.transform = "translate(-50%, -50%)"; // zentral und mittig
+          goalscorers.style.width = "60%"; // 60% der Breite des Parent-Divs
+          goalscorers.style.height = "50%";
+
+          let homegoalscorersdiv = document.createElement("div");
+          homegoalscorersdiv.style.display = "inline-block";
+          homegoalscorersdiv.style.width = "48%";
+          homegoalscorersdiv.style.textAlign = "left";
+          homegoalscorersdiv.style.marginRight = "2%";
+          homegoalscorersdiv.style.height = "65%";
+
+          let awaygoalscorersdiv = document.createElement("div");
+          awaygoalscorersdiv.style.display = "inline-block";
+          awaygoalscorersdiv.style.width = "48%";
+          awaygoalscorersdiv.style.textAlign = "left";
+          awaygoalscorersdiv.style.marginLeft = "2%";
+          awaygoalscorersdiv.style.height = "65%";
+
+          match.goals.forEach((goal) => {
+            let goalentry = document.createElement("p");
+
+            let playerText = document.createElement("span");
+            playerText.textContent =
+              goal.player + (goal.goalType == "goal_own_goal" ? " (ET) " : "");
+
+            let minuteText = document.createElement("span");
+            minuteText.textContent = goal.minute + "'";
+            minuteText.style.float = "right";
+
+            goalentry.appendChild(playerText);
+            goalentry.appendChild(minuteText);
+
+            goalentry.style.color = "white";
+            goalentry.style.fontSize = "30px";
+            goalentry.style.display = "block";
+            goalentry.style.textAlign = "left;";
+
+            let emptygoalentry = document.createElement("p");
+            emptygoalentry.innerHTML = "<br>";
+
+            if (goal.team === match.homeTeamId) {
+              homegoalscorersdiv.appendChild(goalentry);
+              awaygoalscorersdiv.appendChild(emptygoalentry);
+            } else {
+              awaygoalscorersdiv.appendChild(goalentry);
+              homegoalscorersdiv.appendChild(emptygoalentry);
+            }
+            //goalscorers.appendChild(goalentry);
+          });
+
+          if (match.verdict === "") {
+            score.textContent = homegoals + ":" + awaygoals;
+          } else {
+            if (match.verdict == "Nichtantritt GAST") {
+              score.textContent = "X:0";
+            } else {
+              score.textContent = "0:X";
+            }
+          }
+
+          newDiv.appendChild(score);
+          goalscorers.appendChild(homegoalscorersdiv);
+          goalscorers.appendChild(awaygoalscorersdiv);
+          newDiv.appendChild(goalscorers);
+
+          tsvscorersDiv.parentElement.insertBefore(newDiv, tsvscorersDiv);
+        });
+        slides = document.querySelectorAll(".slide");
+      }
+
+      function getLogos() {
+        fetch("/api/logos", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            logos = responseData;
+            //console.log("logos", logos);
+          });
+      }
+
+      function createSponsorPages() {
+        let afterSponsorsDiv = document.getElementById("afterSponsors");
+
+        fetch("/api/sponsors", {
+          method: "GET", // HTTP-Methode
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler beim Senden der Daten");
+            }
+            return response.json(); // Antwort als JSON parsen
+          })
+          .then((responseData) => {
+            sponsors = responseData;
+            // Rest des Codes
+            sponsors.forEach((sponsor) => {
+              let newDiv = document.createElement("div");
+              newDiv.style.position = "absolute";
+              newDiv.style.top = "0";
+              newDiv.style.left = "0";
+              newDiv.style.height = "100vh";
+              newDiv.style.width = "100vw";
+              newDiv.style.textAlign = "center";
+              newDiv.style.backgroundImage = "url('background/sponsor.png')";
+              newDiv.style.backgroundSize = "cover";
+              newDiv.style.backgroundPosition = "center";
+              newDiv.className = "slide";
+
+              let img = document.createElement("img");
+              img.src = "sponsor/" + sponsor;
+              img.alt = "sponsor";
+              img.style.position = "absolute";
+              img.style.top = "50%";
+              img.style.left = "50%";
+              img.style.transform = "translate(-50%, -50%)";
+
+              newDiv.appendChild(img);
+
+              afterSponsorsDiv.parentElement.insertBefore(
+                newDiv,
+                afterSponsorsDiv
+              );
+            });
+            slides = document.querySelectorAll(".slide");
+
+            //console.log("Erfolg:", responseData);
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+          });
+      }
+
+      // acting
+      createSponsorPages();
+      getLogos();
+      getBestTsvScorers();
+      setTimeout(updateData, 12000);
+    </script>
+  </body>
+  <footer>
+    <a href="impressum.html">Impressum</a>
+  </footer>
+</html>
