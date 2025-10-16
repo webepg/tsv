@@ -250,13 +250,13 @@
           )
           .pop();
 
-        const nextHomeMatch = matches
-          .sort((a, b) => a.formattedDate - b.formattedDate)
-          .find(
-            (m) =>
-              m.formattedDate > todayAsformattedDate &&
-              m.homeTeam === "TSV Bad Griesbach"
-          );
+        const nextHomeMatch = matches.filter(
+          (m) =>
+            m.formattedDate > todayAsformattedDate &&
+            m.homeTeam === "TSV Bad Griesbach"
+        );
+
+        console.log("nextHomeMatch", nextHomeMatch);
 
         console.log("todaysMatch", todaysMatch);
 
