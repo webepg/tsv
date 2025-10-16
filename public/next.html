@@ -251,7 +251,7 @@
           .pop();
 
         const nextHomeMatch = matches
-          .sort((a, b) => a.formattedDate.localeCompare(b.formattedDate))
+          .sort((a, b) => a.formattedDate - b.formattedDate)
           .find(
             (m) =>
               m.formattedDate > todayAsformattedDate &&
