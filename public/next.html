@@ -385,21 +385,18 @@
         let hrefs = document.querySelectorAll('a[href*="/match/"]');
         let hrefArray = [];
 
-        let nextMatch = Array.from(hrefs).find((href) => {
+        hrefs.forEach(function (href) {
           let trimmedHref = href.getAttribute("href").split("?")[0];
           let date = trimmedHref.split("-").pop();
-          if (date > todayAsformattedDate) return trimmedHref;
+          if (date > todayAsformattedDate)
+            console.log("nextMatch: ", trimmedHref);
         });
-
-        console.log("nextMatch Array: ", nextMatch);
 
         hrefs.forEach(function (href) {
           let trimmedHref = href.getAttribute("href").split("?")[0];
           let date = trimmedHref.split("-").pop();
           if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
         });
-
-        hrefArray.push(nextMatch);
 
         matchUrls = [...new Set(hrefArray)];
 
