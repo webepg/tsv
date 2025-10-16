@@ -501,7 +501,10 @@
         });
 
         matches.forEach((match) => {
-          if (match.formattedDate == todayAsformattedDate) {
+          if (
+            match.formattedDate == todayAsformattedDate ||
+            match.formattedDate > todayAsformattedDate
+          ) {
             return;
           }
           //console.log("match: ", match);
