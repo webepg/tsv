@@ -660,5 +660,25 @@
         "suspensions": [],
         "missedPenalties": [],
         "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-svg-ruhstorfrott-m1-251019",
+        "formattedDate": "251019",
+        "league": "A-Klasse Pocking",
+        "matchDay": "14. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "SG Ruhstorf / Indling",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "sg-ruhstorf-indling-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "svg-ruhstorfrott",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/64DdkObVUD74/200x200.jpeg",
+        "goals": [],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
     }
 ]
