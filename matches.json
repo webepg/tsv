@@ -660,5 +660,157 @@
         "suspensions": [],
         "missedPenalties": [],
         "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-svg-ruhstorfrott-m1-251019",
+        "formattedDate": "251019",
+        "league": "A-Klasse Pocking",
+        "matchDay": "14. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "SG Ruhstorf / Indling",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "sg-ruhstorf-indling-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "svg-ruhstorfrott",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/64DdkObVUD74/200x200.jpeg",
+        "goals": [
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 14,
+                "additionalMinute": 0,
+                "player": "Antony Peran",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 45,
+                "additionalMinute": 0,
+                "player": "Philipp Danzer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 62,
+                "additionalMinute": 0,
+                "player": "Fabian Traxler",
+                "goalType": "penalty_foul"
+            },
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 64,
+                "additionalMinute": 0,
+                "player": "Christian Reider",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 72,
+                "additionalMinute": 0,
+                "player": "Ivo Tonchev",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 83,
+                "additionalMinute": 0,
+                "player": "Thomas Landbrecht",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 0,
+                "player": "Ivo Tonchev",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 2,
+                "player": "Ivo Tonchev"
+            }
+        ],
+        "suspensions": [
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 31,
+                "additionalMinute": 0,
+                "player": "Karim Jafari"
+            },
+            {
+                "team": "sg-ruhstorf-indling-m1-2025-26",
+                "minute": 31,
+                "additionalMinute": 0,
+                "player": "Christian Reider"
+            }
+        ],
+        "missedPenalties": [],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-djk-malching-m1-tsv-bad-griesbach-m1-251026",
+        "formattedDate": "251026",
+        "league": "A-Klasse Pocking",
+        "matchDay": "15. Spieltag",
+        "homeTeam": "TSV-DJK Malching",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "tsv-djk-malching-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "tsv-djk-malching",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/94ze4H9PqGgj/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-djk-malching-m1-2025-26",
+                "minute": 38,
+                "additionalMinute": 0,
+                "player": "Kevin Holzapfel",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 61,
+                "additionalMinute": 0,
+                "player": "Rares Hopide",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-djk-malching-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 2,
+                "player": "Kevin Holzapfel",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-tsv-karpfham-m2-251102",
+        "formattedDate": "251102",
+        "league": "A-Klasse Pocking",
+        "matchDay": "16. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "TSV Karpfham II",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "tsv-karpfham-m2-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "tsv-karpfham",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/Ko9nfbPC3gMh/200x200.jpeg",
+        "goals": [],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
     }
 ]
