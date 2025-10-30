@@ -245,11 +245,11 @@
 
         const nextHomeMatch = matches
           .sort((a, b) => a.formattedDate - b.formattedDate)
-          .filter(
+          .find(
             (m) =>
               m.formattedDate > todayAsformattedDate &&
               m.homeTeam === "TSV Bad Griesbach"
-          )[0];
+          );
 
         console.log("nextHomeMatch", nextHomeMatch);
 
@@ -376,7 +376,7 @@
         let hrefs = document.querySelectorAll('a[href*="/match/"]');
         let hrefArray = [];
         let nextMatch = null;
-        hrefs.forEach(function (href) {
+        for (const href of hrefs) {
           let trimmedHref = href.getAttribute("href").split("?")[0];
           let date = trimmedHref.split("-").pop();
           if (date > todayAsformattedDate) {
@@ -390,15 +390,15 @@
               }
             }
           }
-        });
+        }
 
         console.log("nextMatch: ", nextMatch);
 
-        hrefs.forEach(function (href) {
+        for (const href of hrefs) {
           let trimmedHref = href.getAttribute("href").split("?")[0];
           let date = trimmedHref.split("-").pop();
           if (date <= todayAsformattedDate) hrefArray.push(trimmedHref);
-        });
+        }
 
         if (nextMatch != null) hrefArray.push(nextMatch);
 
@@ -441,7 +441,7 @@
         tsvScorers.splice(5);
         let percentage = 100 / tsvScorers.length;
 
-        tsvScorers.forEach((tsvScorer) => {
+        for (const tsvScorer of tsvScorers) {
           let newDiv = document.createElement("div");
           newDiv.style.float = "left";
           newDiv.style.width = percentage + "%";
@@ -468,18 +468,18 @@
           newDiv.appendChild(pName);
 
           tsvscorersDiv.appendChild(newDiv);
-        });
+        }
       }
 
       function getLogoForTeam(team) {
         let logo = null;
-        logos.forEach((logoItem) => {
+        for (const logoItem of logos) {
           const logoWithoutEnding = logoItem.split(".")[0];
           if (logoWithoutEnding === team) {
             logo = "logo/" + logoItem;
-            return; // Exit the loop after finding the logo
+            break; // Exit the loop after finding the logo
           }
-        });
+        }
         return logo;
       }
 
@@ -491,12 +491,12 @@
           return Number(a.formattedDate) - Number(b.formattedDate);
         });
 
-        matches.forEach((match) => {
+        for (const match of matches) {
           if (
             match.formattedDate == todayAsformattedDate ||
             match.formattedDate > todayAsformattedDate
           ) {
-            return;
+            continue;
           }
 
           let newDiv = document.createElement("div");
@@ -601,7 +601,7 @@
           awaygoalscorersdiv.style.marginLeft = "2%";
           awaygoalscorersdiv.style.height = "65%";
 
-          match.goals.forEach((goal) => {
+          for (const goal of match.goals) {
             let goalentry = document.createElement("p");
 
             let playerText = document.createElement("span");
@@ -630,16 +630,14 @@
               awaygoalscorersdiv.appendChild(goalentry);
               homegoalscorersdiv.appendChild(emptygoalentry);
             }
-          });
+          }
 
           if (match.verdict === "") {
             score.textContent = homegoals + ":" + awaygoals;
+          } else if (match.verdict == "Nichtantritt GAST") {
+            score.textContent = "X:0";
           } else {
-            if (match.verdict == "Nichtantritt GAST") {
-              score.textContent = "X:0";
-            } else {
-              score.textContent = "0:X";
-            }
+            score.textContent = "0:X";
           }
 
           newDiv.appendChild(score);
@@ -648,7 +646,7 @@
           newDiv.appendChild(goalscorers);
 
           tsvscorersDiv.parentElement.insertBefore(newDiv, tsvscorersDiv);
-        });
+        }
         slides = document.querySelectorAll(".slide");
       }
 
@@ -682,7 +680,7 @@
           .then((responseData) => {
             sponsors = responseData;
             // Rest des Codes
-            sponsors.forEach((sponsor) => {
+            for (const sponsor of sponsors) {
               let newDiv = document.createElement("div");
               newDiv.style.position = "absolute";
               newDiv.style.top = "0";
@@ -709,7 +707,7 @@
                 newDiv,
                 afterSponsorsDiv
               );
-            });
+            }
             slides = document.querySelectorAll(".slide");
           })
           .catch((error) => {
