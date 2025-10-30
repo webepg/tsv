@@ -242,13 +242,6 @@
         const todaysMatch = matches.find(
           (m) => m.formattedDate === todayAsformattedDate
         );
-        const lastHomeMatch = matches
-          .filter(
-            (m) =>
-              m.formattedDate < todayAsformattedDate &&
-              m.homeTeam === "TSV Bad Griesbach"
-          )
-          .pop();
 
         const nextHomeMatch = matches
           .sort((a, b) => a.formattedDate - b.formattedDate)
@@ -270,9 +263,9 @@
           opponentText.innerText = match.awayTeam;
           let awayTeamLogo = getLogoForTeam(match.awayTeamSlug);
           opponentLogo.src =
-            awayTeamLogo != null
-              ? awayTeamLogo
-              : match.awayTeamImg.replace("200x200", "300x300");
+            awayTeamLogo == null
+              ? match.awayTeamImg.replace("200x200", "300x300")
+              : awayTeamLogo;
         }
       }
 
@@ -298,7 +291,6 @@
               let img = document.createElement("img");
               img.src = blob;
               document.getElementById("bestscorersDiv").appendChild(img);
-              //console.log("Erfolg:", responseData);
             })
             .catch((error) => {
               console.error("Fehler:", error);
@@ -327,7 +319,6 @@
               tsvScorers = responseData;
               createTsvScorerPage();
               getBestScorers();
-              //console.log("Erfolg:", responseData);
             })
             .catch((error) => {
               console.error("Fehler:", error);
@@ -507,7 +498,6 @@
           ) {
             return;
           }
-          //console.log("match: ", match);
 
           let newDiv = document.createElement("div");
           newDiv.style.position = "absolute";
@@ -538,7 +528,7 @@
           let homeTeamLogoLocal = getLogoForTeam(match.homeTeamSlug);
           console.log("homeTeamLogoLocal", homeTeamLogoLocal);
           homeTeamLogo.src =
-            homeTeamLogoLocal != null ? homeTeamLogoLocal : match.homeTeamImg;
+            homeTeamLogoLocal == null ? match.homeTeamImg : homeTeamLogoLocal;
           homeTeamLogo.alt = match.homeTeam;
           homeTeamLogo.style.width = "100%";
           homeTeamLogo.style.height = "auto";
@@ -554,7 +544,7 @@
           let awayTeamLogoLocal = getLogoForTeam(match.awayTeamSlug);
           console.log("awayTeamLogoLocal", awayTeamLogoLocal);
           awayTeamLogo.src =
-            awayTeamLogoLocal != null ? awayTeamLogoLocal : match.awayTeamImg;
+            awayTeamLogoLocal == null ? match.awayTeamImg : awayTeamLogoLocal;
           awayTeamLogo.alt = match.awayTeam;
           awayTeamLogo.style.width = homeTeamLogo.style.width;
           awayTeamLogo.style.height = homeTeamLogo.style.height;
@@ -640,7 +630,6 @@
               awaygoalscorersdiv.appendChild(goalentry);
               homegoalscorersdiv.appendChild(emptygoalentry);
             }
-            //goalscorers.appendChild(goalentry);
           });
 
           if (match.verdict === "") {
@@ -675,7 +664,6 @@
           })
           .then((responseData) => {
             logos = responseData;
-            //console.log("logos", logos);
           });
       }
 
@@ -723,8 +711,6 @@
               );
             });
             slides = document.querySelectorAll(".slide");
-
-            //console.log("Erfolg:", responseData);
           })
           .catch((error) => {
             console.error("Fehler:", error);
