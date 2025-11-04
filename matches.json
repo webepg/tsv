@@ -792,25 +792,5 @@
         "suspensions": [],
         "missedPenalties": [],
         "verdict": ""
-    },
-    {
-        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-tsv-karpfham-m2-251102",
-        "formattedDate": "251102",
-        "league": "A-Klasse Pocking",
-        "matchDay": "16. Spieltag",
-        "homeTeam": "TSV Bad Griesbach",
-        "awayTeam": "TSV Karpfham II",
-        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
-        "awayTeamId": "tsv-karpfham-m2-2025-26",
-        "homeTeamSlug": "tsv-bad-griesbach",
-        "awayTeamSlug": "tsv-karpfham",
-        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
-        "awayTeamImg": "https://image.fupa.net/club/Ko9nfbPC3gMh/200x200.jpeg",
-        "goals": [],
-        "redCards": [],
-        "yellowRedCards": [],
-        "suspensions": [],
-        "missedPenalties": [],
-        "verdict": ""
     }
 ]
