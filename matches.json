@@ -834,5 +834,68 @@
         "suspensions": [],
         "missedPenalties": [],
         "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/sv-aigen-a-inn-m1-tsv-bad-griesbach-m1-251108",
+        "formattedDate": "251108",
+        "league": "A-Klasse Pocking",
+        "matchDay": "17. Spieltag",
+        "homeTeam": "SV Aigen a. Inn",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "sv-aigen-a-inn-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "sv-aigen-a-inn",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/team/VDYlokheDHN5/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 13,
+                "additionalMinute": 0,
+                "player": "Waldemar Horst",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sv-aigen-a-inn-m1-2025-26",
+                "minute": 23,
+                "additionalMinute": 0,
+                "player": "Fabian Mayerhofer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sv-aigen-a-inn-m1-2025-26",
+                "minute": 40,
+                "additionalMinute": 0,
+                "player": "Simon Schwarzmeier",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sv-aigen-a-inn-m1-2025-26",
+                "minute": 78,
+                "additionalMinute": 0,
+                "player": "Fabian Mayerhofer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 88,
+                "additionalMinute": 0,
+                "player": "Irinel Munteanu",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 0,
+                "player": "Philipp Danzer",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
     }
 ]
