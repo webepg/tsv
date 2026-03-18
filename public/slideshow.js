@@ -427,47 +427,83 @@
     const homeCol = createGoalColumn("marginRight", "2%");
     const awayCol = createGoalColumn("marginLeft", "2%");
 
-    match.goals
-      .slice()
+    // Split goals into home and away, sorted by minute
+    const homeGoals = match.goals
+      .filter((goal) => goal.team === match.homeTeamId)
       .sort((a, b) => {
         if (a.minute === b.minute)
           return a.additionalMinute - b.additionalMinute;
         return a.minute - b.minute;
-      })
-      .forEach((goal) => {
-        const entry = document.createElement("p");
-        const playerText = document.createElement("span");
-        playerText.textContent =
-          goal.player + (goal.goalType == "goal_own_goal" ? " (ET) " : "");
-        const minuteText = document.createElement("span");
-        minuteText.textContent = goal.minute + "'";
-        minuteText.style.float = "right";
-
-        entry.appendChild(playerText);
-        entry.appendChild(minuteText);
-
-        setStyles(entry, {
-          color: "white",
-          fontSize: "30px",
-          display: "block",
-          textAlign: "left",
-        });
-
-        const empty = document.createElement("p");
-        empty.innerHTML = "<br>";
-
-        if (goal.team === match.homeTeamId) {
-          homeCol.appendChild(entry);
-          awayCol.appendChild(empty);
-        } else {
-          awayCol.appendChild(entry);
-          homeCol.appendChild(empty);
-        }
       });
+
+    const awayGoals = match.goals
+      .filter((goal) => goal.team === match.awayTeamId)
+      .sort((a, b) => {
+        if (a.minute === b.minute)
+          return a.additionalMinute - b.additionalMinute;
+        return a.minute - b.minute;
+      });
+
+    // Build columns in parallel to ensure alignment
+    const maxGoals = Math.max(homeGoals.length, awayGoals.length);
+    for (let i = 0; i < maxGoals; i++) {
+      const homeGoal = homeGoals[i];
+      const awayGoal = awayGoals[i];
+
+      if (homeGoal) {
+        const entry = createGoalEntry(homeGoal);
+        homeCol.appendChild(entry);
+      } else {
+        const empty = createEmptyEntry();
+        homeCol.appendChild(empty);
+      }
+
+      if (awayGoal) {
+        const entry = createGoalEntry(awayGoal);
+        awayCol.appendChild(entry);
+      } else {
+        const empty = createEmptyEntry();
+        awayCol.appendChild(empty);
+      }
+    }
 
     goalscorers.appendChild(homeCol);
     goalscorers.appendChild(awayCol);
     return goalscorers;
+  }
+
+  function createGoalEntry(goal) {
+    const entry = document.createElement("p");
+    const playerText = document.createElement("span");
+    playerText.textContent =
+      goal.player + (goal.goalType == "goal_own_goal" ? " (ET) " : "");
+    const minuteText = document.createElement("span");
+    minuteText.textContent = goal.minute + "'";
+    minuteText.style.float = "right";
+
+    entry.appendChild(playerText);
+    entry.appendChild(minuteText);
+
+    setStyles(entry, {
+      color: "white",
+      fontSize: "30px",
+      display: "block",
+      textAlign: "left",
+    });
+
+    return entry;
+  }
+
+  function createEmptyEntry() {
+    const empty = document.createElement("p");
+    empty.innerHTML = "&nbsp;"; // Use non-breaking space for consistent height
+    setStyles(empty, {
+      color: "white",
+      fontSize: "30px",
+      display: "block",
+      textAlign: "left",
+    });
+    return empty;
   }
 
   function createMatchSlide(match) {
