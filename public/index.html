@@ -214,6 +214,7 @@
       let logos = [];
       let tsvScorers = [];
       let isRunning = false;
+      let slideshowInterval;
 
       // methods
       function nextSlide() {
@@ -229,8 +230,31 @@
       }
 
       function startSlideshow() {
+        slides.forEach((s) => s.classList.remove("active"));
+        currentSlide = 0;
         slides[0].classList.add("active");
-        setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
+        slideshowInterval = setInterval(nextSlide, rotationTime * 1000); // alle x Sekunden zum nächsten Slide wechseln
+      }
+
+      function pauseSlideshow() {
+        if (slideshowInterval) {
+          clearInterval(slideshowInterval);
+          slideshowInterval = null;
+        }
+      }
+
+      function resumeSlideshow() {
+        if (!slideshowInterval) {
+          slideshowInterval = setInterval(nextSlide, rotationTime * 1000);
+        }
+      }
+
+      function restartSlideshow() {
+        pauseSlideshow();
+        slides.forEach((s) => s.classList.remove("active"));
+        currentSlide = 0;
+        slides[0].classList.add("active");
+        slideshowInterval = setInterval(nextSlide, rotationTime * 1000);
       }
 
       function setGreeting() {
@@ -704,6 +728,20 @@
       getLogos();
       getBestTsvScorers();
       setTimeout(updateData, 12000);
+
+      document.addEventListener("keydown", function (event) {
+        if (event.code === "Space") {
+          event.preventDefault();
+          if (slideshowInterval) {
+            pauseSlideshow();
+          } else {
+            resumeSlideshow();
+          }
+        } else if (event.code === "Enter") {
+          event.preventDefault();
+          restartSlideshow();
+        }
+      });
     </script>
   </body>
   <footer>
