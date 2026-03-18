@@ -16,8 +16,90 @@ body {
   width: 100%;
   height: 100%;
   display: none; /* alle Slides ausblenden */
+  background-size: contain;
+  background-position: center;
 }
 
 .slide.active {
   display: block; /* aktiven Slide einblenden */
+}
+
+/* Background themes */
+.bg-landing {
+  background-image: url("background/landing.png");
+}
+
+.bg-greeting {
+  background-image: url("background/greeting.png");
+}
+
+.bg-match {
+  background-image: url("background/match.png");
+}
+
+.bg-sponsor-landing {
+  background-image: url("background/sponsor-landing.png");
+}
+
+.bg-sponsor {
+  background-image: url("background/sponsor.png");
+}
+
+.bg-instagram {
+  background-image: url("background/instagram.png");
+}
+
+/* Greeting page */
+.greeting-text {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 45px;
+}
+
+.opponent-text {
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 45px;
+}
+
+.team-logo {
+  position: absolute;
+  top: 50%;
+  width: 25%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.team-logo--left {
+  left: 5%;
+}
+
+.team-logo--right {
+  right: 5%;
+}
+
+.team-logo img {
+  width: 100%;
+  height: auto;
+}
+
+#ranking table {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 95%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 20px;
+}
+
+#ranking td {
+  width: 50%;
+  vertical-align: center;
 }
