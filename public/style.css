@@ -1,7 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .slideshow {
   position: relative;
-  width: 800px; /* Breite der Slideshow */
-  height: 600px; /* Höhe der Slideshow */
+  width: 100vw; /* Vollbreite des Viewports */
+  height: 100vh; /* Vollhöhe des Viewports */
 }
 
 .slide {

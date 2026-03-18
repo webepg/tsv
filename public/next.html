@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/landing.png');
+          background-image: url(&quot;background/landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -30,7 +30,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/greeting.png');
+          background-image: url(&quot;background/greeting.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -109,7 +109,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/match.png');
+          background-image: url(&quot;background/match.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -144,7 +144,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/match.png');
+          background-image: url(&quot;background/match.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -159,7 +159,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/sponsor-landing.png');
+          background-image: url(&quot;background/sponsor-landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -174,7 +174,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/sponsor-landing.png');
+          background-image: url(&quot;background/sponsor-landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -188,7 +188,7 @@
           left: 0;
           height: 100vh;
           width: 100vw;
-          background-image: url('background/instagram.png');
+          background-image: url(&quot;background/instagram.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -240,7 +240,7 @@
 
         // Find today's match or last home match
         const todaysMatch = matches.find(
-          (m) => m.formattedDate === todayAsformattedDate
+          (m) => m.formattedDate === todayAsformattedDate,
         );
 
         const nextHomeMatch = matches
@@ -248,7 +248,7 @@
           .find(
             (m) =>
               m.formattedDate > todayAsformattedDate &&
-              m.homeTeam === "TSV Bad Griesbach"
+              m.homeTeam === "TSV Bad Griesbach",
           );
 
         console.log("nextHomeMatch", nextHomeMatch);
@@ -573,10 +573,10 @@
           });
 
           let homegoals = match.goals.filter(
-            (x) => x.team === match.homeTeamId
+            (x) => x.team === match.homeTeamId,
           ).length;
           let awaygoals = match.goals.filter(
-            (x) => x.team === match.awayTeamId
+            (x) => x.team === match.awayTeamId,
           ).length;
 
           let goalscorers = document.createElement("div");
@@ -593,6 +593,7 @@
           homegoalscorersdiv.style.textAlign = "left";
           homegoalscorersdiv.style.marginRight = "2%";
           homegoalscorersdiv.style.height = "65%";
+          homegoalscorersdiv.style.verticalAlign = "top";
 
           let awaygoalscorersdiv = document.createElement("div");
           awaygoalscorersdiv.style.display = "inline-block";
@@ -600,7 +601,7 @@
           awaygoalscorersdiv.style.textAlign = "left";
           awaygoalscorersdiv.style.marginLeft = "2%";
           awaygoalscorersdiv.style.height = "65%";
-
+          awaygoalscorersdiv.style.verticalAlign = "top";
           for (const goal of match.goals) {
             let goalentry = document.createElement("p");
 
@@ -705,7 +706,7 @@
 
               afterSponsorsDiv.parentElement.insertBefore(
                 newDiv,
-                afterSponsorsDiv
+                afterSponsorsDiv,
               );
             }
             slides = document.querySelectorAll(".slide");

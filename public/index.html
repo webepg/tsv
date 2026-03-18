@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -13,9 +13,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/landing.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -28,9 +28,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/greeting.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/greeting.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -107,9 +107,9 @@
         style="
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/match.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/match.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -142,9 +142,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/match.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/match.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -157,9 +157,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/sponsor-landing.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/sponsor-landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -172,9 +172,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/sponsor-landing.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/sponsor-landing.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -186,9 +186,9 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 100vh;
-          width: 100vw;
-          background-image: url('background/instagram.png');
+          height: 100%;
+          width: 100%;
+          background-image: url(&quot;background/instagram.png&quot;);
           background-size: contain;
           background-position: center;
         "
@@ -240,13 +240,13 @@
 
         // Find today's match or last home match
         const todaysMatch = matches.find(
-          (m) => m.formattedDate === todayAsformattedDate
+          (m) => m.formattedDate === todayAsformattedDate,
         );
         const lastHomeMatch = matches
           .filter(
             (m) =>
               m.formattedDate < todayAsformattedDate &&
-              m.homeTeam === "TSV Bad Griesbach"
+              m.homeTeam === "TSV Bad Griesbach",
           )
           .pop();
 
@@ -480,8 +480,8 @@
           newDiv.style.position = "absolute";
           newDiv.style.top = "0";
           newDiv.style.left = "0";
-          newDiv.style.height = "100vh";
-          newDiv.style.width = "100vw";
+          newDiv.style.height = "100%";
+          newDiv.style.width = "100%";
           newDiv.style.backgroundImage = "url('background/match.png')";
           newDiv.style.backgroundSize = "contain";
           newDiv.style.backgroundPosition = "center";
@@ -550,10 +550,10 @@
           });
 
           let homegoals = match.goals.filter(
-            (x) => x.team === match.homeTeamId
+            (x) => x.team === match.homeTeamId,
           ).length;
           let awaygoals = match.goals.filter(
-            (x) => x.team === match.awayTeamId
+            (x) => x.team === match.awayTeamId,
           ).length;
 
           let goalscorers = document.createElement("div");
@@ -570,6 +570,7 @@
           homegoalscorersdiv.style.textAlign = "left";
           homegoalscorersdiv.style.marginRight = "2%";
           homegoalscorersdiv.style.height = "65%";
+          homegoalscorersdiv.style.verticalAlign = "top";
 
           let awaygoalscorersdiv = document.createElement("div");
           awaygoalscorersdiv.style.display = "inline-block";
@@ -577,7 +578,7 @@
           awaygoalscorersdiv.style.textAlign = "left";
           awaygoalscorersdiv.style.marginLeft = "2%";
           awaygoalscorersdiv.style.height = "65%";
-
+          awaygoalscorersdiv.style.verticalAlign = "top";
           match.goals.forEach((goal) => {
             let goalentry = document.createElement("p");
 
@@ -666,8 +667,8 @@
               newDiv.style.position = "absolute";
               newDiv.style.top = "0";
               newDiv.style.left = "0";
-              newDiv.style.height = "100vh";
-              newDiv.style.width = "100vw";
+              newDiv.style.height = "100%";
+              newDiv.style.width = "100%";
               newDiv.style.textAlign = "center";
               newDiv.style.backgroundImage = "url('background/sponsor.png')";
               newDiv.style.backgroundSize = "cover";
@@ -686,7 +687,7 @@
 
               afterSponsorsDiv.parentElement.insertBefore(
                 newDiv,
-                afterSponsorsDiv
+                afterSponsorsDiv,
               );
             });
             slides = document.querySelectorAll(".slide");
