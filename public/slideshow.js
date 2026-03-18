@@ -427,45 +427,25 @@
     const homeCol = createGoalColumn("marginRight", "2%");
     const awayCol = createGoalColumn("marginLeft", "2%");
 
-    // Split goals into home and away, sorted by minute
-    const homeGoals = match.goals
-      .filter((goal) => goal.team === match.homeTeamId)
+    match.goals
+      .slice()
       .sort((a, b) => {
         if (a.minute === b.minute)
           return a.additionalMinute - b.additionalMinute;
         return a.minute - b.minute;
-      });
-
-    const awayGoals = match.goals
-      .filter((goal) => goal.team === match.awayTeamId)
-      .sort((a, b) => {
-        if (a.minute === b.minute)
-          return a.additionalMinute - b.additionalMinute;
-        return a.minute - b.minute;
-      });
-
-    // Build columns in parallel to ensure alignment
-    const maxGoals = Math.max(homeGoals.length, awayGoals.length);
-    for (let i = 0; i < maxGoals; i++) {
-      const homeGoal = homeGoals[i];
-      const awayGoal = awayGoals[i];
-
-      if (homeGoal) {
-        const entry = createGoalEntry(homeGoal);
-        homeCol.appendChild(entry);
-      } else {
+      })
+      .forEach((goal) => {
+        const entry = createGoalEntry(goal);
         const empty = createEmptyEntry();
-        homeCol.appendChild(empty);
-      }
 
-      if (awayGoal) {
-        const entry = createGoalEntry(awayGoal);
-        awayCol.appendChild(entry);
-      } else {
-        const empty = createEmptyEntry();
-        awayCol.appendChild(empty);
-      }
-    }
+        if (goal.team === match.homeTeamId) {
+          homeCol.appendChild(entry);
+          awayCol.appendChild(empty);
+        } else {
+          awayCol.appendChild(entry);
+          homeCol.appendChild(empty);
+        }
+      });
 
     goalscorers.appendChild(homeCol);
     goalscorers.appendChild(awayCol);
