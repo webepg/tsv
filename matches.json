@@ -897,5 +897,234 @@
         "suspensions": [],
         "missedPenalties": [],
         "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-asv-ortenburg-m1-251116",
+        "formattedDate": "251116",
+        "league": "A-Klasse Pocking",
+        "matchDay": "6. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "ASV Ortenburg",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "asv-ortenburg-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "asv-ortenburg",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/qBnEKNgzkVWQ/200x200.jpeg",
+        "goals": [
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 16,
+                "additionalMinute": 0,
+                "player": "Samuel Schmid",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 37,
+                "additionalMinute": 0,
+                "player": "Silvan Schmid",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 42,
+                "additionalMinute": 0,
+                "player": "Denis Gass",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 45,
+                "additionalMinute": 0,
+                "player": "Samuel Schmid",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 49,
+                "additionalMinute": 0,
+                "player": "Johannes Bauer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 53,
+                "additionalMinute": 0,
+                "player": "Philipp Langmeyer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 76,
+                "additionalMinute": 0,
+                "player": "Patrick Maier",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 86,
+                "additionalMinute": 0,
+                "player": "Sebastian Kohlhofer",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-djk-sv-hartkirchen-m1-260322",
+        "formattedDate": "260322",
+        "league": "A-Klasse Pocking",
+        "matchDay": "18. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "SG Hartkirchen / Pocking",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "sg-hartkirchen-pocking-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "djk-sv-hartkirchen",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/team/V8V9Kuyk0y0c/200x200.jpeg",
+        "goals": [
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 18,
+                "additionalMinute": 0,
+                "player": "Daniel Militky",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 44,
+                "additionalMinute": 0,
+                "player": "Maximilian Seefried",
+                "goalType": "penalty_foul"
+            },
+            {
+                "team": "sg-hartkirchen-pocking-m1-2025-26",
+                "minute": 52,
+                "additionalMinute": 0,
+                "player": "Jan Skala",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 56,
+                "additionalMinute": 0,
+                "player": "Thomas Landbrecht"
+            }
+        ],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/asv-ortenburg-m1-tsv-bad-griesbach-m1-260329",
+        "formattedDate": "260329",
+        "league": "A-Klasse Pocking",
+        "matchDay": "19. Spieltag",
+        "homeTeam": "ASV Ortenburg",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "asv-ortenburg-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "asv-ortenburg",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/qBnEKNgzkVWQ/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 40,
+                "additionalMinute": 0,
+                "player": "Florian Dobler",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 53,
+                "additionalMinute": 0,
+                "player": "Silvan Schmid",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 54,
+                "additionalMinute": 0,
+                "player": "Rares Hopide",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 70,
+                "additionalMinute": 0,
+                "player": "Rares Hopide",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 73,
+                "additionalMinute": 0,
+                "player": "Maximilian Langmeyer",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 78,
+                "additionalMinute": 0,
+                "player": "Stephan Jetzinger",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 83,
+                "additionalMinute": 0,
+                "player": "Denis Gass",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 6,
+                "player": "Daniel Brummer",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 85,
+                "additionalMinute": 0,
+                "player": "Patrick Maier"
+            }
+        ],
+        "suspensions": [
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 85,
+                "additionalMinute": 0,
+                "player": "Patrick Maier"
+            },
+            {
+                "team": "tsv-bad-griesbach-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 4,
+                "player": "Paul Papst"
+            },
+            {
+                "team": "asv-ortenburg-m1-2025-26",
+                "minute": 90,
+                "additionalMinute": 7,
+                "player": "Silvan Schmid"
+            }
+        ],
+        "missedPenalties": [],
+        "verdict": ""
     }
 ]
