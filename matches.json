@@ -1217,5 +1217,102 @@
         ],
         "missedPenalties": [],
         "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/tsv-bad-griesbach-m1-sv-wuerding-m1-260419",
+        "formattedDate": "260419",
+        "league": "A-Klasse Pocking",
+        "matchDay": "22. Spieltag",
+        "homeTeam": "TSV Bad Griesbach",
+        "awayTeam": "SV Würding",
+        "homeTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "awayTeamId": "sv-wuerding-m1-2025-26",
+        "homeTeamSlug": "tsv-bad-griesbach",
+        "awayTeamSlug": "sv-wuerding",
+        "homeTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/team/JH3D5OkH8vEE/200x200.jpeg",
+        "goals": [
+            {
+                "team": "sv-wuerding-m1-2025-26",
+                "minute": 58,
+                "additionalMinute": 0,
+                "player": "Florian Wäfler",
+                "goalType": "goal_scrounger"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [
+            {
+                "team": "sv-wuerding-m1-2025-26",
+                "minute": 57,
+                "additionalMinute": 0,
+                "player": "Florian Wäfler"
+            }
+        ],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/stv-ering-a-inn-m1-tsv-bad-griesbach-m1-260426",
+        "formattedDate": "260426",
+        "league": "A-Klasse Pocking",
+        "matchDay": "23. Spieltag",
+        "homeTeam": "STV Ering a. Inn",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "stv-ering-a-inn-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "stv-ering-a-inn",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/m7Fcq9xhyefW/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [
+            {
+                "team": "stv-ering-a-inn-m1-2025-26",
+                "minute": 16,
+                "additionalMinute": 0,
+                "player": "Stefan Hager",
+                "goalType": "goal_headed"
+            },
+            {
+                "team": "stv-ering-a-inn-m1-2025-26",
+                "minute": 45,
+                "additionalMinute": 0,
+                "player": "Dominik Aaron Riedleder",
+                "goalType": "goal_shoot"
+            },
+            {
+                "team": "stv-ering-a-inn-m1-2025-26",
+                "minute": 65,
+                "additionalMinute": 0,
+                "player": "Maximilian Sieghart",
+                "goalType": "goal_shoot"
+            }
+        ],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
+    },
+    {
+        "url": "https://www.fupa.net/match/rsv-kirchham-m1-tsv-bad-griesbach-m1-260503",
+        "formattedDate": "260503",
+        "league": "A-Klasse Pocking",
+        "matchDay": "24. Spieltag",
+        "homeTeam": "RSV Kirchham",
+        "awayTeam": "TSV Bad Griesbach",
+        "homeTeamId": "rsv-kirchham-m1-2025-26",
+        "awayTeamId": "tsv-bad-griesbach-m1-2025-26",
+        "homeTeamSlug": "rsv-kirchham",
+        "awayTeamSlug": "tsv-bad-griesbach",
+        "homeTeamImg": "https://image.fupa.net/club/FABYOSflmgTW/200x200.jpeg",
+        "awayTeamImg": "https://image.fupa.net/club/5H1OOMamvmOI/200x200.jpeg",
+        "goals": [],
+        "redCards": [],
+        "yellowRedCards": [],
+        "suspensions": [],
+        "missedPenalties": [],
+        "verdict": ""
     }
 ]
