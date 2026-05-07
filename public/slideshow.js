@@ -353,7 +353,6 @@
   }
 
   function createTeamLogo(match, isHome) {
-    const teamId = isHome ? match.homeTeamId : match.awayTeamId;
     const teamName = isHome ? match.homeTeam : match.awayTeam;
     const teamSlug = isHome ? match.homeTeamSlug : match.awayTeamSlug;
     const teamImg = isHome ? match.homeTeamImg : match.awayTeamImg;
