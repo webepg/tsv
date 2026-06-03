@@ -595,6 +595,12 @@
       } else if (event.code === "Enter") {
         event.preventDefault();
         restartSlideshow();
+      } else if (event.code === "ArrowLeft") {
+        event.preventDefault();
+        prevSlide();
+      } else if (event.code === "ArrowRight") {
+        event.preventDefault();
+        nextSlide();
       }
     });
   }
